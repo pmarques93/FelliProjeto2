@@ -24,18 +24,15 @@ namespace Felli
                 Console.Write($" ");
                 for (uint j = 0; j < boardSize; j++)
                 {
-                    
-
                     // Prints true positions
-                    if (board[i,j].Position.IsPlayable.PlayableCheck)
+                    if (board[i,j].Position.IsPlayable)
                     {
-                        //Console.Write($"{board[i,j].Position.Row}");
-                        //Console.Write($"{board[i,j].Position.Column}");
+                        Console.Write($"{board[i,j].Position.Row}");
+                        Console.Write($"{board[i,j].Position.Column}");
                     }
+              
                     else
                         Console.Write($"  ");
-
-                    
                 }
                 Console.WriteLine("");
             }

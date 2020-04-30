@@ -35,20 +35,15 @@ namespace Felli
                 {
                     // Creates true and false positions in game board
                     if (j == 2)
-                        Board[i,j] = new Board(new Position(i,j, 
-                            new State(true)));
+                        Board[i,j] = new Board(new Position(i,j, true));
                     else if (i == 2)
-                        Board[i,j] = new Board(new Position(i,j, 
-                            new State(false)));
+                        Board[i,j] = new Board(new Position(i,j, false));
                     else if (i % 2 == 0 && j %2 == 0)
-                        Board[i,j] = new Board(new Position(i,j, 
-                            new State(true)));
+                        Board[i,j] = new Board(new Position(i,j, true));
                     else if (i % 2 != 0 && j %2 != 0)
-                        Board[i,j] = new Board(new Position(i,j, 
-                            new State(true)));
+                        Board[i,j] = new Board(new Position(i,j, true));
                     else
-                        Board[i,j] = new Board(new Position(i,j, 
-                            new State(false)));
+                        Board[i,j] = new Board(new Position(i,j, false));
                 }
             }
 
@@ -57,17 +52,14 @@ namespace Felli
             {
                 for (uint j = 0; j < boardSize; j++)
                 {
-                    ///////////// SEGMENTATION FAULT /////////////////////
-                    /*
                     // Gives player1 positions
-                    if (Board[i,j].Position.IsPlayable.PlayableCheck)
+                    if (Board[i,j].Position.IsPlayable)              
                     {
                         playerOnePieces[temp] = new Player($"P1{temp}",
-                            new Position(i,j, new State(false)));
+                            new Position(i,j, true));
+                        Board[i,j].Position.IsPlayable = false;
                         temp++;
-                    }
-                    */
-                 
+                    }                
                 }
             }
 

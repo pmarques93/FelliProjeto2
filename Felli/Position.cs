@@ -7,14 +7,13 @@ namespace Felli
     {
         public uint Row { get; private set; }
         public uint Column { get; private set; }
-        public State IsPlayable { get; private set; }
+        public bool IsPlayable { get; set; }
 
-        public Position(uint row, uint column, State isPlayable)
+        public Position(uint row, uint column, bool isPlayable)
         {
             Row = row;
             Column = column;
-            IsPlayable = IsPlayable;
+            IsPlayable = isPlayable;
         }
-
     }
 }

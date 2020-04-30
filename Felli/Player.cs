@@ -13,7 +13,7 @@ namespace Felli
         {
             this.name = name;
             Position = position;
+            Position.IsPlayable = false;
         }
-
     }
 }

@@ -5,7 +5,7 @@ namespace Felli
     /// </summary>
     public class State
     {
-        public bool PlayableCheck { get; private set; }
+        public bool PlayableCheck { get; set; }
 
         public State(bool playableCheck)
         {
