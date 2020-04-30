@@ -5,21 +5,13 @@ namespace Felli
     /// </summary>
     public class Board
     {
-        private readonly int row;
-        private readonly int column;
-        private readonly bool isPlayable;
+        public Position position { get; private set; }
+        public State IsPlayable { get; private set; }
 
-        public Board(int row, int column, bool isPlayable)
+        public Board(Position position, State isPlayable)
         {
-            this.row = row;
-            this.column = column;
-            this.isPlayable = isPlayable;
+            this.position = position;
+            IsPlayable = isPlayable;
         }
-
-        public int PrintRow() => row;
-
-        public int PrintColumn() => column;
-
-        public bool IsPlayable() => isPlayable;
     }
 }
