@@ -5,15 +5,14 @@ namespace Felli
     /// </summary>
     public class Player
     {
-        private string name;
+        public string Name { get; }
 
         public Position Position { get; private set; }
 
         public Player(string name, Position position)
         {
-            this.name = name;
+            Name = name;
             Position = position;
-            Position.IsPlayable = false;
         }
     }
 }
