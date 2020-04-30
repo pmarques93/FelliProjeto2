@@ -5,12 +5,12 @@ namespace Felli
     /// </summary>
     public class Board
     {
-        public Position position { get; private set; }
+        public Position Position { get; private set; }
         public State IsPlayable { get; private set; }
 
         public Board(Position position, State isPlayable)
         {
-            this.position = position;
+            Position = position;
             IsPlayable = isPlayable;
         }
     }

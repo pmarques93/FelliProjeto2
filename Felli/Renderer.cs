@@ -27,8 +27,8 @@ namespace Felli
                     // Prints true positions
                     if (board[i,j].IsPlayable.PlayableCheck)
                     {
-                        Console.Write($"{board[i,j].position.Row}");
-                        Console.Write($"{board[i,j].position.Column}");
+                        Console.Write($"{board[i,j].Position.Row}");
+                        Console.Write($"{board[i,j].Position.Column}");
                     }
                     else
                         Console.Write($"  ");

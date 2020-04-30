@@ -7,8 +7,6 @@ namespace Felli
     /// </summary>
     class Program
     {
-        // Variables
-
         /// <summary>
         /// Main method
         /// </summary>
