@@ -1,7 +1,5 @@
 # Felli
 
-# Wolf and Sheep
-
 ### Grupo 03: 
 |Nome|Número|GitHub|
 |:-:|:-:|:-:|
@@ -22,26 +20,30 @@ https://github.com/pmarques93/FelliProjeto2.git
 
 ---
 ### Descrição da solução
-Para resulução do problema, começámos por criar uma classe (_Board_) que contém as posições no tabuleiro (_Row_, _Column_), juntamente com o _IsPlayable_ que define se a posição pode ser jogada ou não.
+Para resoução do problema começámos por criar várias classes relativas ao jogo. Criámos as classes _State_ e _Position_ que estão diretamente ligadas à classe _Board_. Estas três classes são responsáveis pela criação do tabuleiro, sendo auxiliadas pela classe _Renderer_ para imprimir o tabuleiro para a consola. De seguida criámos a classe _Game_ que vai conter o _gameloop_ e o código relativo á criação de instâncias do tabuleiro e dos restantes elementos.
 
 ---
 ### Arquitetura do código
 #### Métodos:
 - #### _Main()_;
-  - O método corre o _Game()_;
-
-- #### _Game()_;
-  - Responsável pelo _loop_ inteiro do jogo. 
-
-- #### _PrintBoard()_;
-  - Imprime o tabuleiro do jogo;
-
-
-
+  - O método corre a classe _Game_;
+  
 #### Classes:
+- #### _State_;
+  - Define se algo é verdadeiro ou falso. Neste caso, define o estado da posição no tabuleiro;
+  
+- #### _Position_;
+  - Contém a _Row_, _Column_, que vão definir a posição no tabuleiro;
+
 - #### _Board_;
-  - Contém a _row_, _column_ e _isPlayable_;
-  - 
+  - Cria o tabuleiro de jogo;
+  - Contém variáveis _Position_ e _State_;
+  
+- #### _Renderer_;
+  - Responsável por imprimir informação para a consola;
+  
+- #### _Game_;
+  - Contém o _gameloop_ e o código relativo á criação de instâncias do tabuleiro e dos restantes elementos.;
   
 ---
 ### Fluxograma
