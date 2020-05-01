@@ -15,22 +15,36 @@ namespace Felli
 
         public Position Position { get; set; }
 
+        public bool Selected { get; set; }
+
         public Player(string name, Position position)
         {
             Name = name;
             Position = position;
         }
 
-        public Position GetInput()
+        public Position GetPosition()
         {
+        
             uint aux1, aux2;
+            Position pos;
             Console.Write("Insert a row number: ");
             aux1 = Convert.ToUInt32(Console.ReadLine());
 
             Console.Write("Insert a row number: ");
             aux2 = Convert.ToUInt32(Console.ReadLine());
-            Position pos = new Position(aux1,aux2);
+            pos = new Position(aux1,aux2);
             return pos;
+        }
+
+        public void SelectPlayer()
+        {
+            Selected = true;
+        }
+
+        public void DeselectPlayer()
+        {
+            Selected = false;
         }
 
     }

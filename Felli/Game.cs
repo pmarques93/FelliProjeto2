@@ -1,3 +1,6 @@
+using System.Security;
+using System.Data;
+using System.Dynamic;
 using System.Reflection.Metadata;
 using System;
 namespace Felli
@@ -28,6 +31,7 @@ namespace Felli
             Player[] selectedPlayer;
             Position tempPosition = new Position(0,0);
             Position currentPosition = new Position(0,0);
+            int selectedPiece = 0;
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
@@ -35,19 +39,34 @@ namespace Felli
             // Gameloop - while not game over
             while (!(gameover))
             {   
+                /* Checks if the round num is odd or even and defines the selected player 
+                accordingly */
                 if (roundCounter % 2 == 0)
                     selectedPlayer = playerOne;
                 else
                     selectedPlayer = playerTwo;
 
-                tempPosition = selectedPlayer[0].GetInput();
-                currentPosition = new Position(selectedPlayer[0].Position.Row, selectedPlayer[0].Position.Column);
+                Console.Write("\nSelect a piece to play with: ");
+                
+                selectedPiece = Convert.ToInt32(Console.ReadLine());
+                selectedPlayer[selectedPiece].Selected = true;
+
+                foreach (Player player in selectedPlayer)
+                {
+                    if (player.Selected)
+                    {
+                        Console.WriteLine($"{player.Name} selected");
+
+                        tempPosition = player.GetPosition();
+                        currentPosition = new Position(player.Position.Row, player.Position.Column);
+                    } 
+                }
 
                 if(roundCounter > 0)
                     if (Board[tempPosition.Row, tempPosition.Column].Position.IsPlayable)
                     {
                         Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
-                        selectedPlayer[0].Position = tempPosition;
+                        selectedPlayer[selectedPiece].Position = tempPosition;
                         Board[tempPosition.Row, tempPosition.Column].Position.OccupySpace();
                         tempPosition = new Position(0,0);
                     }
@@ -58,13 +77,16 @@ namespace Felli
                         continue;
                     }
                 
-                for (uint i = 0; i < boardSize; i++)
+
+                // Descomentar para imprimir as posições jogáveis
+
+                /* for (uint i = 0; i < boardSize; i++)
                 {
                     for (uint j = 0; j < boardSize; j++)
                     {
                         Console.WriteLine($"[{i}, {j} - {Board[i,j].Position.IsPlayable}]");
                     }
-                }    
+                }   */  
             
                 
 
@@ -75,6 +97,7 @@ namespace Felli
                 // False to create the loop
                 gameover = false;
                 roundCounter ++;
+                selectedPlayer[selectedPiece].Selected = false;
             }
             
         }
