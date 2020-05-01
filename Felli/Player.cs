@@ -1,4 +1,3 @@
-using System;
 namespace Felli
 {
     /// <summary>
@@ -13,26 +12,14 @@ namespace Felli
         private Renderer print = new Renderer();
         public bool IsAlive { get; private set; }
 
-
         public byte Index { get; private set;}
+
         public Player(string name, Position position, bool isAlive)
         {
             Name = name;
             Position = position;
             IsAlive = isAlive;
             Index = GetIndex();
-        }
-
-        public Position GetPosition()
-        {
-            byte aux1, aux2;
-            Position pos;
-            print.RenderMessage("InsertRow");
-            aux1 = Convert.ToByte(Console.ReadLine());
-            print.RenderMessage("InsertColumn");
-            aux2 = Convert.ToByte(Console.ReadLine());
-            pos = new Position(aux1,aux2);
-            return pos;
         }
 
         public void SelectPlayer()
@@ -62,8 +49,6 @@ namespace Felli
             {
                 if (Name == name1[i] || Name == name2[i])
                 {
-                    // Console.WriteLine($"Name: {Name}");
-                    // Console.WriteLine($"i: {i}");
                     index = i;
                     break;
                 }
