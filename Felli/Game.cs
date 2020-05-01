@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+using System;
 namespace Felli
 {
     /// <summary>
@@ -22,25 +24,57 @@ namespace Felli
 
         public void Run()
         {
+            int roundCounter = 0;
+            Player[] selectedPlayer;
+            Position tempPosition = new Position(0,0);
+            Position currentPosition = new Position(0,0);
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
 
             // Gameloop - while not game over
             while (!(gameover))
-            {
-                // Renders board
+            {   
+                if (roundCounter % 2 == 0)
+                    selectedPlayer = playerOne;
+                else
+                    selectedPlayer = playerTwo;
+
+                tempPosition = selectedPlayer[0].GetInput();
+                currentPosition = new Position(selectedPlayer[0].Position.Row, selectedPlayer[0].Position.Column);
+
+                if(roundCounter > 0)
+                    if (Board[tempPosition.Row, tempPosition.Column].Position.IsPlayable)
+                    {
+                        Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
+                        selectedPlayer[0].Position = tempPosition;
+                        Board[tempPosition.Row, tempPosition.Column].Position.OccupySpace();
+                        tempPosition = new Position(0,0);
+                    }
+                    else
+                    {
+                        Console.WriteLine("That is not a valid move");
+                        printBoard.Render(playerOne, playerTwo);
+                        continue;
+                    }
+                
+                for (uint i = 0; i < boardSize; i++)
+                {
+                    for (uint j = 0; j < boardSize; j++)
+                    {
+                        Console.WriteLine($"[{i}, {j} - {Board[i,j].Position.IsPlayable}]");
+                    }
+                }    
+            
+                
+
+
                 printBoard.Render(playerOne, playerTwo);
 
 
-
-
-
-
-
-
                 // False to create the loop
-                gameover = true;
+                gameover = false;
+                roundCounter ++;
             }
             
         }

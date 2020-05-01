@@ -8,7 +8,7 @@ namespace Felli
         public uint Row { get; private set; }
 
         public uint Column { get; private set; }
-
+    
         public bool IsPlayable { get; private set; }
 
         public bool Occupied { get; private set; }

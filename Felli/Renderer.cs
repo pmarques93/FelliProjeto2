@@ -44,7 +44,7 @@ namespace Felli
                                 Console.Write($"{player.Name} ");
                             }
                         }
-                        foreach (Player player in playerTwo)
+                        foreach (Player player in playerTwo)    
                         {
                             if (player.Position.Row == board[i,j].Position.Row
                             &&  player.Position.Column == 
