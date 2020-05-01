@@ -1,7 +1,3 @@
-using System.Security;
-using System.Data;
-using System.Dynamic;
-using System.Reflection.Metadata;
 using System;
 namespace Felli
 {
@@ -141,7 +137,7 @@ namespace Felli
                         if (Board[i,j].Position.IsPlayable)              
                         {
                             playerOne[temp] = new Player($"W{temp}",
-                                new Position(i,j));
+                                new Position(i,j), true);
                             Board[i,j].Position.OccupySpace();
                             temp++;
                         }                
@@ -158,7 +154,7 @@ namespace Felli
                         if (Board[i,j].Position.IsPlayable)              
                         {
                             playerTwo[temp] = new Player($"B{temp}",
-                                new Position(i,j));
+                                new Position(i,j), true);
                             Board[i,j].Position.OccupySpace();
                             temp++;
                         }                

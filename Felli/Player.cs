@@ -1,8 +1,3 @@
-using System.ComponentModel;
-using System.Dynamic;
-using Microsoft.VisualBasic.CompilerServices;
-using System.Data;
-using System.Runtime.ConstrainedExecution;
 using System;
 namespace Felli
 {
@@ -17,10 +12,13 @@ namespace Felli
 
         public bool Selected { get; set; }
 
-        public Player(string name, Position position)
+        public bool IsAlive { get; private set; }
+
+        public Player(string name, Position position, bool isAlive)
         {
             Name = name;
             Position = position;
+            IsAlive = isAlive;
         }
 
         public Position GetPosition()
@@ -47,5 +45,10 @@ namespace Felli
             Selected = false;
         }
 
+        // Stops playing from being printed and chooseable
+        public void Die()
+        {
+            IsAlive = false;
+        }
     }
 }

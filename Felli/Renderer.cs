@@ -37,28 +37,51 @@ namespace Felli
                     {
                         foreach (Player player in playerOne)
                         {
-                            if (player.Position.Row == board[i,j].Position.Row
-                            &&  player.Position.Column == 
-                                board[i,j].Position.Column)
-                            {
-                                Console.Write($"{player.Name} ");
-                            }
+                            if (player.IsAlive)
+                                if (ComparePosition(board[i,j], player))
+                                    Console.Write($"{player.Name} ");
                         }
                         foreach (Player player in playerTwo)    
                         {
-                            if (player.Position.Row == board[i,j].Position.Row
-                            &&  player.Position.Column == 
-                                board[i,j].Position.Column)
-                            {
-                                Console.Write($"{player.Name} ");
-                            }
+                            if (player.IsAlive)
+                                if (ComparePosition(board[i,j], player))           
+                                    Console.Write($"{player.Name} ");
                         }
-                    }     
+                    } 
                     else
                         Console.Write($"   ");  
                 }
+                // Prints playable numbers on middle row
+                if (i == 2)
+                    PossiblePlays();
+
                 Console.WriteLine("");
             }
+        }
+
+        // Prints possible plays
+        public void PossiblePlays()
+        {
+            Console.Write($"              Playable Numbers: ");
+            foreach (Board position in board)
+            {
+                if (position.Position.IsPlayable)
+                {
+                    Console.Write($"{position.Position.Row}");
+                    Console.Write($"{position.Position.Column}");
+                }
+            }
+        }
+
+        // Returns true for equal positions
+        public bool ComparePosition(Board board, Player player) 
+        {
+            bool x = false;
+            if (board.Position.Row == player.Position.Row &&
+                board.Position.Column == player.Position.Column)
+                x = true;
+
+            return x;
         }
     }
 }
