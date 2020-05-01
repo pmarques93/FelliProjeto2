@@ -17,6 +17,8 @@ namespace Felli
 
         public bool Selected { get; set; }
 
+        private Renderer print = new Renderer();
+
         public Player(string name, Position position)
         {
             Name = name;
@@ -28,10 +30,11 @@ namespace Felli
         
             uint aux1, aux2;
             Position pos;
-            Console.Write("Insert a row number: ");
+            print.RenderMessage("InsertRow");
+            // Console.Write("Insert a row number: ");
             aux1 = Convert.ToUInt32(Console.ReadLine());
 
-            Console.Write("Insert a row number: ");
+            print.RenderMessage("InsertColumn");
             aux2 = Convert.ToUInt32(Console.ReadLine());
             pos = new Position(aux1,aux2);
             return pos;

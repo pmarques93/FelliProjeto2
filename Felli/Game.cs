@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Security;
 using System.Data;
 using System.Dynamic;
@@ -13,14 +14,14 @@ namespace Felli
         public Board[,] Board { get; private set; }
         private const uint boardSize = 5;
         private bool gameover = false;
-        private Renderer printBoard;
+        private Renderer print;
         private Player[] playerOne, playerTwo;
 
         // Runs on main method start
         public Game()
         {
             Board = new Board[boardSize,boardSize];
-            printBoard = new Renderer(Board, boardSize);
+            print = new Renderer(Board, boardSize);
             playerOne = new Player[6];
             playerTwo = new Player[6];
         }
@@ -29,7 +30,7 @@ namespace Felli
         {
             int roundCounter = 0;
             Player[] selectedPlayer;
-            Position tempPosition = new Position(0,0);
+            Position newPosition = new Position(0,0);
             Position currentPosition = new Position(0,0);
             int selectedPiece = 0;
             CreateGameBoard();
@@ -46,7 +47,7 @@ namespace Felli
                 else
                     selectedPlayer = playerTwo;
 
-                Console.Write("\nSelect a piece to play with: ");
+                print.RenderMessage("SelectPiece");
                 
                 selectedPiece = Convert.ToInt32(Console.ReadLine());
                 selectedPlayer[selectedPiece].Selected = true;
@@ -55,25 +56,25 @@ namespace Felli
                 {
                     if (player.Selected)
                     {
-                        Console.WriteLine($"{player.Name} selected");
+                        print.RenderPlayer(player.Name);
 
-                        tempPosition = player.GetPosition();
+                        newPosition = player.GetPosition();
                         currentPosition = new Position(player.Position.Row, player.Position.Column);
                     } 
                 }
 
                 if(roundCounter > 0)
-                    if (Board[tempPosition.Row, tempPosition.Column].Position.IsPlayable)
+                    if (Board[newPosition.Row, newPosition.Column].Position.IsPlayable)
                     {
                         Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
-                        selectedPlayer[selectedPiece].Position = tempPosition;
-                        Board[tempPosition.Row, tempPosition.Column].Position.OccupySpace();
-                        tempPosition = new Position(0,0);
+                        selectedPlayer[selectedPiece].Position = newPosition;
+                        Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
+                        newPosition = new Position(0,0);
                     }
                     else
                     {
-                        Console.WriteLine("That is not a valid move");
-                        printBoard.Render(playerOne, playerTwo);
+                        print.RenderMessage("InvalidMove");
+                        print.Render(playerOne, playerTwo);
                         continue;
                     }
                 
@@ -89,19 +90,16 @@ namespace Felli
                 }   */  
             
                 
-
-
-                printBoard.Render(playerOne, playerTwo);
+                print.Render(playerOne, playerTwo);
 
 
                 // False to create the loop
-                gameover = false;
+                gameover = false;   
                 roundCounter ++;
                 selectedPlayer[selectedPiece].Selected = false;
             }
             
         }
-
 
         public void CreateGameBoard()
         {

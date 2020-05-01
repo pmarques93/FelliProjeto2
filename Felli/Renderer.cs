@@ -15,6 +15,8 @@ namespace Felli
             this.board = board;
             this.boardSize = boardSize;
         }
+        public Renderer(){}
+
 
         // Renders the board
         public void Render(Player[] playerOne, Player[] playerTwo)
@@ -59,6 +61,34 @@ namespace Felli
                 }
                 Console.WriteLine("");
             }
+        }
+
+        public void RenderMessage(string message)
+        {
+            
+            switch (message)
+            {
+                case "InvalidMove":
+                    Console.WriteLine("That is not a valid move");
+                    break;
+                case "InsertRow":
+                    Console.Write("Insert a row number: ");
+                    break;
+                case "InsertColumn":
+                    Console.Write("Insert a column number: ");
+                    break;
+                case "SelectPiece":
+                    Console.Write("\nSelect a piece to play with: ");
+                    break;
+                default:
+                    Console.WriteLine("");
+                    break;
+            }
+        }
+
+        public void RenderPlayer(string playerName)
+        {
+            Console.WriteLine($"{playerName} selected");
         }
     }
 }
