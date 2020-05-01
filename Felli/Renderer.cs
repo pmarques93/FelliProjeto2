@@ -87,8 +87,9 @@ namespace Felli
         public void RenderPlayer(string playerName)
         {
             Console.WriteLine($"{playerName} selected");
-        // Prints possible plays
         }
+
+        // Prints possible plays
         public void PossiblePlays()
         {
             Console.Write($"              Playable Numbers: ");

@@ -11,7 +11,7 @@ namespace Felli
         public Position Position { get; set; }
 
         public bool Selected { get; set; }
-        private Renderer print = new Renderer();
+        
         public bool IsAlive { get; private set; }
 
         public Player(string name, Position position, bool isAlive)
@@ -23,6 +23,7 @@ namespace Felli
 
         public Position GetPosition()
         {
+            Renderer print = new Renderer();
             byte aux1, aux2;
             Position pos;
             print.RenderMessage("InsertRow");

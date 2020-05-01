@@ -9,20 +9,19 @@ namespace Felli
         public Board[,] Board { get; private set; }
         private const byte boardSize = 5;
         private bool gameover = false;
-        private Renderer print;
         private Player[] playerOne, playerTwo;
 
         // Runs on main method start
         public Game()
         {
             Board = new Board[boardSize,boardSize];
-            print = new Renderer(Board, boardSize);
             playerOne = new Player[6];
             playerTwo = new Player[6];
         }
 
         public void Run()
         {
+            Renderer print = new Renderer(Board, boardSize);
             byte roundCounter = 0;
             Player[] selectedPlayer;
             Position newPosition = new Position(0,0);
@@ -64,7 +63,6 @@ namespace Felli
                         Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
                         selectedPlayer[selectedPiece].Position = newPosition;
                         Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
-                        newPosition = new Position(0,0);
                     }
                     else
                     {
@@ -72,24 +70,9 @@ namespace Felli
                         print.RenderBoard(playerOne, playerTwo);
                         continue;
                     }
-                
-
-                // Descomentar para imprimir as posições jogáveis
-
-                /* for (byte i = 0; i < boardSize; i++)
-                {
-                    for (byte j = 0; j < boardSize; j++)
-                    {
-                        Console.WriteLine($"[{i}, {j} - {Board[i,j].Position.IsPlayable}]");
-                    }
-                }   */  
             
-                
                 print.RenderBoard(playerOne, playerTwo);
-
-
-                // False to create the loop
-                gameover = false;   
+                
                 roundCounter ++;
                 selectedPlayer[selectedPiece].Selected = false;
             }
