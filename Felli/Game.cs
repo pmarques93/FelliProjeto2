@@ -9,27 +9,32 @@ namespace Felli
         public Board[,] Board { get; private set; }
         private const byte boardSize = 5;
         private bool gameover = false;
-        private Renderer print;
         private Player[] playerOne, playerTwo;
-        private string pieceName = "";
-        private byte firstToPlay = 0;
 
         // Runs on main method start
         public Game()
         {
             Board = new Board[boardSize,boardSize];
-            print = new Renderer(Board, boardSize);
             playerOne = new Player[6];
             playerTwo = new Player[6];
         }
 
         public void Run()
         {
+            // Variables for input / renderer classes
+            Input input = new Input();
+            Renderer print = new Renderer(Board, boardSize);
             byte roundCounter = 0;
+            // Player movement variables
             Player[] selectedPlayer;
-            Position newPosition = new Position(0,0);
-            Position currentPosition = new Position(0,0);
-            byte pieceIndex = 0;
+            Position newPosition;
+            Position currentPosition;
+            Position tempPosition;
+            byte firstToPlay = 0;
+            // Piece choosing
+            byte pieceIndex;
+            string pieceChoice = "";
+
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
@@ -37,12 +42,16 @@ namespace Felli
             // Gameloop - while not game over
             while (!(gameover))
             {   
+                newPosition = new Position(0,0);
+                currentPosition = new Position(0,0);
+                tempPosition = new Position(0,0);
 
                 if (roundCounter == 0)
-                    FirstRound();
-
-                /* Checks if the round num is odd or even and defines the selected player 
-                accordingly */
+                {
+                    print.RenderMessage("FirstRound");
+                    firstToPlay = Convert.ToByte(Console.ReadLine());
+                }
+                // Checks round to define player turn
                 if (firstToPlay == 1)
                 {    
                     if (roundCounter % 2 == 0)
@@ -50,56 +59,58 @@ namespace Felli
                     else
                         selectedPlayer = playerTwo;
                 }
-                else
+                else if (firstToPlay == 2)
                 {
                     if (roundCounter % 2 == 0)
                         selectedPlayer = playerTwo;
                     else
                         selectedPlayer = playerOne;
                 }
+                else
+                    continue;
+
                 print.RenderBoard(playerOne, playerTwo);
                 print.RenderMessage("SelectPiece");
-                pieceName = Console.ReadLine().ToUpper();
+                pieceChoice = Console.ReadLine().ToUpper();
                 pieceIndex = 0;
+
+    
                 foreach (Player piece in selectedPlayer)
                 {
                     
-                    if (piece.Name == pieceName)
+                    if (piece.Name == pieceChoice)
                     {   
                         pieceIndex = piece.Index;
                         selectedPlayer[pieceIndex].Selected = true;
                         if (piece.Selected)
                         {
-                            
                             print.RenderPlayer(piece.Name);
-
-                            newPosition = piece.GetPosition();
+                            
                             currentPosition = new Position(piece.Position.Row, piece.Position.Column);
+                            do
+                            {
+                                tempPosition = input.GetPosition();
+                                if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position))
+                                {
+                                    newPosition = tempPosition;
+                                    continue;
+                                }
+                                else
+                                {
+                                    print.RenderMessage("InvalidMove");
+                                    print.RenderBoard(playerOne, playerTwo);
+                                }
+                            }while(newPosition != tempPosition);  
                         } 
                     }
-
                 }
+                Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
+                selectedPlayer[pieceIndex].Position = newPosition;
+                Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
+                            
 
-        
-                if (Board[newPosition.Row, newPosition.Column].Position.IsPlayable)
-                {
-                    Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
-                    selectedPlayer[pieceIndex].Position = newPosition;
-                    Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
-                }
-                else
-                {
-                    print.RenderMessage("InvalidMove");
-                    print.RenderBoard(playerOne, playerTwo);
-                    continue;
-                }
-                                
-                // print.RenderBoard(playerOne, playerTwo);
-
-
-                // False to create the loop
-                gameover = false;   
                 roundCounter ++;
+                // Variable Reset
                 selectedPlayer[pieceIndex].Selected = false;
             }
             
@@ -171,12 +182,6 @@ namespace Felli
         private void Quit()
         {
             gameover = true;
-        }
-
-        private void FirstRound()
-        {
-            print.RenderMessage("FirstRound");
-            firstToPlay = Convert.ToByte(Console.ReadLine());
         }
     }
 }
