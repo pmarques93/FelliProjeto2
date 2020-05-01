@@ -78,15 +78,20 @@ namespace Felli
                 case "SelectPiece":
                     Console.Write("\nSelect a piece to play with: ");
                     break;
+                case "FirstRound":
+                    Console.Write("Who will play first?\n"+
+                    "\n{'1' for Player 1 | '2' for Player 2}."+
+                    "\n[1 / 2]: ");
+                    break;
                 default:
-                    Console.WriteLine("");
+                    Console.WriteLine("No message defined");
                     break;
             }
         }
 
         public void RenderPlayer(string playerName)
         {
-            Console.WriteLine($"{playerName} selected");
+            Console.WriteLine($"{playerName} selected.\n");
         // Prints possible plays
         }
         public void PossiblePlays()
