@@ -83,6 +83,14 @@ namespace Felli
                     "\n{'1' for Player 1 | '2' for Player 2}."+
                     "\n[1 / 2]: ");
                     break;
+                case "Player1Round":
+                    Console.WriteLine("\n-----------------------"
+                    +"-------------- PLAYER 1 --------");
+                    break;
+                case "Player2Round":
+                    Console.WriteLine("\n--------- PLAYER 2 --------------" +
+                    "-----------------------");
+                    break;
                 default:
                     Console.WriteLine("No message defined");
                     break;

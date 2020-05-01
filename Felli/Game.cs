@@ -39,24 +39,45 @@ namespace Felli
             {   
 
                 if (roundCounter == 0)
-                    FirstRound();
+                {
+                    print.RenderMessage("FirstRound");
+                    firstToPlay = Convert.ToByte(Console.ReadLine());
+                }
 
                 /* Checks if the round num is odd or even and defines the selected player 
                 accordingly */
                 if (firstToPlay == 1)
                 {    
                     if (roundCounter % 2 == 0)
+                    {
+                        print.RenderMessage("Player1Round");
                         selectedPlayer = playerOne;
+                    }
+                        
                     else
+                    {
+                        print.RenderMessage("Player2Round");
                         selectedPlayer = playerTwo;
+                    }
+                        
                 }
-                else
+                else if (firstToPlay == 2)
                 {
                     if (roundCounter % 2 == 0)
+                    {
+                        print.RenderMessage("Player2Round");
                         selectedPlayer = playerTwo;
+                    }
+                        
                     else
+                    {
+                        print.RenderMessage("Player1Round");
                         selectedPlayer = playerOne;
+                    }
                 }
+                else
+                    continue;
+
                 print.RenderBoard(playerOne, playerTwo);
                 print.RenderMessage("SelectPiece");
                 pieceName = Console.ReadLine().ToUpper();
@@ -171,12 +192,6 @@ namespace Felli
         private void Quit()
         {
             gameover = true;
-        }
-
-        private void FirstRound()
-        {
-            print.RenderMessage("FirstRound");
-            firstToPlay = Convert.ToByte(Console.ReadLine());
         }
     }
 }
