@@ -1,8 +1,3 @@
-using System.ComponentModel;
-using System.Dynamic;
-using Microsoft.VisualBasic.CompilerServices;
-using System.Data;
-using System.Runtime.ConstrainedExecution;
 using System;
 namespace Felli
 {
@@ -16,26 +11,24 @@ namespace Felli
         public Position Position { get; set; }
 
         public bool Selected { get; set; }
-
         private Renderer print = new Renderer();
+        public bool IsAlive { get; private set; }
 
-        public Player(string name, Position position)
+        public Player(string name, Position position, bool isAlive)
         {
             Name = name;
             Position = position;
+            IsAlive = isAlive;
         }
 
         public Position GetPosition()
         {
-        
-            uint aux1, aux2;
+            byte aux1, aux2;
             Position pos;
             print.RenderMessage("InsertRow");
-            // Console.Write("Insert a row number: ");
-            aux1 = Convert.ToUInt32(Console.ReadLine());
-
+            aux1 = Convert.ToByte(Console.ReadLine());
             print.RenderMessage("InsertColumn");
-            aux2 = Convert.ToUInt32(Console.ReadLine());
+            aux2 = Convert.ToByte(Console.ReadLine());
             pos = new Position(aux1,aux2);
             return pos;
         }
@@ -50,5 +43,10 @@ namespace Felli
             Selected = false;
         }
 
+        // Stops playing from being printed and chooseable
+        public void Die()
+        {
+            IsAlive = false;
+        }
     }
 }

@@ -5,23 +5,23 @@ namespace Felli
     /// </summary>
     public class Position
     {
-        public uint Row { get; private set; }
+        public byte Row { get; private set; }
 
-        public uint Column { get; private set; }
+        public byte Column { get; private set; }
     
         public bool IsPlayable { get; private set; }
 
         public bool Occupied { get; private set; }
         
 
-        public Position(uint row, uint column, bool isPlayable)
+        public Position(byte row, byte column, bool isPlayable)
         {
             Row = row;
             Column = column;
             IsPlayable = isPlayable;
         }        
 
-        public Position(uint row, uint column)
+        public Position(byte row, byte column)
         {
             Row = row;
             Column = column;

@@ -1,8 +1,3 @@
-using System.Net.Http;
-using System.Security;
-using System.Data;
-using System.Dynamic;
-using System.Reflection.Metadata;
 using System;
 namespace Felli
 {
@@ -12,7 +7,7 @@ namespace Felli
     public class Game
     {
         public Board[,] Board { get; private set; }
-        private const uint boardSize = 5;
+        private const byte boardSize = 5;
         private bool gameover = false;
         private Renderer print;
         private Player[] playerOne, playerTwo;
@@ -28,11 +23,11 @@ namespace Felli
 
         public void Run()
         {
-            int roundCounter = 0;
+            byte roundCounter = 0;
             Player[] selectedPlayer;
             Position newPosition = new Position(0,0);
             Position currentPosition = new Position(0,0);
-            int selectedPiece = 0;
+            byte selectedPiece = 0;
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
@@ -49,7 +44,7 @@ namespace Felli
 
                 print.RenderMessage("SelectPiece");
                 
-                selectedPiece = Convert.ToInt32(Console.ReadLine());
+                selectedPiece = Convert.ToByte(Console.ReadLine());
                 selectedPlayer[selectedPiece].Selected = true;
 
                 foreach (Player player in selectedPlayer)
@@ -74,23 +69,23 @@ namespace Felli
                     else
                     {
                         print.RenderMessage("InvalidMove");
-                        print.Render(playerOne, playerTwo);
+                        print.RenderBoard(playerOne, playerTwo);
                         continue;
                     }
                 
 
                 // Descomentar para imprimir as posições jogáveis
 
-                /* for (uint i = 0; i < boardSize; i++)
+                /* for (byte i = 0; i < boardSize; i++)
                 {
-                    for (uint j = 0; j < boardSize; j++)
+                    for (byte j = 0; j < boardSize; j++)
                     {
                         Console.WriteLine($"[{i}, {j} - {Board[i,j].Position.IsPlayable}]");
                     }
                 }   */  
             
                 
-                print.Render(playerOne, playerTwo);
+                print.RenderBoard(playerOne, playerTwo);
 
 
                 // False to create the loop
@@ -104,9 +99,9 @@ namespace Felli
         public void CreateGameBoard()
         {
             // Creates board
-            for (uint i = 0; i < boardSize; i++)
+            for (byte i = 0; i < boardSize; i++)
             {
-                for (uint j = 0; j < boardSize; j++)
+                for (byte j = 0; j < boardSize; j++)
                 {
                     // Creates true and false positions in game board
                     if (j == 2)
@@ -124,22 +119,22 @@ namespace Felli
         }
 
 
-        public void CreatePlayer(int x)
+        public void CreatePlayer(byte x)
         {   
-            int temp = 0;
+            byte temp = 0;
             if (x == 1)
         
                 // Creates player1 pieces
-                for (uint i = 0; i < 2; i++)
+                for (byte i = 0; i < 2; i++)
                 {
-                    for (uint j = 0; j < boardSize; j++)
+                    for (byte j = 0; j < boardSize; j++)
                     {
                         // Gives player1 positions
                         // Sets positions on board to false
                         if (Board[i,j].Position.IsPlayable)              
                         {
                             playerOne[temp] = new Player($"W{temp}",
-                                new Position(i,j));
+                                new Position(i,j), true);
                             Board[i,j].Position.OccupySpace();
                             temp++;
                         }                
@@ -147,16 +142,16 @@ namespace Felli
                 }
             else
                 // Creates player2 pieces
-                for (uint i = 3; i < 5; i++)
+                for (byte i = 3; i < 5; i++)
                 {
-                    for (uint j = 0; j < boardSize; j++)
+                    for (byte j = 0; j < boardSize; j++)
                     {
                         // Gives player1 positions
                         // Sets positions on board to false
                         if (Board[i,j].Position.IsPlayable)              
                         {
                             playerTwo[temp] = new Player($"B{temp}",
-                                new Position(i,j));
+                                new Position(i,j), true);
                             Board[i,j].Position.OccupySpace();
                             temp++;
                         }                
