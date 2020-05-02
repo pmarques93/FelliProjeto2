@@ -9,7 +9,7 @@ namespace Felli
 
         public byte Column { get; private set; }
     
-        public bool IsPlayable { get; private set; }
+        public bool IsPlayable { get; set; }
 
         public bool Occupied { get; private set; }
         

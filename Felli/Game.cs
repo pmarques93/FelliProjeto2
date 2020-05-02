@@ -9,8 +9,8 @@ namespace Felli
         public Board[,] Board { get; private set; }
         private const byte boardSize = 5;
         private bool gameover = false;
-        private Player[] playerOne, playerTwo;
-
+        public Player[] playerOne, playerTwo;
+        public Victory winCondition{get;set;}
         // Runs on main method start
         public Game()
         {
@@ -30,6 +30,7 @@ namespace Felli
             Position newPosition;
             Position currentPosition;
             Position tempPosition;
+            Victory winCondition;
             byte firstToPlay = 0;
             // Piece choosing
             byte pieceIndex;
@@ -42,6 +43,8 @@ namespace Felli
             // Gameloop - while not game over
             while (!(gameover))
             {   
+                
+                
                 newPosition = new Position(0,0);
                 currentPosition = new Position(0,0);
                 tempPosition = new Position(0,0);
@@ -89,7 +92,11 @@ namespace Felli
                 pieceChoice = Console.ReadLine().ToUpper();
                 pieceIndex = 0;
 
-    
+                winCondition = new Victory (Board, selectedPlayer);
+                if(winCondition.WinChecker() == true)
+                {
+                    gameover = true;
+                }
                 foreach (Player piece in selectedPlayer)
                 {
                     
@@ -125,10 +132,10 @@ namespace Felli
                     selectedPlayer[pieceIndex].Position = newPosition;
                     Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
                 }
-
-                            
+                
 
                 roundCounter ++;
+
                 // Variable
                 selectedPlayer[pieceIndex].Selected = false;
             }
