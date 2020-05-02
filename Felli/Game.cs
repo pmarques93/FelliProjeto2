@@ -137,7 +137,7 @@ namespace Felli
 
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
-                                            Console.Write("EQWEQWEQWE");
+                                            Console.Write("TESTE");
                                             newPosition = tempPosition;
                                             continue;
                                         }

@@ -57,6 +57,7 @@ namespace Felli
                         nextPos.Row == currentPos.Row - 1 ||
                         nextPos.Column == currentPos.Column + 1 ||
                         nextPos.Column == currentPos.Column -1)
+                        /*
                 {
                     if (currentPos.Row < nextPos.Row && currentPos.Column < nextPos.Column)
                         if (board[nextPos.Row+1,nextPos.Column+1].Position.IsPlayable)
@@ -82,8 +83,10 @@ namespace Felli
                     else if (currentPos.Row > nextPos.Row && currentPos.Column == nextPos.Column)
                         if (board[nextPos.Row-1,nextPos.Column].Position.IsPlayable)
                             canMove = true;
-                }
-
+                }*/
+                
+                canMove = true;//APAGAR
+                
             return canMove;
         }
     }
