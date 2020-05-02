@@ -117,27 +117,28 @@ namespace Felli
                                     // If position is occupied
                                     if (Board[tempPosition.Row,tempPosition.Column].Position.Occupied)
                                     {
-                                        
-                                       
-                                        // cleans the positions
-                                        Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
-                                        Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
-
-                                        // Kills the eaten player
-                                        foreach (Player player in playerTwo)
-                                            if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
-                                            Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
-                                                player.Die();
-
-                                        foreach (Player player in playerOne)
-                                            if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
-                                            Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
-                                                player.Die();
-
-
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
-                                            Console.Write("TESTE");
+                                       
+                                            // cleans the positions
+                                            Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
+                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
+
+
+                                            // Kills the eaten player
+                                            foreach (Player player in playerTwo)
+                                                if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
+                                                Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
+                                                    player.Die();
+
+                                            foreach (Player player in playerOne)
+                                                if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
+                                                Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
+                                                    player.Die();
+
+
+                                        
+                                            
                                             newPosition = tempPosition;
                                             continue;
                                         }

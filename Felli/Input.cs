@@ -38,13 +38,9 @@ namespace Felli
 
             if (GameBoundaries(nextPos))
                 if (nextPos.IsPlayable)
-                    if (nextPos.Row == currentPos.Row + 1 ||
-                        nextPos.Row == currentPos.Row - 1 ||
-                        nextPos.Column == currentPos.Column + 1 ||
-                        nextPos.Column == currentPos.Column -1)
-                    {
+                    if (OneSquareMovement(currentPos,nextPos))
                         canMove = true;
-                    }
+
             return canMove;
         }
 
@@ -53,41 +49,56 @@ namespace Felli
             bool canMove = false;
             
             if (GameBoundaries(nextPos))
-                if (nextPos.Row == currentPos.Row + 1 ||
-                        nextPos.Row == currentPos.Row - 1 ||
-                        nextPos.Column == currentPos.Column + 1 ||
-                        nextPos.Column == currentPos.Column -1)
-                        /*
-                {
-                    if (currentPos.Row < nextPos.Row && currentPos.Column < nextPos.Column)
-                        if (board[nextPos.Row+1,nextPos.Column+1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row < nextPos.Row && currentPos.Column > nextPos.Column)
-                        if (board[nextPos.Row+1,nextPos.Column-1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
-                        if (board[nextPos.Row-1,nextPos.Column+1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
-                        if (board[nextPos.Row-1,nextPos.Column-1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row == nextPos.Row && currentPos.Column < nextPos.Column)
-                        if (board[nextPos.Row,nextPos.Column+1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row == nextPos.Row && currentPos.Column > nextPos.Column)
-                        if (board[nextPos.Row,nextPos.Column-1].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row < nextPos.Row && currentPos.Column == nextPos.Column)
-                        if (board[nextPos.Row+1,nextPos.Column].Position.IsPlayable)
-                            canMove = true;
-                    else if (currentPos.Row > nextPos.Row && currentPos.Column == nextPos.Column)
-                        if (board[nextPos.Row-1,nextPos.Column].Position.IsPlayable)
-                            canMove = true;
-                }*/
-                
-                canMove = true;//APAGAR
+                if (OneSquareMovement(currentPos,nextPos))
+                    if (CheckPossibleEat(currentPos, nextPos, board))
+                        canMove = true;
                 
             return canMove;
+        }
+
+        private bool OneSquareMovement(Position currentPos, Position nextPos)
+        {
+            bool canMove = false;
+
+            if (nextPos.Row == currentPos.Row + 1 ||
+                nextPos.Row == currentPos.Row - 1 ||
+                nextPos.Column == currentPos.Column + 1 ||
+                nextPos.Column == currentPos.Column -1)
+                canMove = true;
+
+            return canMove;
+        }
+
+        private bool CheckPossibleEat(Position currentPos, Position nextPos, Board[,] board)
+        {
+            bool canEat = false;
+
+            if (currentPos.Row < nextPos.Row && currentPos.Column < nextPos.Column)
+                if (board[nextPos.Row+1,nextPos.Column+1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row < nextPos.Row && currentPos.Column > nextPos.Column)
+                if (board[nextPos.Row+1,nextPos.Column-1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
+                if (board[nextPos.Row-1,nextPos.Column+1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
+                if (board[nextPos.Row-1,nextPos.Column-1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row == nextPos.Row && currentPos.Column < nextPos.Column)
+                if (board[nextPos.Row,nextPos.Column+1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row == nextPos.Row && currentPos.Column > nextPos.Column)
+                if (board[nextPos.Row,nextPos.Column-1].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row < nextPos.Row && currentPos.Column == nextPos.Column)
+                if (board[nextPos.Row+1,nextPos.Column].Position.IsPlayable)
+                    canEat = true;
+            if (currentPos.Row > nextPos.Row && currentPos.Column == nextPos.Column)
+                if (board[nextPos.Row-1,nextPos.Column].Position.IsPlayable)
+                    canEat = true;
+                    
+            return canEat;
         }
     }
 }
