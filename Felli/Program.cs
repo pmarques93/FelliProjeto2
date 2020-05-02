@@ -13,8 +13,9 @@ namespace Felli
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            Rules rules = new Rules();
             Game gameplay = new Game();
-
+            rules.PrintRules();
             gameplay.Run();
         }
     }
