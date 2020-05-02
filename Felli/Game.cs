@@ -110,6 +110,7 @@ namespace Felli
                                     if (!(Board[tempPosition.Row,tempPosition.Column].Position.Occupied))
                                         if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position))
                                         {
+                                            Console.WriteLine("\nMOVEMENT METHOD");
                                             newPosition = tempPosition;
                                             continue;
                                         }
@@ -119,27 +120,38 @@ namespace Felli
                                     {
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
-                                       
+                                            Console.WriteLine("\nEAT METHOD");
                                             // cleans the positions
-                                            Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
                                             Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
 
+                                            foreach (Player p2 in playerTwo)
+                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
+                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
+                                                        p2.Die();
 
-                                            // Kills the eaten player
-                                            foreach (Player player in playerTwo)
-                                                if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
-                                                Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
-                                                    player.Die();
-
-                                            foreach (Player player in playerOne)
-                                                if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
-                                                Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
-                                                    player.Die();
-
-
+                                            foreach (Player p1 in playerOne)
+                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
+                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
+                                                        p1.Die();
+                                                        
+                                            /* N TOU A CONSEGUIR METER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                                            if (selectedPlayer == playerOne)
+                                                // Kills the eaten player
+                                                foreach (Player p2 in playerTwo)
+                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
+                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
+                                                        p2.Die();
+                                            else
+                                                foreach (Player p1 in playerOne)
+                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
+                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
+                                                        p1.Die();
+                                            */
                                         
-                                            
+                                            // Gives player new pos and occupies its position
+                                            tempPosition = input.pos;
                                             newPosition = tempPosition;
+                                            
                                             continue;
                                         }
                                     }
@@ -148,12 +160,16 @@ namespace Felli
                                         print.RenderMessage("InvalidMove");
                                         print.RenderBoard(playerOne, playerTwo);
                                     }
+
                                 }while(newPosition != tempPosition);  
                             } 
                         }
                     }
                     else
                         continue;
+
+
+
                 }
                 if (Board[newPosition.Row , newPosition.Column].Position.IsPlayable)
                 {
@@ -162,13 +178,10 @@ namespace Felli
                     Board[newPosition.Row, newPosition.Column].Position.OccupySpace();
                 }
 
-                            
-
                 roundCounter ++;
-                // Variable
+                // Variable reset
                 selectedPlayer[pieceIndex].Selected = false;
             }
-            
         }
 
         private void CreateGameBoard()

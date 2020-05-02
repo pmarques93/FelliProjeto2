@@ -110,7 +110,7 @@ namespace Felli
                 if (position.Position.IsPlayable)
                 {
                     Console.Write($"{position.Position.Row}");
-                    Console.Write($"{position.Position.Column}");
+                    Console.Write($"{position.Position.Column} ");
                 }
             }
         }
