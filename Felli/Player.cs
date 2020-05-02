@@ -9,7 +9,7 @@ namespace Felli
         public Position Position { get; set; }
 
         public bool Selected { get; set; }
-        private Renderer print = new Renderer();
+        
         public bool IsAlive { get; private set; }
 
         public byte Index { get; private set;}
