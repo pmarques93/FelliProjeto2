@@ -31,9 +31,12 @@ namespace Felli
             Position currentPosition;
             Position tempPosition;
             byte firstToPlay = 0;
+            bool canMove;
+            
             // Piece choosing
             byte pieceIndex;
             string pieceChoice = "";
+            string playerName = "";
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
@@ -46,6 +49,7 @@ namespace Felli
                 currentPosition = new Position(0,0);
                 tempPosition = new Position(0,0);
                 bool validPiece = false;
+                canMove = false;
                 
 
                 if (roundCounter == 0 && firstToPlay == 0)
@@ -60,12 +64,14 @@ namespace Felli
                     {
                         print.RenderMessage("Player1Round");
                         selectedPlayer = playerOne;
+                        playerName = "p1";
                     }
                         
                     else
                     {
                         print.RenderMessage("Player2Round");
                         selectedPlayer = playerTwo;
+                        playerName = "p2";
                     }
                         
                 }
@@ -75,12 +81,14 @@ namespace Felli
                     {
                         print.RenderMessage("Player2Round");
                         selectedPlayer = playerTwo;
+                        playerName = "p2";
                     }
                         
                     else
                     {
                         print.RenderMessage("Player1Round");
                         selectedPlayer = playerOne;
+                        playerName = "p1";
                     }
                 }
                 else
@@ -116,6 +124,7 @@ namespace Felli
                                         {
                                             Console.WriteLine("\nMOVEMENT METHOD");
                                             newPosition = tempPosition;
+                                            canMove = true;
                                             continue;
                                         }
 
@@ -125,9 +134,10 @@ namespace Felli
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
                                             Console.WriteLine("\nEAT METHOD");
-                                            // cleans the positions
-                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
+                                            
+                                            
 
+                                            /*
                                             foreach (Player p2 in playerTwo)
                                                     if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
                                                     Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
@@ -137,26 +147,47 @@ namespace Felli
                                                     if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
                                                     Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
                                                         p1.Die();
-                                                        
-                                            /* N TOU A CONSEGUIR METER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                                            if (selectedPlayer == playerOne)
+                                            */
+
+                                            if (playerName == "p1")
+                                            {
+                                                Console.WriteLine("\nplayer eat METHOD");
                                                 // Kills the eaten player
                                                 foreach (Player p2 in playerTwo)
-                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
-                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
-                                                        p2.Die();
-                                            else
+                                                    {
+                                                        if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
+                                                        Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
+                                                        {
+                                                            // cleans the desired position
+                                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
+                                                            p2.Die();
+                                                            canMove = true;
+                                                        }
+                                                    }
+                                            }
+                                            else if (playerName == "p2")
+                                            {
+                                                
                                                 foreach (Player p1 in playerOne)
-                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
-                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
-                                                        p1.Die();
-                                            */
-                                        
+                                                    {
+                                                        if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
+                                                        Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
+                                                        {
+                                                            // cleans the desired position
+                                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
+                                                            p1.Die();
+                                                            canMove = true;
+                                                        }
+                                                    }
+                                            }
+
                                             // Gives player new pos and occupies its position
-                                            tempPosition = input.pos;
-                                            newPosition = tempPosition;
-                                            
-                                            continue;
+                                            if (canMove == true)
+                                            {
+                                                tempPosition = input.pos;
+                                                newPosition = tempPosition;
+                                                continue;
+                                            }
                                         }
                                     }
                                     else
@@ -165,7 +196,7 @@ namespace Felli
                                         print.RenderBoard(playerOne, playerTwo);
                                     }
     
-                                }while(newPosition != tempPosition);  
+                                }while(newPosition != tempPosition || canMove == false);  
                             } 
                             break;
                         }
