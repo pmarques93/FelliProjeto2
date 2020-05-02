@@ -108,7 +108,7 @@ namespace Felli
         }
 
         // Prints possible plays
-        public void PossiblePlays()
+        private void PossiblePlays()
         {
             Console.Write($"              Playable Numbers: ");
             foreach (Board position in board)
@@ -122,7 +122,7 @@ namespace Felli
         }
 
         // Returns true for equal positions
-        public bool ComparePosition(Board board, Player player) 
+        private bool ComparePosition(Board board, Player player) 
         {
             bool x = false;
             if (board.Position.Row == player.Position.Row &&

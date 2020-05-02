@@ -6,7 +6,7 @@ namespace Felli
     /// </summary>
     public class Input
     {
-        public Position pos { get; private set; }
+        public Position EatMovement { get; private set; }
 
         public Position GetPosition()
         {
@@ -77,57 +77,57 @@ namespace Felli
                 if (board[nextPos.Row+1,nextPos.Column+1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column+1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column+1));
                 }
             if (currentPos.Row < nextPos.Row && currentPos.Column > nextPos.Column)
                 if (board[nextPos.Row+1,nextPos.Column-1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column-1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column-1));
                 }
             if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
                 if (board[nextPos.Row-1,nextPos.Column+1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column+1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column+1));
                 }
             if (currentPos.Row > nextPos.Row && currentPos.Column > nextPos.Column)
                 if (board[nextPos.Row-1,nextPos.Column-1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column-1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column-1));
                 }
             if (currentPos.Row == nextPos.Row && currentPos.Column < nextPos.Column)
                 if (board[nextPos.Row,nextPos.Column+1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column+1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column+1));
                 }
             if (currentPos.Row == nextPos.Row && currentPos.Column > nextPos.Column)
                 if (board[nextPos.Row,nextPos.Column-1].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column-1));
+                    GetEatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column-1));
                 }
             if (currentPos.Row < nextPos.Row && currentPos.Column == nextPos.Column)
                 if (board[nextPos.Row+1,nextPos.Column].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column));
+                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column));
                 }
             if (currentPos.Row > nextPos.Row && currentPos.Column == nextPos.Column)
                 if (board[nextPos.Row-1,nextPos.Column].Position.IsPlayable)
                 {
                     canEat = true;
-                    EatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column));
+                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column));
                 }
                     
             return canEat;
         }
 
-        public void EatMovement(byte row, byte column)
+        public void GetEatMovement(byte row, byte column)
         {
-            pos = new Position (row, column);
+            EatMovement = new Position (row, column);
         }
     }
 }

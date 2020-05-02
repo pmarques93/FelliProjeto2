@@ -98,7 +98,6 @@ namespace Felli
                 print.RenderMessage("SelectPiece");
                 pieceChoice = Console.ReadLine().ToUpper();
                 pieceIndex = 0;
-
     
                 foreach (Player piece in selectedPlayer)
                 {   
@@ -134,20 +133,6 @@ namespace Felli
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
                                             Console.WriteLine("\nEAT METHOD");
-                                            
-                                            
-
-                                            /*
-                                            foreach (Player p2 in playerTwo)
-                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
-                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
-                                                        p2.Die();
-
-                                            foreach (Player p1 in playerOne)
-                                                    if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
-                                                    Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
-                                                        p1.Die();
-                                            */
 
                                             if (playerName == "p1")
                                             {
@@ -155,8 +140,7 @@ namespace Felli
                                                 // Kills the eaten player
                                                 foreach (Player p2 in playerTwo)
                                                     {
-                                                        if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p2.Position.Row &&
-                                                        Board[tempPosition.Row, tempPosition.Column].Position.Column == p2.Position.Column)
+                                                        if (ComparePosition(Board[tempPosition.Row, tempPosition.Column], p2))
                                                         {
                                                             // cleans the desired position
                                                             Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
@@ -167,11 +151,9 @@ namespace Felli
                                             }
                                             else if (playerName == "p2")
                                             {
-                                                
                                                 foreach (Player p1 in playerOne)
                                                     {
-                                                        if (Board[tempPosition.Row, tempPosition.Column].Position.Row == p1.Position.Row &&
-                                                        Board[tempPosition.Row, tempPosition.Column].Position.Column == p1.Position.Column)
+                                                        if (ComparePosition(Board[tempPosition.Row, tempPosition.Column], p1))
                                                         {
                                                             // cleans the desired position
                                                             Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
@@ -184,7 +166,7 @@ namespace Felli
                                             // Gives player new pos and occupies its position
                                             if (canMove == true)
                                             {
-                                                tempPosition = input.pos;
+                                                tempPosition = input.EatMovement;
                                                 newPosition = tempPosition;
                                                 continue;
                                             }
@@ -291,6 +273,16 @@ namespace Felli
                     }
                 }
         }
+
+        private bool ComparePosition(Board board, Player player) 
+        {
+            bool x = false;
+            if (board.Position.Row == player.Position.Row &&
+                board.Position.Column == player.Position.Column)
+                x = true;
+
+            return x;
+    }
 
         private void Quit()
         {
