@@ -92,32 +92,67 @@ namespace Felli
     
                 foreach (Player piece in selectedPlayer)
                 {
-                    
-                    if (piece.Name == pieceChoice)
-                    {   
-                        pieceIndex = piece.Index;
-                        selectedPlayer[pieceIndex].Selected = true;
-                        if (piece.Selected)
-                        {
-                            print.RenderPlayer(piece.Name);
-                            
-                            currentPosition = new Position(piece.Position.Row, piece.Position.Column);
-                            do
+                    if (piece.IsAlive)
+                    {
+                        if (piece.Name == pieceChoice)
+                        {   
+                            pieceIndex = piece.Index;
+                            selectedPlayer[pieceIndex].Selected = true;
+                            if (piece.Selected)
                             {
-                                tempPosition = input.GetPosition();
-                                if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position))
+                                print.RenderPlayer(piece.Name);
+                                
+                                currentPosition = new Position(piece.Position.Row, piece.Position.Column);
+                                do
                                 {
-                                    newPosition = tempPosition;
-                                    continue;
-                                }
-                                else
-                                {
-                                    print.RenderMessage("InvalidMove");
-                                    print.RenderBoard(playerOne, playerTwo);
-                                }
-                            }while(newPosition != tempPosition);  
-                        } 
+                                    tempPosition = input.GetPosition();
+                                    // If position isn't occupied
+                                    if (!(Board[tempPosition.Row,tempPosition.Column].Position.Occupied))
+                                        if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position))
+                                        {
+                                            newPosition = tempPosition;
+                                            continue;
+                                        }
+
+                                    // If position is occupied
+                                    if (Board[tempPosition.Row,tempPosition.Column].Position.Occupied)
+                                    {
+                                        
+                                       
+                                        // cleans the positions
+                                        Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
+                                        Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
+
+                                        // Kills the eaten player
+                                        foreach (Player player in playerTwo)
+                                            if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
+                                            Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
+                                                player.Die();
+
+                                        foreach (Player player in playerOne)
+                                            if (Board[tempPosition.Row, tempPosition.Column].Position.Row == player.Position.Row &&
+                                            Board[tempPosition.Row, tempPosition.Column].Position.Column == player.Position.Column)
+                                                player.Die();
+
+
+                                        if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
+                                        {
+                                            Console.Write("EQWEQWEQWE");
+                                            newPosition = tempPosition;
+                                            continue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        print.RenderMessage("InvalidMove");
+                                        print.RenderBoard(playerOne, playerTwo);
+                                    }
+                                }while(newPosition != tempPosition);  
+                            } 
+                        }
                     }
+                    else
+                        continue;
                 }
                 if (Board[newPosition.Row , newPosition.Column].Position.IsPlayable)
                 {
