@@ -91,6 +91,11 @@ namespace Felli
                     Console.WriteLine("\n--------- PLAYER 2 --------------" +
                     "-----------------------");
                     break;
+                case "InvalidPiece":
+                    Console.WriteLine("\n-------------------- INVALID PIECE -----------" +
+                    "----------\n"+
+                    "Please, insert a valid piece name.\n");
+                    break;
                 default:
                     Console.WriteLine("No message defined");
                     break;

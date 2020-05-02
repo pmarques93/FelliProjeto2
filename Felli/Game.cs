@@ -34,19 +34,21 @@ namespace Felli
             // Piece choosing
             byte pieceIndex;
             string pieceChoice = "";
-
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
 
             // Gameloop - while not game over
+            
             while (!(gameover))
             {   
                 newPosition = new Position(0,0);
                 currentPosition = new Position(0,0);
                 tempPosition = new Position(0,0);
+                bool validPiece = false;
+                
 
-                if (roundCounter == 0)
+                if (roundCounter == 0 && firstToPlay == 0)
                 {
                     print.RenderMessage("FirstRound");
                     firstToPlay = Convert.ToByte(Console.ReadLine());
@@ -83,7 +85,7 @@ namespace Felli
                 }
                 else
                     continue;
-
+                
                 print.RenderBoard(playerOne, playerTwo);
                 print.RenderMessage("SelectPiece");
                 pieceChoice = Console.ReadLine().ToUpper();
@@ -91,11 +93,13 @@ namespace Felli
 
     
                 foreach (Player piece in selectedPlayer)
-                {
+                {   
                     if (piece.IsAlive)
                     {
+                        
                         if (piece.Name == pieceChoice)
                         {   
+                            validPiece = true;
                             pieceIndex = piece.Index;
                             selectedPlayer[pieceIndex].Selected = true;
                             if (piece.Selected)
@@ -160,10 +164,13 @@ namespace Felli
                                         print.RenderMessage("InvalidMove");
                                         print.RenderBoard(playerOne, playerTwo);
                                     }
-
+    
                                 }while(newPosition != tempPosition);  
                             } 
+                            break;
                         }
+                        else
+                            validPiece = false;
                     }
                     else
                         continue;
@@ -171,6 +178,13 @@ namespace Felli
 
 
                 }
+
+                if (!(validPiece))
+                {
+                    continue;
+                }
+
+                
                 if (Board[newPosition.Row , newPosition.Column].Position.IsPlayable)
                 {
                     Board[currentPosition.Row, currentPosition.Column].Position.FreeSpace();
