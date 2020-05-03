@@ -10,6 +10,7 @@ namespace Felli
         private const byte boardSize = 5;
         private bool gameover = false;
         private Player[] playerOne, playerTwo;
+        private bool canMove;
 
         /// <summary>
         /// Game class constructor
@@ -36,7 +37,7 @@ namespace Felli
             Position currentPosition;
             Position tempPosition;
             byte firstToPlay = 0;
-            bool canMove;
+            
             
             // Piece choosing
             byte pieceIndex;
@@ -102,6 +103,17 @@ namespace Felli
                 print.RenderMessage("SelectPiece");
                 pieceChoice = Console.ReadLine().ToUpper();
                 pieceIndex = 0;
+                // for (int i = 0; i < 5; i ++)
+                // {
+                //     for (int j = 0; j < 5; j ++)
+                //     {
+                //         if (Board[i,j].Position.Occupied)
+                //             Console.WriteLine($"[{i}, {j}: Occupied]");
+                //         else
+                //             Console.WriteLine($"[{i}, {j}: Free    ]");
+
+                //     }
+                // }
     
                 foreach (Player piece in selectedPlayer)
                 {   
@@ -121,35 +133,36 @@ namespace Felli
                                 do
                                 {
                                     tempPosition = input.GetPosition();
-                                    // If position isn't occupied
+                                    // Checks if position isn't occupied
                                     if (!(BoardOccupied(tempPosition)))
-                                        if (input.Movement(currentPosition, 
-                                            Board[tempPosition.Row,tempPosition.
-                                            Column].Position))
-                                        {
-                                            newPosition = tempPosition;
-                                            canMove = true;
-                                            continue;
-                                        }
-
-                                    // If position is occupied
-                                    if (BoardOccupied(tempPosition))
                                     {
-                                        if (input.Eat(currentPosition, 
+                                        // Check if it's possible to move 1 cell
+                                        if (input.Movement(currentPosition, 
                                             Board[tempPosition.Row,tempPosition.
                                             Column].Position, Board))
                                         {
-                                            // Kills enemy piece
-                                            PlayerKill(playerName, tempPosition);
-                                            
-                                            tempPosition = input.EatMovement;
                                             newPosition = tempPosition;
                                             canMove = true;
-                                            
-                                            continue;
+                                                continue;
                                         }
-                                        continue;
+                                        // Check if it's possible to eat a piece
+                                        if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
+                                        {
+                                            
+                                            // Kills enemy piece
+                                            PlayerKill(playerName, tempPosition, input);
+                                            // Gives player new pos
+                                            if (canMove == true)
+                                            {
+                                                tempPosition = input.EatMovement;
+                                                newPosition = tempPosition;
+                                                continue;
+                                            }
+                                        }
+                                     
                                     }
+                                    // If a move or a eat isn't possible
+                                    // the move is consider as invalid
                                     else
                                     {
                                         print.RenderMessage("InvalidMove");
@@ -172,16 +185,20 @@ namespace Felli
                     continue;
                 }
                 
+                // Check if the position where the player if trying to go is playable
                 if (Board[newPosition.Row , newPosition.Column].Position.
                     IsPlayable)
                 {
+                    // Makes piece's previous position playable and availabe
                     Board[currentPosition.Row, currentPosition.Column].Position
                         .FreeSpace();
+                    // Makes the curret piece position occupied and not playable
                     selectedPlayer[pieceIndex].Position = newPosition;
                     Board[newPosition.Row, newPosition.Column].Position.
                         OccupySpace();
                 }
-
+                
+                // Increments the number of rounds
                 roundCounter ++;
                 // Variable reset
                 selectedPlayer[pieceIndex].Selected = false;
@@ -208,21 +225,24 @@ namespace Felli
         /// </summary>
         /// <param name="pName">Chosen player</param>
         /// <param name="tempPosition">Temporary position input</param>
-        private void PlayerKill(string pName, Position tempPosition)
+        private void PlayerKill(string pName, Position tempPosition, Input input)
         {
+            byte killedPieceRow = input.KilledPiecePos.Row;
+            byte killedPieceColumn = input.KilledPiecePos.Column;
+
+            // Kills the piece with a position that corresponds to the 
+            // killedPiece position
             if (pName == "p1")
             {
-                // Kills the eaten player
                 foreach (Player p2 in playerTwo)
                 {
-                    if (ComparePosition(
-                        Board[tempPosition.Row, tempPosition.Column], p2))
+                    if (killedPieceRow == p2.Position.Row &&
+                        killedPieceColumn == p2.Position.Column)
                     {
-                        // cleans the desired position
-                        Board[tempPosition.Row, tempPosition.Column].Position.
-                            FreeSpace();
-                        // Kills p2 piece
                         p2.Die();
+                        Board[killedPieceRow, killedPieceColumn].
+                        Position.FreeSpace();
+                        canMove = true;
                     }
                 }
             }
@@ -230,14 +250,13 @@ namespace Felli
             {
                 foreach (Player p1 in playerOne)
                 {
-                    if (ComparePosition(Board[tempPosition.Row, tempPosition.
-                        Column], p1))
+                    if (killedPieceRow == p1.Position.Row &&
+                        killedPieceColumn == p1.Position.Column)
                     {
-                        // cleans the desired position
-                        Board[tempPosition.Row, tempPosition.Column].Position.
-                            FreeSpace();
-                        // Kills p1 piece
                         p1.Die();
+                        Board[killedPieceRow, killedPieceColumn].
+                        Position.FreeSpace();
+                        canMove = true;
                     }
                 }
             }

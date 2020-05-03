@@ -7,6 +7,7 @@ namespace Felli
     public class Input
     {
         public Position EatMovement { get; private set; }
+        public Position KilledPiecePos {get; private set;}
 
         public Position GetPosition()
         {
@@ -32,14 +33,24 @@ namespace Felli
             return result;
         }
 
-        public bool Movement(Position currentPos, Position nextPos)
+        public bool Movement(Position currentPos, Position nextPos, Board[,] board)
         {
-            bool canMove = false;
+            bool canMove = false;   
+            
 
             if (GameBoundaries(nextPos))
+            {
                 if (nextPos.IsPlayable)
+                {
                     if (OneSquareMovement(currentPos,nextPos))
+                    {
+                        Console.WriteLine("\nOne square\n");
                         canMove = true;
+                    }
+                    
+                }
+            }
+
 
             return canMove;
         }
@@ -49,9 +60,11 @@ namespace Felli
             bool canMove = false;
             
             if (GameBoundaries(nextPos))
-                if (OneSquareMovement(currentPos,nextPos))
-                    if (CheckPossibleEat(currentPos, nextPos, board))
-                        canMove = true;
+                if (CheckPossibleEat(currentPos, nextPos, board))
+                {
+                    canMove = true;
+                }
+                    
                 
             return canMove;
         }
@@ -59,13 +72,28 @@ namespace Felli
         private bool OneSquareMovement(Position currentPos, Position nextPos)
         {
             bool canMove = false;
+            bool checkColumn = (
+                    nextPos.Column == currentPos.Column + 1 ||
+                    nextPos.Column == currentPos.Column - 1 ||
+                    nextPos.Column == currentPos.Column);
 
-            if (nextPos.Row == currentPos.Row + 1 ||
-                nextPos.Row == currentPos.Row - 1 ||
-                nextPos.Column == currentPos.Column + 1 ||
-                nextPos.Column == currentPos.Column -1)
-                canMove = true;
+            if (nextPos.Row == currentPos.Row + 1)
+            {
+                if (checkColumn)
+                    canMove = true; 
+            }
 
+            else if (nextPos.Row == currentPos.Row - 1)
+            {
+                if (checkColumn)
+                    canMove = true;
+            }
+            else
+            {
+                if (nextPos.Column == currentPos.Column + 1 ||
+                    nextPos.Column == currentPos.Column - 1)
+                    canMove = true;
+            }
             return canMove;
         }
 
@@ -73,61 +101,189 @@ namespace Felli
         {
             bool canEat = false;
 
-            if (currentPos.Row < nextPos.Row && currentPos.Column < nextPos.Column)
-                if (board[nextPos.Row+1,nextPos.Column+1].Position.IsPlayable)
+            // Checks if the player is trying to make a 2 cells move
+            if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 && 
+                (Math.Abs(currentPos.Row - nextPos.Row)) <= 2)
+            {
+                if ((nextPos.Row - 1) < 0)
                 {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column+1));
+                    if ((nextPos.Column - 1) < 0)
+                    {
+                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
+                            
+                        }
+                    }
+                    else if (Convert.ToByte(nextPos.Column + 1) > 4)
+                    {
+                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
+                        }
+                    }
+                    else
+                    {
+                        if (board[Convert.ToByte(nextPos.Row + 1), nextPos.Column].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
+                        }
+                    }
                 }
-            if (currentPos.Row < nextPos.Row && currentPos.Column > nextPos.Column)
-                if (board[nextPos.Row+1,nextPos.Column-1].Position.IsPlayable)
+
+                else if (Convert.ToByte(nextPos.Row + 1) > 4)
                 {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column-1));
+                    if ((nextPos.Column - 1) < 0)
+                    {
+                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
+                        }
+                    }
+
+                    else if (Convert.ToByte(nextPos.Column + 1) > 4)
+                    {
+                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                        if (board[Convert.ToByte(nextPos.Row - 1), nextPos.Column].
+                        Position.Occupied)
+                        {
+                            canEat = true;
+                            SetEatMovement(nextPos.Row, nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
+
+                        }
+                    }
+                     
                 }
-            if (currentPos.Row > nextPos.Row && currentPos.Column < nextPos.Column)
-                if (board[nextPos.Row-1,nextPos.Column+1].Position.IsPlayable)
+                else
                 {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column+1));
-                }
-            if (currentPos.Row > nextPos.Row && currentPos.Column > nextPos.Column)
-                if (board[nextPos.Row-1,nextPos.Column-1].Position.IsPlayable)
-                {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column-1));
-                }
-            if (currentPos.Row == nextPos.Row && currentPos.Column < nextPos.Column)
-                if (board[nextPos.Row,nextPos.Column+1].Position.IsPlayable)
-                {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column+1));
-                }
-            if (currentPos.Row == nextPos.Row && currentPos.Column > nextPos.Column)
-                if (board[nextPos.Row,nextPos.Column-1].Position.IsPlayable)
-                {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row),Convert.ToByte(nextPos.Column-1));
-                }
-            if (currentPos.Row < nextPos.Row && currentPos.Column == nextPos.Column)
-                if (board[nextPos.Row+1,nextPos.Column].Position.IsPlayable)
-                {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row+1),Convert.ToByte(nextPos.Column));
-                }
-            if (currentPos.Row > nextPos.Row && currentPos.Column == nextPos.Column)
-                if (board[nextPos.Row-1,nextPos.Column].Position.IsPlayable)
-                {
-                    canEat = true;
-                    GetEatMovement(Convert.ToByte(nextPos.Row-1),Convert.ToByte(nextPos.Column));
-                }
+                    if (nextPos.Row > currentPos.Row)
+                    {
+                        if (nextPos.Column > currentPos.Column)
+                        {
+                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
+                            }
+                        }
+
+                        else if (nextPos.Column < currentPos.Column)
+                        {
+                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
+                            }
+                        }
+
+                        else
+                        {
+                            if (board[Convert.ToByte(nextPos.Row - 1), nextPos.Column].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
+                            }
+                        }
+                    }
+
+
+                    // 
+                    else if (nextPos.Row < currentPos.Row)
+                    {
+                        if (nextPos.Column > currentPos.Column)
+                        {
+                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
+                            }
+                        }
+
+                        else if (nextPos.Column < currentPos.Column)
+                        {
+                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
+                            }
+                        }
+
+                        else
+                        {
+                            if (board[Convert.ToByte(nextPos.Row + 1), nextPos.Column].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (nextPos.Column > currentPos.Column)
+                        {
+                            if (board[nextPos.Row, Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column - 1));
+                            }
+                        }
+                        else
+                        {
+                            if (board[nextPos.Row, Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column + 1));
+                            }
+                        }
+                    }
                     
+                }
+                
+            }
+             
             return canEat;
         }
 
-        private void GetEatMovement(byte row, byte column)
+        private void SetEatMovement(byte row, byte column)
         {
             EatMovement = new Position (row, column);
+        }
+
+        private void SetKilledPiecePos(byte row, byte column)
+        {
+            KilledPiecePos = new Position (row, column);
         }
     }
 }
