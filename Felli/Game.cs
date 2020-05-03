@@ -91,7 +91,6 @@ namespace Felli
                     
                 
                 print.RenderBoard(playerOne, playerTwo, playerName);
-                print.RenderMessage("SelectPiece");
                 pieceChoice = input.GetPiece();
                 pieceIndex = 0;
 

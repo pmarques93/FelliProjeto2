@@ -124,7 +124,7 @@ namespace Felli
                 
                 else if(piece.IsAlive == true)
                 {
-                    Console.WriteLine("erma gerd it works");
+                   
                     continue;
                 }
                 else
