@@ -45,6 +45,7 @@ namespace Felli
             string pieceChoice = "";
             string playerName = "";
             
+            print.PrintRules();
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
@@ -118,7 +119,7 @@ namespace Felli
                 winCondition = new Victory (Board);
                 if(winCondition.WinChecker(currentPosition, Board, selectedPlayer) == true)
                 {
-                    Console.WriteLine("this did it");
+                    
                     gameover = true;
                 }
                 foreach (Player piece in selectedPlayer)

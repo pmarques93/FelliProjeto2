@@ -21,6 +21,7 @@ namespace Felli
             bool canMoveUp = true;
             bool canMoveUpRight = true;
             bool canMoveUpLeft = true;
+            int deadPiece = 0;
             foreach(Player piece in SelectedPlayer)
             {
 
@@ -113,21 +114,26 @@ namespace Felli
                         canMoveRight = false;
                     }
                 }
+                
                 if( canMoveDown == false && canMoveUp == false && canMoveUpLeft == false
                 && canMoveUpRight == false && canMoveDownLeft == false && 
                 canMoveDownRight == false && canMoveLeft == false && canMoveRight == false)
                 {
-                playerWon = true; 
+                    playerWon = true; 
                 }
-                if(piece.IsAlive == true)
+                
+                else if(piece.IsAlive == true)
                 {
                     Console.WriteLine("erma gerd it works");
                     continue;
                 }
                 else
                 {
-                    Console.WriteLine("Nopes");
-                    playerWon = true;
+                    deadPiece++;
+                    if (deadPiece == 6)
+                    {
+                        playerWon = true;
+                    }
                 }
             }
 
