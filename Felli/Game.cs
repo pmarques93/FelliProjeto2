@@ -80,7 +80,7 @@ namespace Felli
 
 
 
-                print.RenderBoard(playerOne, playerTwo);
+                print.RenderBoard(playerOne, playerTwo, playerName);
                 print.RenderMessage("SelectPiece");
                 pieceChoice = Console.ReadLine().ToUpper();
                
@@ -139,7 +139,8 @@ namespace Felli
                                     else
                                     {
                                         print.RenderMessage("InvalidMove");
-                                        print.RenderBoard(playerOne, playerTwo);
+                                        print.RenderBoard(playerOne, playerTwo,
+                                                        playerName);
                                     }
     
                                 }while(canMove == false);  
