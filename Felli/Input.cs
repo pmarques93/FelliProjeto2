@@ -125,7 +125,7 @@ namespace Felli
             return canEat;
         }
 
-        public void GetEatMovement(byte row, byte column)
+        private void GetEatMovement(byte row, byte column)
         {
             EatMovement = new Position (row, column);
         }
