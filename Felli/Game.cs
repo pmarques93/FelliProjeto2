@@ -11,6 +11,9 @@ namespace Felli
         private bool gameover = false;
         private Player[] playerOne, playerTwo;
         private bool canMove;
+        private Player[] selectedPlayer;
+        private Renderer print;
+        private string playerName;
 
         /// <summary>
         /// Game class constructor
@@ -20,6 +23,7 @@ namespace Felli
             Board = new Board[boardSize,boardSize];
             playerOne = new Player[6];
             playerTwo = new Player[6];
+            print = new Renderer(Board, boardSize);
         }
 
         /// <summary>
@@ -27,12 +31,11 @@ namespace Felli
         /// </summary>
         public void Run()
         {
-            // Variables for input / renderer classes
+            // Input class
             Input input = new Input();
-            Renderer print = new Renderer(Board, boardSize);
+            
             byte roundCounter = 0;
             // Player movement variables
-            Player[] selectedPlayer;
             Position newPosition;
             Position currentPosition;
             Position tempPosition;
@@ -42,7 +45,7 @@ namespace Felli
             // Piece choosing
             byte pieceIndex;
             string pieceChoice = "";
-            string playerName = "";
+            playerName = "";
             
             CreateGameBoard();
             CreatePlayer(1);
@@ -51,11 +54,16 @@ namespace Felli
             // Gameloop - while not game over
             while (!(gameover))
             {   
+                // Variables Reset
                 newPosition = new Position(0,0);
                 currentPosition = new Position(0,0);
                 tempPosition = new Position(0,0);
                 bool validPiece = false;
                 canMove = false;
+                pieceIndex = 0;
+
+
+
 
                 if (roundCounter == 0 && firstToPlay == 0)
                 {
@@ -63,58 +71,19 @@ namespace Felli
                     firstToPlay = Convert.ToByte(Console.ReadLine());
                 }
                 // Checks round to define player turn
-                if (firstToPlay == 1)
-                {    
-                    if (roundCounter % 2 == 0)
-                    {
-                        print.RenderMessage("Player1Round");
-                        selectedPlayer = playerOne;
-                        playerName = "p1";
-                    }
-                        
-                    else
-                    {
-                        print.RenderMessage("Player2Round");
-                        selectedPlayer = playerTwo;
-                        playerName = "p2";
-                    }
-                        
-                }
-                else if (firstToPlay == 2)
-                {
-                    if (roundCounter % 2 == 0)
-                    {
-                        print.RenderMessage("Player2Round");
-                        selectedPlayer = playerTwo;
-                        playerName = "p2";
-                    }
-                        
-                    else
-                    {
-                        print.RenderMessage("Player1Round");
-                        selectedPlayer = playerOne;
-                        playerName = "p1";
-                    }
-                }
+                if (firstToPlay == 1 || firstToPlay == 2)
+                    PlayerTurn(firstToPlay, roundCounter);
                 else
                     continue;
                 
+
+
+
+
                 print.RenderBoard(playerOne, playerTwo);
                 print.RenderMessage("SelectPiece");
                 pieceChoice = Console.ReadLine().ToUpper();
-                pieceIndex = 0;
-                // for (int i = 0; i < 5; i ++)
-                // {
-                //     for (int j = 0; j < 5; j ++)
-                //     {
-                //         if (Board[i,j].Position.Occupied)
-                //             Console.WriteLine($"[{i}, {j}: Occupied]");
-                //         else
-                //             Console.WriteLine($"[{i}, {j}: Free    ]");
-
-                //     }
-                // }
-    
+               
                 foreach (Player piece in selectedPlayer)
                 {   
                     if (piece.IsAlive)
@@ -143,14 +112,18 @@ namespace Felli
                                         {
                                             newPosition = tempPosition;
                                             canMove = true;
-                                                continue;
+                                            continue;
                                         }
+                                        // If the movement is greater than 1
                                         // Check if it's possible to eat a piece
-                                        if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
+                                        if (input.Eat(currentPosition, 
+                                            Board[tempPosition.Row,tempPosition.
+                                            Column].Position, Board))
                                         {
                                             
                                             // Kills enemy piece
-                                            PlayerKill(playerName, tempPosition, input);
+                                            PlayerKill(playerName, tempPosition,
+                                                    input);
                                             // Gives player new pos
                                             if (canMove == true)
                                             {
@@ -185,13 +158,13 @@ namespace Felli
                     continue;
                 }
                 
-                // Check if the position where the player if trying to go is playable
+                // Check if desired position is playable
                 if (Board[newPosition.Row , newPosition.Column].Position.
                     IsPlayable)
                 {
                     // Makes piece's previous position playable and availabe
-                    Board[currentPosition.Row, currentPosition.Column].Position
-                        .FreeSpace();
+                    Board[currentPosition.Row, currentPosition.Column].Position.
+                        FreeSpace();
                     // Makes the curret piece position occupied and not playable
                     selectedPlayer[pieceIndex].Position = newPosition;
                     Board[newPosition.Row, newPosition.Column].Position.
@@ -203,6 +176,43 @@ namespace Felli
                 // Variable reset
                 selectedPlayer[pieceIndex].Selected = false;
             }
+        }
+
+        private void PlayerTurn(byte firstToPlay, byte roundCounter)
+        {
+
+            if (firstToPlay == 1)
+            {    
+                if (roundCounter % 2 == 0)
+                {
+                    print.RenderMessage("Player1Round");
+                    selectedPlayer = playerOne;
+                    playerName = "p1";
+                }
+                    
+                else
+                {
+                    print.RenderMessage("Player2Round");
+                    selectedPlayer = playerTwo;
+                    playerName = "p2";
+                }
+            }
+            else if (firstToPlay == 2)
+                {
+                    if (roundCounter % 2 == 0)
+                    {
+                        print.RenderMessage("Player2Round");
+                        selectedPlayer = playerTwo;
+                        playerName = "p2";
+                    }
+                        
+                    else
+                    {
+                        print.RenderMessage("Player1Round");
+                        selectedPlayer = playerOne;
+                        playerName = "p1";
+                    }
+                }
         }
 
         /// <summary>
@@ -225,7 +235,7 @@ namespace Felli
         /// </summary>
         /// <param name="pName">Chosen player</param>
         /// <param name="tempPosition">Temporary position input</param>
-        private void PlayerKill(string pName, Position tempPosition, Input input)
+        private void PlayerKill(string pName, Position tempPosition,Input input)
         {
             byte killedPieceRow = input.KilledPiecePos.Row;
             byte killedPieceColumn = input.KilledPiecePos.Column;
@@ -330,21 +340,6 @@ namespace Felli
                 }
         }
 
-        /// <summary>
-        /// Compares position beetween the board and a player
-        /// </summary>
-        /// <param name="board"> Board parameter to compare</param>
-        /// <param name="player"> Player Parameter to compare</param>
-        /// <returns> Returns true if both positions are equal</returns>
-        private bool ComparePosition(Board board, Player player) 
-        {
-            bool x = false;
-            if (board.Position.Row == player.Position.Row &&
-                board.Position.Column == player.Position.Column)
-                x = true;
-
-            return x;
-    }
         /// <summary>
         /// Quits the gameloop
         /// </summary>

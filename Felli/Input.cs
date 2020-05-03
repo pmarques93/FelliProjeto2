@@ -33,25 +33,22 @@ namespace Felli
             return result;
         }
 
-        public bool Movement(Position currentPos, Position nextPos, Board[,] board)
+        public bool Movement(Position currentPos, Position nextPos, 
+                        Board[,] board)
         {
             bool canMove = false;   
             
-
             if (GameBoundaries(nextPos))
             {
                 if (nextPos.IsPlayable)
                 {
                     if (OneSquareMovement(currentPos,nextPos))
                     {
-                        Console.WriteLine("\nOne square\n");
                         canMove = true;
                     }
                     
                 }
             }
-
-
             return canMove;
         }
 
@@ -65,17 +62,15 @@ namespace Felli
                     canMove = true;
                 }
                     
-                
             return canMove;
         }
 
         private bool OneSquareMovement(Position currentPos, Position nextPos)
         {
             bool canMove = false;
-            bool checkColumn = (
-                    nextPos.Column == currentPos.Column + 1 ||
-                    nextPos.Column == currentPos.Column - 1 ||
-                    nextPos.Column == currentPos.Column);
+            bool checkColumn = (nextPos.Column == currentPos.Column + 1 ||
+                                nextPos.Column == currentPos.Column - 1 ||
+                                nextPos.Column == currentPos.Column);
 
             if (nextPos.Row == currentPos.Row + 1)
             {
@@ -97,45 +92,50 @@ namespace Felli
             return canMove;
         }
 
-        private bool CheckPossibleEat(Position currentPos, Position nextPos, Board[,] board)
+        private bool CheckPossibleEat(Position currentPos, Position nextPos, 
+                                    Board[,] board)
         {
             bool canEat = false;
 
             // Checks if the player is trying to make a 2 cells move
-            if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 && 
+            if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 &&
                 (Math.Abs(currentPos.Row - nextPos.Row)) <= 2)
             {
                 if ((nextPos.Row - 1) < 0)
                 {
                     if ((nextPos.Column - 1) < 0)
                     {
-                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)].
-                        Position.Occupied)
+                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.
+                            ToByte(nextPos.Column + 1)].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
+                                            Convert.ToByte(nextPos.Column + 1));
                             
                         }
                     }
                     else if (Convert.ToByte(nextPos.Column + 1) > 4)
                     {
-                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)].
+                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.
+                            ToByte(nextPos.Column - 1)].
                         Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
+                                            Convert.ToByte(nextPos.Column - 1));
                         }
                     }
                     else
                     {
-                        if (board[Convert.ToByte(nextPos.Row + 1), nextPos.Column].
-                        Position.Occupied)
+                        if (board[Convert.ToByte(nextPos.Row + 1), nextPos.
+                            Column].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
+                                            nextPos.Column);
                         }
                     }
                 }
@@ -144,35 +144,38 @@ namespace Felli
                 {
                     if ((nextPos.Column - 1) < 0)
                     {
-                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)].
-                        Position.Occupied)
+                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.
+                            ToByte(nextPos.Column + 1)].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1),
+                                            Convert.ToByte(nextPos.Column + 1));
                         }
                     }
 
                     else if (Convert.ToByte(nextPos.Column + 1) > 4)
                     {
-                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)].
-                        Position.Occupied)
+                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.
+                            ToByte(nextPos.Column - 1)].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1),
+                                            Convert.ToByte(nextPos.Column - 1));
                             
                         }
                     }
                     else
                     {
                         
-                        if (board[Convert.ToByte(nextPos.Row - 1), nextPos.Column].
-                        Position.Occupied)
+                        if (board[Convert.ToByte(nextPos.Row - 1), nextPos.
+                        Column].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
+                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), 
+                                            nextPos.Column);
 
                         }
                     }
@@ -184,31 +187,37 @@ namespace Felli
                     {
                         if (nextPos.Column > currentPos.Column)
                         {
-                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.
+                                ToByte(nextPos.Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
+                                            Convert.ToByte(nextPos.Column - 1));
                             }
                         }
 
                         else if (nextPos.Column < currentPos.Column)
                         {
-                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.
+                                ToByte(nextPos.Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
+                                            Convert.ToByte(nextPos.Column + 1));
                             }
                         }
 
                         else
                         {
-                            if (board[Convert.ToByte(nextPos.Row - 1), nextPos.Column].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row - 1), nextPos.
+                                Column].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
+                                                nextPos.Column);
                             }
                         }
                     }
@@ -219,31 +228,37 @@ namespace Felli
                     {
                         if (nextPos.Column > currentPos.Column)
                         {
-                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.
+                                ToByte(nextPos.Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
+                                            Convert.ToByte(nextPos.Column - 1));
                             }
                         }
 
                         else if (nextPos.Column < currentPos.Column)
                         {
-                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.
+                                ToByte(nextPos.Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
+                                            Convert.ToByte(nextPos.Column + 1));
                             }
                         }
 
                         else
                         {
-                            if (board[Convert.ToByte(nextPos.Row + 1), nextPos.Column].Position.Occupied)
+                            if (board[Convert.ToByte(nextPos.Row + 1), nextPos.
+                                Column].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
+                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
+                                                nextPos.Column);
                             }
                         }
                     }
@@ -251,28 +266,29 @@ namespace Felli
                     {
                         if (nextPos.Column > currentPos.Column)
                         {
-                            if (board[nextPos.Row, Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
+                            if (board[nextPos.Row, Convert.ToByte(nextPos.
+                                Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column - 1));
+                                SetKilledPiecePos(nextPos.Row, Convert.
+                                                ToByte(nextPos.Column - 1));
                             }
                         }
                         else
                         {
-                            if (board[nextPos.Row, Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
+                            if (board[nextPos.Row, Convert.ToByte(nextPos.
+                                Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
                                 SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column + 1));
+                                SetKilledPiecePos(nextPos.Row, Convert.
+                                                ToByte(nextPos.Column + 1));
                             }
                         }
                     }
-                    
                 }
-                
             }
-             
             return canEat;
         }
 
