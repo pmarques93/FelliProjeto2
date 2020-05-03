@@ -113,7 +113,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
                             
                         }
@@ -124,7 +124,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
                         }
                     }
@@ -134,7 +134,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
                         }
                     }
@@ -148,7 +148,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
                         }
                     }
@@ -159,7 +159,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
                             
                         }
@@ -171,7 +171,7 @@ namespace Felli
                         Position.Occupied)
                         {
                             canEat = true;
-                            GetEatMovement(nextPos.Row, nextPos.Column);
+                            SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
 
                         }
@@ -187,7 +187,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1));
                             }
                         }
@@ -197,7 +197,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1));
                             }
                         }
@@ -207,7 +207,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row - 1), nextPos.Column].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), nextPos.Column);
                             }
                         }
@@ -222,7 +222,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1));
                             }
                         }
@@ -232,7 +232,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1));
                             }
                         }
@@ -242,7 +242,7 @@ namespace Felli
                             if (board[Convert.ToByte(nextPos.Row + 1), nextPos.Column].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1), nextPos.Column);
                             }
                         }
@@ -254,7 +254,7 @@ namespace Felli
                             if (board[nextPos.Row, Convert.ToByte(nextPos.Column - 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column - 1));
                             }
                         }
@@ -263,7 +263,7 @@ namespace Felli
                             if (board[nextPos.Row, Convert.ToByte(nextPos.Column + 1)].Position.Occupied)
                             {
                                 canEat = true;
-                                GetEatMovement(nextPos.Row, nextPos.Column);
+                                SetEatMovement(nextPos.Row, nextPos.Column);
                                 SetKilledPiecePos(nextPos.Row, Convert.ToByte(nextPos.Column + 1));
                             }
                         }
@@ -276,7 +276,7 @@ namespace Felli
             return canEat;
         }
 
-        private void GetEatMovement(byte row, byte column)
+        private void SetEatMovement(byte row, byte column)
         {
             EatMovement = new Position (row, column);
         }
