@@ -56,11 +56,24 @@ namespace Felli
                 tempPosition = new Position(0,0);
                 bool validPiece = false;
                 canMove = false;
-
-                if (roundCounter == 0 && firstToPlay == 0)
+                pieceIndex = 0;
+                
+                if (roundCounter == 0 && firstToPlay != 1 && firstToPlay != 2)
                 {
                     print.RenderMessage("FirstRound");
-                    firstToPlay = Convert.ToByte(Console.ReadLine());
+                    string auxInput = Console.ReadLine();
+                    if (auxInput.ToLower() == "exit")
+                        Quit();
+                    else
+                    {
+                        if (input.CheckConvert(auxInput))
+                        {
+                            firstToPlay = Convert.ToByte(auxInput);
+                        }
+                            
+                        else
+                            continue;
+                    }
                 }
                 // Checks round to define player turn
                 if (firstToPlay == 1)
@@ -97,23 +110,14 @@ namespace Felli
                     }
                 }
                 else
+                {
                     continue;
+                }
+                    
                 
                 print.RenderBoard(playerOne, playerTwo);
-                print.RenderMessage("SelectPiece");
-                pieceChoice = Console.ReadLine().ToUpper();
-                pieceIndex = 0;
-                // for (int i = 0; i < 5; i ++)
-                // {
-                //     for (int j = 0; j < 5; j ++)
-                //     {
-                //         if (Board[i,j].Position.Occupied)
-                //             Console.WriteLine($"[{i}, {j}: Occupied]");
-                //         else
-                //             Console.WriteLine($"[{i}, {j}: Free    ]");
-
-                //     }
-                // }
+                pieceChoice = input.GetPiece();
+                gameover = input.QuitInput;
     
                 foreach (Player piece in selectedPlayer)
                 {   
@@ -133,6 +137,7 @@ namespace Felli
                                 do
                                 {
                                     tempPosition = input.GetPosition();
+                                    gameover = input.QuitInput;
                                     // Checks if position isn't occupied
                                     if (!(BoardOccupied(tempPosition)))
                                     {
@@ -163,13 +168,13 @@ namespace Felli
                                     }
                                     // If a move or a eat isn't possible
                                     // the move is consider as invalid
-                                    else
+                                    else if (!(gameover))
                                     {
                                         print.RenderMessage("InvalidMove");
                                         print.RenderBoard(playerOne, playerTwo);
                                     }
     
-                                }while(canMove == false);  
+                                }while(canMove == false && gameover == false);  
                             } 
                             break;
                         }
