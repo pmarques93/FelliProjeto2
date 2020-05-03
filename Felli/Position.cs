@@ -13,7 +13,6 @@ namespace Felli
 
         public bool Occupied { get; private set; }
         
-
         public Position(byte row, byte column, bool isPlayable)
         {
             Row = row;

@@ -21,10 +21,11 @@ namespace Felli
         // Renders the board
         public void RenderBoard(Player[] playerOne, Player[] playerTwo)
         {
-            Console.WriteLine("");
+            Console.Write("\n     0  1  2  3  4\n\n");
+
             for (byte i = 0; i < boardSize; i++)
             {
-                Console.Write($" ");
+                Console.Write($" {i}  ");
                 for (byte j = 0; j < boardSize; j++)
                 {
                     // Prints playable positions
@@ -51,11 +52,13 @@ namespace Felli
                         }
                     } 
                     else
-                        Console.Write($"   ");  
+                        Console.Write($".. ");  
                 }
                 // Prints playable numbers on middle row
-                if (i == 2)
+                if (i == 1)
                     PossiblePlays();
+                if (i == 2)
+                    EatenPieces(playerOne, playerTwo);
 
                 Console.WriteLine("");
             }
@@ -92,8 +95,8 @@ namespace Felli
                     "-----------------------");
                     break;
                 case "InvalidPiece":
-                    Console.WriteLine("\n-------------------- INVALID PIECE -----------" +
-                    "----------\n"+
+                    Console.WriteLine("\n-------------------- INVALID PIECE" +
+                    " ---------------------\n"+
                     "Please, insert a valid piece name.\n");
                     break;
                 default:
@@ -108,7 +111,7 @@ namespace Felli
         }
 
         // Prints possible plays
-        public void PossiblePlays()
+        private void PossiblePlays()
         {
             Console.Write($"              Playable Numbers: ");
             foreach (Board position in board)
@@ -121,8 +124,27 @@ namespace Felli
             }
         }
 
+        private void EatenPieces(Player[] playerOne, Player[] playerTwo)
+        {
+            Console.Write($"          Eaten Player Pieaces: ");
+            foreach (Player player in playerOne)
+            {
+                if (!(player.IsAlive))
+                {
+                    Console.Write($"{player.Name} ");
+                }
+            }
+            foreach (Player player in playerTwo)
+            {
+                if (!(player.IsAlive))
+                {
+                    Console.Write($"{player.Name} ");
+                }
+            }
+        }
+
         // Returns true for equal positions
-        public bool ComparePosition(Board board, Player player) 
+        private bool ComparePosition(Board board, Player player) 
         {
             bool x = false;
             if (board.Position.Row == player.Position.Row &&
