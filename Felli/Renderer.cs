@@ -19,13 +19,17 @@ namespace Felli
 
 
         // Renders the board
-        public void RenderBoard(Player[] playerOne, Player[] playerTwo)
+        public void RenderBoard(Player[] playerOne, Player[] playerTwo,
+                            string playerName)
         {
-            Console.Write("\n     0  1  2  3  4\n\n");
-
+            Console.Write("\n .----0  1  2  3  4---.");
+            Console.Write($"               Selectable Pieces\n");
+            Console.Write(" |                    |              ");
+            PossiblePick(playerOne, playerTwo, playerName);
+            Console.WriteLine("");
             for (byte i = 0; i < boardSize; i++)
             {
-                Console.Write($" {i}  ");
+                Console.Write($" {i}   ");
                 for (byte j = 0; j < boardSize; j++)
                 {
                     // Prints playable positions
@@ -54,14 +58,19 @@ namespace Felli
                     else
                         Console.Write($".. ");  
                 }
+                Console.Write($"  {i}");
                 // Prints playable numbers on middle row
-                if (i == 1)
-                    PossiblePlays();
                 if (i == 2)
-                    EatenPieces(playerOne, playerTwo);
+                    PossiblePlays();
+                if (i == 3)
+                    EatenPieces(playerOne, playerTwo, 1);
+                if (i == 4)
+                    EatenPieces(playerOne, playerTwo, 2);
 
                 Console.WriteLine("");
             }
+            Console.Write(" |                    |");
+            Console.Write("\n '----0  1  2  3  4---'\n");
         }
 
         public void RenderMessage(string message)
@@ -70,50 +79,64 @@ namespace Felli
             switch (message)
             {
                 case "InvalidMove":
-                    Console.WriteLine("That is not a valid move");
+                    Console.WriteLine(" That is not a valid move");
                     break;
                 case "InsertRow":
-                    Console.Write("Insert a row number: ");
+                    Console.Write(" Insert a row number: ");
                     break;
                 case "InsertColumn":
-                    Console.Write("Insert a column number: ");
+                    Console.Write(" Insert a column number: ");
                     break;
                 case "SelectPiece":
-                    Console.Write("\nSelect a piece to play with: ");
+                    Console.Write("\n Select a piece to play with: ");
                     break;
                 case "FirstRound":
-                    Console.Write("Who will play first?\n"+
-                    "\n{'1' for Player 1 | '2' for Player 2}."+
-                    "\n[1 / 2]: ");
+                    Console.Write("\n Who will play first?\n"+
+                    "\n '1' for Player 1 | '2' for Player 2 "+
+                    "\n Pick first player: ");
                     break;
                 case "Player1Round":
-                    Console.WriteLine("\n-----------------------"
-                    +"-------------- PLAYER 1 --------");
+                    Console.WriteLine("\n -----------------------------" +
+                    "-------------------------");
+                    Console.Write("                            "
+                        +"             ** PLAYER 1 **");
                     break;
                 case "Player2Round":
-                    Console.WriteLine("\n--------- PLAYER 2 --------------" +
-                    "-----------------------");
+                    Console.WriteLine("\n -----------------------------" +
+                    "-------------------------");
+                    Console.Write("                            "
+                        +"             ** PLAYER 2 **");
                     break;
                 case "InvalidPiece":
-                    Console.WriteLine("\n-------------------- INVALID PIECE" +
+                    Console.WriteLine("\n -------------------- INVALID PIECE" +
                     " ---------------------\n"+
-                    "Please, insert a valid piece name.\n");
+                    " Please, insert a valid piece name.\n");
+                    break;
+                case "MovementString":
+                    Console.WriteLine("\n-------------------- INVALID INPUT" +
+                    " ---------------------\n"+
+                    "Please, insert a number, not a string.\n");
+                    break;
+                case "MovementTooBig":
+                    Console.WriteLine("\n-------------------- INVALID INPUT" +
+                    " ---------------------\n"+
+                    "Please, insert a valid number.\n");
                     break;
                 default:
-                    Console.WriteLine("No message defined");
+                    Console.WriteLine(" No message defined");
                     break;
             }
         }
 
         public void RenderPlayer(string playerName)
         {
-            Console.WriteLine($"{playerName} selected.\n");
+            Console.WriteLine($" {playerName} selected.\n");
         }
 
         // Prints possible plays
         private void PossiblePlays()
         {
-            Console.Write($"              Playable Numbers: ");
+            Console.Write($"           Playable Numbers: ");
             foreach (Board position in board)
             {
                 if (position.Position.IsPlayable)
@@ -124,21 +147,28 @@ namespace Felli
             }
         }
 
-        private void EatenPieces(Player[] playerOne, Player[] playerTwo)
+        private void EatenPieces(Player[] playerOne, Player[] playerTwo, byte x)
         {
-            Console.Write($"          Eaten Player Pieaces: ");
-            foreach (Player player in playerOne)
+            if (x == 1)
             {
-                if (!(player.IsAlive))
+                Console.Write($"    Eaten Player One Pieces: ");
+                foreach (Player player in playerOne)
                 {
-                    Console.Write($"{player.Name} ");
+                    if (!(player.IsAlive))
+                    {
+                        Console.Write($"{player.Name} ");
+                    }
                 }
             }
-            foreach (Player player in playerTwo)
+            else
             {
-                if (!(player.IsAlive))
+                Console.Write($"    Eaten Player Two Pieces: ");
+                foreach (Player player in playerTwo)
                 {
-                    Console.Write($"{player.Name} ");
+                    if (!(player.IsAlive))
+                    {
+                        Console.Write($"{player.Name} ");
+                    }
                 }
             }
         }
@@ -163,6 +193,32 @@ namespace Felli
             Console.WriteLine("- White pieces go first.");
          
         }
+        private void PossiblePick(Player[] playerOne, Player[] playerTwo, 
+                                string playerName)
+        {
+            if (playerName == "p1")
+            {
+                foreach (Player player in playerOne)
+                {
+                    if (player.IsAlive)
+                    {
+                        Console.Write($"{player.Name}|");
+                    }
+                }
+            }
+            else
+            {
+                foreach (Player player in playerTwo)
+                {
+                    if (player.IsAlive)
+                    {
+                        Console.Write($"{player.Name}|");
+                    }
+                }
+            }
+        }
+
+
         // Returns true for equal positions
         private bool ComparePosition(Board board, Player player) 
         {
