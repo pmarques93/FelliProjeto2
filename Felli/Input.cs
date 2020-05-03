@@ -44,6 +44,7 @@ namespace Felli
                 {
                     if (OneSquareMovement(currentPos,nextPos))
                     {
+                        Console.WriteLine("\nOne square\n");
                         canMove = true;
                     }
                     
@@ -60,7 +61,11 @@ namespace Felli
             
             if (GameBoundaries(nextPos))
                 if (CheckPossibleEat(currentPos, nextPos, board))
+                {
                     canMove = true;
+                    Console.WriteLine("\nit possible\n");
+                }
+                    
                 
             return canMove;
         }
