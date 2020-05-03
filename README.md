@@ -1,3 +1,16 @@
+# Felli
+
+### Grupo 03: 
+|Nome|Número|GitHub|
+|:-:|:-:|:-:|
+|Luiz Santos|a21901441|JundMaster|
+|Pedro Marques|a21900253|pmarques93|
+|Gonçalo Verde|a21901395|MrVerdinsky|
+
+---
+### Tarefas realizadas no exercício
+
+|Gonçalo Verde|Luiz Santos|Pedro Marques|
 |:-:|:-:|:-:|
 ||Game - Movement Input|Add - Board, Position, Renderer, Game, Player classes|
 ||Movement Input / Select Player Input / Renderer - Messages Print|Renderer - Possible Plays + Player Pieces|
