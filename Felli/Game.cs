@@ -119,48 +119,46 @@ namespace Felli
                                     tempPosition = input.GetPosition();
                                     // If position isn't occupied
                                     if (!(Board[tempPosition.Row,tempPosition.Column].Position.Occupied))
-                                        if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position))
+                                    {
+                                        if (input.Movement(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
-                                            Console.WriteLine("\nMOVEMENT METHOD");
                                             newPosition = tempPosition;
                                             canMove = true;
-                                            continue;
+                                                continue;
                                         }
-
-                                    // If position is occupied
-                                    if (Board[tempPosition.Row,tempPosition.Column].Position.Occupied)
-                                    {
+                                    
                                         if (input.Eat(currentPosition, Board[tempPosition.Row,tempPosition.Column].Position, Board))
                                         {
-                                            Console.WriteLine("\nEAT METHOD");
-
                                             if (playerName == "p1")
                                             {
-                                                Console.WriteLine("\nplayer eat METHOD");
                                                 // Kills the eaten player
                                                 foreach (Player p2 in playerTwo)
+                                                {
+                                                    if (input.
+                                                    KilledPiecePos.Row == p2.Position.Row &&
+                                                    input.
+                                                    KilledPiecePos.Column == p2.Position.Column)
                                                     {
-                                                        if (ComparePosition(Board[tempPosition.Row, tempPosition.Column], p2))
-                                                        {
-                                                            // cleans the desired position
-                                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
-                                                            p2.Die();
-                                                            canMove = true;
-                                                        }
+                                                        p2.Die();
+                                                        Board[input.KilledPiecePos.Row, input.KilledPiecePos.Column].Position.FreeSpace();
+                                                        canMove = true;
                                                     }
+                                                }
                                             }
                                             else if (playerName == "p2")
                                             {
                                                 foreach (Player p1 in playerOne)
+                                                {
+                                                    if (input.
+                                                    KilledPiecePos.Row == p1.Position.Row &&
+                                                    input.
+                                                    KilledPiecePos.Column == p1.Position.Column)
                                                     {
-                                                        if (ComparePosition(Board[tempPosition.Row, tempPosition.Column], p1))
-                                                        {
-                                                            // cleans the desired position
-                                                            Board[tempPosition.Row, tempPosition.Column].Position.FreeSpace();
-                                                            p1.Die();
-                                                            canMove = true;
-                                                        }
+                                                        p1.Die();
+                                                        Board[input.KilledPiecePos.Row, input.KilledPiecePos.Column].Position.FreeSpace();
+                                                        canMove = true;
                                                     }
+                                                }
                                             }
 
                                             // Gives player new pos and occupies its position
@@ -172,6 +170,8 @@ namespace Felli
                                             }
                                         }
                                     }
+
+
                                     else
                                     {
                                         print.RenderMessage("InvalidMove");
