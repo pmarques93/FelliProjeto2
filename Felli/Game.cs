@@ -115,9 +115,10 @@ namespace Felli
                 //         else
                 //             Console.WriteLine($"[{i}, {j}: Free    ]");
 
-                winCondition = new Victory (Board, selectedPlayer);
-                if(winCondition.WinChecker() == true)
+                winCondition = new Victory (Board);
+                if(winCondition.WinChecker(currentPosition, Board, selectedPlayer) == true)
                 {
+                    Console.WriteLine("this did it");
                     gameover = true;
                 }
                 foreach (Player piece in selectedPlayer)
