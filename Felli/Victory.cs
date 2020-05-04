@@ -29,7 +29,7 @@ namespace Felli
                 if (p1.IsAlive)
                 {
                     piecesLeftP1++;
-                    if (cantMove(p1.Position, board))
+                    if (CantMove(p1.Position, board))
                     {
                         gameOverCountP1++;
                     }
@@ -46,7 +46,7 @@ namespace Felli
                 if (p2.IsAlive)
                 {
                     piecesLeftP2++;
-                    if (cantMove(p2.Position, board))
+                    if (CantMove(p2.Position, board))
                     {
                         gameOverCountP2++;
                     }
@@ -61,7 +61,7 @@ namespace Felli
             return gameover;
         }
     
-    public bool cantMove(Position p, Board[,] board)
+    private bool CantMove(Position p, Board[,] board)
     {
         bool gameOver = false;
         byte gameOverCount = 0;

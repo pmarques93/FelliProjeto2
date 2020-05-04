@@ -188,9 +188,9 @@ namespace Felli
             if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 &&
                 (Math.Abs(currentPos.Row - nextPos.Row)) <= 2)
             {
-                if ((nextPos.Row - 1) < 0)
+                if (nextPos.Row == 0)
                 {
-                    if ((nextPos.Column - 1) < 0)
+                    if (nextPos.Column == 0)
                     {
                         if (board[Convert.ToByte(nextPos.Row + 1), Convert.
                             ToByte(nextPos.Column + 1)].Position.Occupied)
@@ -202,11 +202,10 @@ namespace Felli
                             
                         }
                     }
-                    else if (Convert.ToByte(nextPos.Column + 1) > 4)
+                    else if (nextPos.Column == 4)
                     {
                         if (board[Convert.ToByte(nextPos.Row + 1), Convert.
-                            ToByte(nextPos.Column - 1)].
-                        Position.Occupied)
+                            ToByte(nextPos.Column - 1)].Position.Occupied)
                         {
                             canEat = true;
                             SetEatMovement(nextPos.Row, nextPos.Column);
@@ -227,9 +226,9 @@ namespace Felli
                     }
                 }
 
-                else if (Convert.ToByte(nextPos.Row + 1) > 4)
+                else if (nextPos.Row == 4)
                 {
-                    if ((nextPos.Column - 1) < 0)
+                    if (nextPos.Column == 0)
                     {
                         if (board[Convert.ToByte(nextPos.Row - 1), Convert.
                             ToByte(nextPos.Column + 1)].Position.Occupied)
@@ -241,7 +240,7 @@ namespace Felli
                         }
                     }
 
-                    else if (Convert.ToByte(nextPos.Column + 1) > 4)
+                    else if (nextPos.Column == 4)
                     {
                         if (board[Convert.ToByte(nextPos.Row - 1), Convert.
                             ToByte(nextPos.Column - 1)].Position.Occupied)
