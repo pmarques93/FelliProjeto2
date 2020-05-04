@@ -109,9 +109,19 @@ namespace Felli
                                 
                                 currentPosition = new Position(piece.Position.
                                     Row, piece.Position.Column);
+
+                                // Variable to print board if input fails
+                                byte boardFailInput = 0;
                                 do
                                 {
+                                    // Prints board only if input fails
+                                    if (boardFailInput > 0)
+                                        print.RenderBoard(playerOne, playerTwo,
+                                                       playerName);
+
+
                                     tempPosition = input.GetPosition();
+                                    
                                     gameover = input.QuitInput;
                                     // Checks if position isn't occupied
                                     if (!(BoardOccupied(tempPosition)))
@@ -150,10 +160,14 @@ namespace Felli
                                     else if (!(gameover))
                                     {
                                         print.RenderMessage("InvalidMove");
-                                        print.RenderBoard(playerOne, playerTwo,
-                                                        playerName);
+                                        if (boardFailInput > 0)
+                                            print.RenderBoard(playerOne, 
+                                                        playerTwo, playerName);
+                                        
                                     }
-    
+
+                                    // Variable to print board if input fails
+                                    boardFailInput++;
                                 }while(canMove == false && gameover == false);  
                             } 
                             break;
