@@ -1,143 +1,185 @@
-using System;
-
 namespace Felli
 {
     public class Victory
     {
-        public Board[,] Board {get; set;}
-        public Victory (Board[,] board)
+        /// <summary>
+        /// Defines victory condition
+        /// </summary>
+        /// <param name="playerOne"> Parameter with playerOne array</param>
+        /// <param name="playerTwo"> Parameter with playerTwo array</param>
+        /// <param name="Board"> Parameter with board array</param>
+        /// <returns> Returns victory condition if one of the players
+        /// runs out of pieces;
+        /// Returns victory condition if one of the players runs out 
+        /// of possible plays;</returns>
+        public bool Gameover(Player[] playerOne, Player[] playerTwo,
+                            Board[,] board)
         {
-            Board = board;
-        }
-        
-        public bool WinChecker(Position currentPos, Board[,] board, Player[] SelectedPlayer)
-        {
-            bool playerWon = false;
-            bool canMoveLeft  = true;
-            bool canMoveRight = true;
-            bool canMoveDown = true;
-            bool canMoveDownLeft = true;
-            bool canMoveDownRight = true;
-            bool canMoveUp = true;
-            bool canMoveUpRight = true;
-            bool canMoveUpLeft = true;
-            int deadPiece = 0;
-            foreach(Player piece in SelectedPlayer)
+            Input input = new Input();
+            Renderer print = new Renderer();
+            bool gameover = false;
+            byte piecesLeftP1 = 0;
+            byte piecesLeftP2 = 0;
+            byte gameOverCountP1 = 0;
+            byte gameOverCountP2 = 0;
+
+            // Checks if there are plays left for each player
+            foreach (Player p1 in playerOne)
             {
-
-                if ((currentPos.Row - 1) < 0)
-                    {
-                        if ((currentPos.Column - 1) < 0)
-                        {
-                            if (board[Convert.ToByte(currentPos.Row + 1), Convert.ToByte(currentPos.Column + 1)].
-                            Position.Occupied)
-                            {
-                                canMoveUpRight = false;
-                            }
-                        }
-                        else if (Convert.ToByte(currentPos.Column + 1) > 4)
-                        {
-                            if (board[Convert.ToByte(currentPos.Row + 1), Convert.ToByte(currentPos.Column - 1)].
-                            Position.Occupied)
-                            {
-                                canMoveUpLeft = false;
-                            }
-                        }
-                    }
-                else if (Convert.ToByte(currentPos.Row + 1) > 4)
+                if (p1.IsAlive)
                 {
-                    if ((currentPos.Column - 1) < 0)
+                    piecesLeftP1++;
+                    if (cantMove(p1.Position, board))
                     {
-                        if (board[Convert.ToByte(currentPos.Row - 1), Convert.ToByte(currentPos.Column + 1)].
-                        Position.Occupied)
-                        {
-                            canMoveDownRight = false;                           
-                        }
-                    }
-
-                    else if (Convert.ToByte(currentPos.Column + 1) > 4)
-                    {
-                        if (board[Convert.ToByte(currentPos.Row - 1), Convert.ToByte(currentPos.Column - 1)].
-                        Position.Occupied)
-                        {
-                            canMoveDownLeft = false;
-                        }
-                    }
-                    else
-                    {
-                        if (board[Convert.ToByte(currentPos.Row - 1), currentPos.Column].
-                        Position.Occupied)
-                        {
-                            canMoveDown = false;
-                        }
-                    }
-                        
-                }
-                else
-                {
-                    if (board[Convert.ToByte(currentPos.Row - 1), Convert.ToByte(currentPos.Column - 1)].Position.Occupied)
-                    {
-                        canMoveDownLeft = false;
-                    }
-
-                    if (board[Convert.ToByte(currentPos.Row - 1), Convert.ToByte(currentPos.Column + 1)].Position.Occupied)
-                    {
-                        canMoveDownRight = false;
-                    }
-                    if (board[Convert.ToByte(currentPos.Row - 1), currentPos.Column].Position.Occupied)
-                    {
-                        canMoveLeft = false;
-                    }
-                    
-                    if (board[Convert.ToByte(currentPos.Row + 1), Convert.ToByte(currentPos.Column - 1)].Position.Occupied)
-                    {
-                        canMoveUpLeft = false;
-                    }
-
-                    if (board[Convert.ToByte(currentPos.Row + 1), Convert.ToByte(currentPos.Column + 1)].Position.Occupied)
-                    {
-                        canMoveUpRight = false;
-                    }
-
-                    if (board[Convert.ToByte(currentPos.Row + 1), currentPos.Column].Position.Occupied)
-                    {
-                        canMoveUp = false;
-                    }
-
-                    if (board[currentPos.Row, Convert.ToByte(currentPos.Column - 1)].Position.Occupied)
-                    {
-                        canMoveLeft = false;
-                    }
-
-                    if (board[currentPos.Row, Convert.ToByte(currentPos.Column + 1)].Position.Occupied)
-                    {
-                        canMoveRight = false;
-                    }
-                }
-                
-                if( canMoveDown == false && canMoveUp == false && canMoveUpLeft == false
-                && canMoveUpRight == false && canMoveDownLeft == false && 
-                canMoveDownRight == false && canMoveLeft == false && canMoveRight == false)
-                {
-                    playerWon = true; 
-                }
-                
-                else if(piece.IsAlive == true)
-                {
-                   
-                    continue;
-                }
-                else
-                {
-                    deadPiece++;
-                    if (deadPiece == 6)
-                    {
-                        playerWon = true;
+                        gameOverCountP1++;
                     }
                 }
             }
+            if (gameOverCountP1 == piecesLeftP1)
+            {
+                print.RenderMessage("NoPlaysP1");
+                gameover = true;
+            }
 
-            return playerWon;
+            foreach (Player p2 in playerTwo)
+            {
+                if (p2.IsAlive)
+                {
+                    piecesLeftP2++;
+                    if (cantMove(p2.Position, board))
+                    {
+                        gameOverCountP2++;
+                    }
+                }
+            }
+            if (gameOverCountP2 == piecesLeftP2)
+            {
+                print.RenderMessage("NoPlaysP2");
+                gameover = true;
+            }
+
+            return gameover;
         }
+    
+    public bool cantMove(Position p, Board[,] board)
+    {
+        bool gameOver = false;
+        byte gameOverCount = 0;
+
+        // Borders
+        if (p.Row == 0 && p.Column == 0)
+            if ((board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 0 && p.Column == 2)
+            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column].Position.IsPlayable == false))
+                gameOverCount ++;
+        
+        if (p.Row == 0 && p.Column == 4)
+            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column-2].Position.IsPlayable == false))
+                gameOverCount ++;
+        
+        if (p.Row == 4 && p.Column == 0)
+            if ((board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column+2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 4 && p.Column == 2)
+            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column].Position.IsPlayable == false))
+                gameOverCount ++;
+        
+        if (p.Row == 4 && p.Column == 4)
+            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column-2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+
+        // Borders - 1
+        if (p.Row == 1 && p.Column == 1)
+            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+2].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 1 && p.Column == 3)
+            if ((board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-2].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column-2].Position.IsPlayable == false))
+                gameOverCount ++;
+        
+        if (p.Row == 3 && p.Column == 3)
+            if ((board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-2].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column-2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 3 && p.Column == 1)
+            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+2].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column+2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 1 && p.Column == 2)
+            if ((board[p.Row-1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column].Position.IsPlayable == false))
+                gameOverCount ++;
+
+        if (p.Row == 3 && p.Column == 2)
+            if ((board[p.Row+1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column].Position.IsPlayable == false))
+                gameOverCount ++;
+        
+        // Middle
+        if (p.Row == 2 && p.Column == 2)
+            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column-2].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row-2,p.Column+2].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column-2].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column].Position.IsPlayable == false) &&
+                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
+                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
+                gameOverCount ++;
+
+
+        if (gameOverCount > 0)
+            gameOver = true;
+
+        return gameOver;
+    }
+
+
+
+
     }
 }

@@ -33,26 +33,26 @@ namespace Felli
         {
             // Input class
             Input input = new Input();
+            Victory winCondition = new Victory();
             
             byte roundCounter = 0;
             // Player movement variables
             Position newPosition;
             Position currentPosition;
             Position tempPosition;
-            Victory winCondition;
             byte firstToPlay = 0;
-            
             
             // Piece choosing
             byte pieceIndex;
             string pieceChoice = "";
             playerName = "";
             
+            // Initial run methods
             print.PrintRules();
             CreateGameBoard();
             CreatePlayer(1);
             CreatePlayer(2);
-
+            
             // Gameloop - while not game over
             while (!(gameover))
             {   
@@ -88,20 +88,10 @@ namespace Felli
                 {
                     continue;
                 }
-                    
-                
+           
                 print.RenderBoard(playerOne, playerTwo, playerName);
                 pieceChoice = input.GetPiece();
                 pieceIndex = 0;
-
-                winCondition = new Victory (Board);
-                if(winCondition.WinChecker(currentPosition, Board, selectedPlayer) == true)
-                {
-                    
-                    gameover = true;
-                }
-               
-               
                 gameover = input.QuitInput;
     
                 foreach (Player piece in selectedPlayer)
@@ -193,6 +183,18 @@ namespace Felli
                         OccupySpace();
                 }
                 
+
+                // Gameover checking
+                if (roundCounter > 0)
+                {
+                    if(winCondition.Gameover(playerOne, playerTwo, Board))
+                    {
+                        print.RenderBoard(playerOne, playerTwo, playerName);
+                        Quit();
+                        break;
+                    }
+                }
+
                 // Increments the number of rounds
                 roundCounter ++;
 
@@ -201,9 +203,13 @@ namespace Felli
             }
         }
 
+        /// <summary>
+        /// Defines player's turn
+        /// </summary>
+        /// <param name="firstToPlay"> Defines first player to play</param>
+        /// <param name="roundCounter"> Parameter with round number</param>
         private void PlayerTurn(byte firstToPlay, byte roundCounter)
         {
-
             if (firstToPlay == 1)
             {    
                 if (roundCounter % 2 == 0)

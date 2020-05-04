@@ -100,10 +100,8 @@ namespace Felli
             }
 
             return validInput;
-
         }
         
-
         public bool GameBoundaries(Position nextPos)
         {
             bool result = false;
@@ -154,7 +152,7 @@ namespace Felli
             return canMove;
         }
 
-        private bool OneSquareMovement(Position currentPos, Position nextPos)
+        public bool OneSquareMovement(Position currentPos, Position nextPos)
         {
             bool canMove = false;
             bool checkColumn = (nextPos.Column == currentPos.Column + 1 ||
@@ -252,12 +250,10 @@ namespace Felli
                             SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1),
                                             Convert.ToByte(nextPos.Column - 1));
-                            
                         }
                     }
                     else
                     {
-                        
                         if (board[Convert.ToByte(nextPos.Row - 1), nextPos.
                         Column].Position.Occupied)
                         {
@@ -265,7 +261,6 @@ namespace Felli
                             SetEatMovement(nextPos.Row, nextPos.Column);
                             SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), 
                                             nextPos.Column);
-
                         }
                     }
                      

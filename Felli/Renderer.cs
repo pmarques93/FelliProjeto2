@@ -113,14 +113,26 @@ namespace Felli
                     " Please, insert a valid piece name.\n");
                     break;
                 case "MovementString":
-                    Console.WriteLine("\n-------------------- INVALID INPUT" +
+                    Console.WriteLine("\n -------------------- INVALID INPUT" +
                     " ---------------------\n"+
                     "Please, insert a number, not a string.\n");
                     break;
                 case "MovementTooBig":
-                    Console.WriteLine("\n-------------------- INVALID INPUT" +
+                    Console.WriteLine("\n -------------------- INVALID INPUT" +
                     " ---------------------\n"+
                     "Please, insert a valid number.\n");
+                    break;
+                case "NoPlaysP1":
+                    Console.WriteLine("\n -----------------------------" +
+                    "-------------------------");
+                    Console.WriteLine("\n"+
+                    " P2 is the Winner !! Goodbye!\n");
+                    break;
+                case "NoPlaysP2":
+                    Console.WriteLine("\n -----------------------------" +
+                    "-------------------------");
+                    Console.WriteLine("\n"+
+                    " P1 is the Winner !! Goodbye!\n");
                     break;
                 default:
                     Console.WriteLine(" No message defined");
