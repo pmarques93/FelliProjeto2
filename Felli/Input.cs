@@ -10,15 +10,16 @@ namespace Felli
         public Position KilledPiecePos {get; private set;}
         public bool QuitInput {get; private set; }
         public bool ChangePieceInput {get; private set; }
+        public bool ValidMove { get; private set; }
         
-        public Position GetPosition()
+        public Position GetPosition(Position currentPos)
         {
             Renderer print = new Renderer();
             byte row = 0;
             byte column = 0;
             bool validInput = false;
             string rowString, columnString;
-            Position pos;
+            Position newPos;
             while (!(validInput))
             {
                 print.RenderMessage("InsertRow");
@@ -54,22 +55,33 @@ namespace Felli
                         {
                             row = Convert.ToByte(rowString);
                             column = Convert.ToByte(columnString);
-                            pos = new Position(row, column);
-                            // if (GameBoundaries(pos))
-                            // {
-                            //     validInput = true;
-                            // }
-                            validInput = true;
+                            newPos = new Position(row, column);
+                        
                             
+                            if ((Math.Abs(currentPos.Column - newPos.Column)) <= 2 &&
+                                (Math.Abs(currentPos.Row - newPos.Row)) <= 2)
+                            {
+                                validInput = true;
+                                ValidMove = true;
+                            }
+                                                            
+                            else
+                            {
+                                validInput = true;
+                                ValidMove = false;
+
+                            }
                         }
+                            
+                            
                         QuitInput = false;
                     }
                 }
 
             }
 
-            pos = new Position(row, column);
-            return pos;
+            newPos = new Position(row, column);
+            return newPos;
         }
 
         public string GetPiece()
@@ -359,8 +371,10 @@ namespace Felli
                     }
                     else
                     {
+                        
                         if (nextPos.Column > currentPos.Column)
                         {
+                            
                             if (board[nextPos.Row, Convert.ToByte(nextPos.
                                 Column - 1)].Position.Occupied)
                             {

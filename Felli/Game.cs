@@ -122,10 +122,11 @@ namespace Felli
                                                        playerName);
 
 
-                                    tempPosition = input.GetPosition();
+                                    tempPosition = input.GetPosition(currentPosition);
                                     gameover = input.QuitInput;
                                     changePiece = input.ChangePieceInput;
-                                    if (!(input.GameBoundaries(tempPosition)))
+
+                                    if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
                                     {
                                         print.RenderMessage("InvalidMove");
                                         break;
@@ -188,7 +189,7 @@ namespace Felli
                 }
 
                 
-                if (!(validPiece) || (changePiece))
+                if (!(validPiece) || (changePiece) || !(input.ValidMove))
                 {
                     continue;
                 }
