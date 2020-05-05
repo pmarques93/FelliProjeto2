@@ -9,6 +9,7 @@ namespace Felli
         public Position EatMovement { get; private set; }
         public Position KilledPiecePos {get; private set;}
         public bool QuitInput {get; private set; }
+        public bool ChangePieceInput {get; private set; }
         
         public Position GetPosition()
         {
@@ -27,6 +28,11 @@ namespace Felli
                     validInput = true;
                     QuitInput = true;
                 }
+                else if (rowString.ToLower() == "back")
+                {
+                    validInput = true;
+                    ChangePieceInput = true;
+                }
                 else
                 {
                     QuitInput = false;
@@ -37,6 +43,11 @@ namespace Felli
                         validInput = true;
                         QuitInput = true;
                     }
+                    else if (columnString.ToLower() == "back")
+                    {
+                        validInput = true;
+                        ChangePieceInput = true;
+                    }
                     else
                     {
                         if (CheckConvert(rowString) && CheckConvert(columnString))
@@ -44,10 +55,11 @@ namespace Felli
                             row = Convert.ToByte(rowString);
                             column = Convert.ToByte(columnString);
                             pos = new Position(row, column);
-                            if (GameBoundaries(pos))
-                            {
-                                validInput = true;
-                            }
+                            // if (GameBoundaries(pos))
+                            // {
+                            //     validInput = true;
+                            // }
+                            validInput = true;
                             
                         }
                         QuitInput = false;

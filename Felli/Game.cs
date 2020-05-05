@@ -61,6 +61,7 @@ namespace Felli
                 currentPosition = new Position(0,0);
                 tempPosition = new Position(0,0);
                 bool validPiece = false;
+                bool changePiece = false;
                 canMove = false;
                 pieceIndex = 0;
                 
@@ -93,6 +94,7 @@ namespace Felli
                 pieceChoice = input.GetPiece();
                 pieceIndex = 0;
                 gameover = input.QuitInput;
+
     
                 foreach (Player piece in selectedPlayer)
                 {   
@@ -121,8 +123,13 @@ namespace Felli
 
 
                                     tempPosition = input.GetPosition();
-                                    
                                     gameover = input.QuitInput;
+                                    changePiece = input.ChangePieceInput;
+                                    if (!(input.GameBoundaries(tempPosition)))
+                                    {
+                                        print.RenderMessage("InvalidMove");
+                                        break;
+                                    }
                                     // Checks if position isn't occupied
                                     if (!(BoardOccupied(tempPosition)))
                                     {
@@ -157,8 +164,8 @@ namespace Felli
                                     }
                                     // If a move or a eat isn't possible
                                     // the move is consider as invalid
-                                    else if (!(gameover))
-                                    {
+                                    else if (!(gameover) && !changePiece)
+                                    {   
                                         print.RenderMessage("InvalidMove");
                                         if (boardFailInput > 0)
                                             print.RenderBoard(playerOne, 
@@ -168,7 +175,8 @@ namespace Felli
 
                                     // Variable to print board if input fails
                                     boardFailInput++;
-                                }while(canMove == false && gameover == false);  
+                                }while(canMove == false && gameover == false &&
+                                       changePiece == false);  
                             } 
                             break;
                         }
@@ -179,7 +187,8 @@ namespace Felli
                         continue;
                 }
 
-                if (!(validPiece))
+                
+                if (!(validPiece) || (changePiece))
                 {
                     continue;
                 }

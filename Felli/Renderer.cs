@@ -79,7 +79,9 @@ namespace Felli
             switch (message)
             {
                 case "InvalidMove":
-                    Console.WriteLine(" That is not a valid move");
+                    Console.WriteLine("\n -------------------- INVALID MOVE" +
+                    " ---------------------\n"+
+                    " That is not a valid move!\n Please, try again.");
                     break;
                 case "InsertRow":
                     Console.Write(" Insert a row number: ");
