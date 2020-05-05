@@ -11,15 +11,15 @@ namespace Felli
         public bool QuitInput {get; private set; }
         public bool ChangePieceInput {get; private set; }
         public bool ValidMove { get; private set; }
+        private Position currentPos;
         
-        public Position GetPosition(Position currentPos)
+        public Position GetPosition(Position player, string pName)
         {
             Renderer print = new Renderer();
             byte row = 0;
             byte column = 0;
             bool validInput = false;
             string rowString, columnString;
-            Position newPos;
             while (!(validInput))
             {
                 print.RenderMessage("InsertRow");
@@ -51,15 +51,17 @@ namespace Felli
                     }
                     else
                     {
-                        if (CheckConvert(rowString) && CheckConvert(columnString))
+                        if (CheckConvert(player, pName))
+                       
                         {
+                            currentPos = new Position(player.Row, player.Column);
                             row = Convert.ToByte(rowString);
-                            column = Convert.ToByte(columnString);
-                            newPos = new Position(row, column);
+                            column = Convert.ToByte(columnString);                          
+                            player = new Position(row, column);
                         
                             
-                            if ((Math.Abs(currentPos.Column - newPos.Column)) <= 2 &&
-                                (Math.Abs(currentPos.Row - newPos.Row)) <= 2)
+                            if (((Math.Abs(currentPos.Column - player.Column)) <= 2 &&
+                                (Math.Abs(currentPos.Row - player.Row)) <= 2))
                             {
                                 validInput = true;
                                 ValidMove = true;
@@ -80,8 +82,8 @@ namespace Felli
 
             }
 
-            newPos = new Position(row, column);
-            return newPos;
+            player = new Position(row, column);
+            return player;
         }
 
         public string GetPiece()
@@ -103,14 +105,14 @@ namespace Felli
             return pieceChoice;
         }
 
-        public bool CheckConvert(string inputString)
+        public bool CheckConvert(Position player, string pName)
         {
             Renderer print = new Renderer();
             bool validInput = false;
             byte aux;
             try 
             {
-                aux = Convert.ToByte(inputString);
+                aux = Convert.ToByte(pName);
                 validInput = true;
             }
             

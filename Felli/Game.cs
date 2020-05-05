@@ -25,7 +25,6 @@ namespace Felli
             playerTwo = new Player[6];
             print = new Renderer(Board, boardSize);
         }
-
         /// <summary>
         /// Used to run the game, contains the main gameloop
         /// </summary>
@@ -73,13 +72,30 @@ namespace Felli
                         Quit();
                     else
                     {
-                        if (input.CheckConvert(auxInput))
+                        foreach(Player p1Piece in playerOne)
                         {
-                            firstToPlay = Convert.ToByte(auxInput);
+                            if (input.CheckConvert(p1Piece.Position, auxInput))
+                            {
+                                firstToPlay = Convert.ToByte(auxInput);
+                            }
+                                
+                            else
+                            {
+                                continue;
+                            }
+                        }   
+                        foreach(Player p2Piece in playerTwo)
+                        {   
+                          if (input.CheckConvert(p2Piece.Position, auxInput))
+                            {
+                                firstToPlay = Convert.ToByte(auxInput);
+                            }
+                                
+                            else
+                            {
+                                continue;
+                            }  
                         }
-                            
-                        else
-                            continue;
                     }
                 }
                 // Checks round to define player turn
@@ -120,52 +136,103 @@ namespace Felli
                                     if (boardFailInput > 0)
                                         print.RenderBoard(playerOne, playerTwo,
                                                        playerName);
-
-
-                                    tempPosition = input.GetPosition(currentPosition);
-                                    gameover = input.QuitInput;
-                                    changePiece = input.ChangePieceInput;
-
-                                    if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
                                     {
-                                        print.RenderMessage("InvalidMove");
-                                        break;
-                                    }
-                                    // Checks if position isn't occupied
-                                    if (!(BoardOccupied(tempPosition)))
-                                    {
-                                        // Check if it's possible to move 1 cell
-                                        if (input.Movement(currentPosition, 
-                                            Board[tempPosition.Row,tempPosition.
-                                            Column].Position, Board))
+                                        foreach(Player p1Piece in playerOne)
                                         {
-                                            newPosition = tempPosition;
-                                            canMove = true;
-                                            continue;
-                                        }
-                                        // If the movement is greater than 1
-                                        // Check if it's possible to eat a piece
-                                        if (input.Eat(currentPosition, 
-                                            Board[tempPosition.Row,tempPosition.
-                                            Column].Position, Board))
-                                        {
+                                            tempPosition = input.GetPosition(p1Piece.Position, playerName);
                                             
-                                            // Kills enemy piece
-                                            PlayerKill(playerName, tempPosition,
-                                                    input);
-                                            // Gives player new pos
-                                            if (canMove == true)
+
+                                            gameover = input.QuitInput;
+                                            changePiece = input.ChangePieceInput;
+
+                                            if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
                                             {
-                                                tempPosition = input.EatMovement;
-                                                newPosition = tempPosition;
-                                                continue;
+                                                print.RenderMessage("InvalidMove");
+                                                break;
+                                            }
+                                            // Checks if position isn't occupied
+                                            if (!(BoardOccupied(tempPosition)))
+                                            {
+                                                // Check if it's possible to move 1 cell
+                                                if (input.Movement(currentPosition, 
+                                                    Board[tempPosition.Row,tempPosition.
+                                                    Column].Position, Board))
+                                                {
+                                                    newPosition = tempPosition;
+                                                    canMove = true;
+                                                    continue;
+                                                }
+                                                // If the movement is greater than 1
+                                                // Check if it's possible to eat a piece
+                                                if (input.Eat(currentPosition, 
+                                                    Board[tempPosition.Row,tempPosition.
+                                                    Column].Position, Board))
+                                                {
+                                                    
+                                                    // Kills enemy piece
+                                                    PlayerKill(playerName, tempPosition,
+                                                            input);
+                                                    // Gives player new pos
+                                                    if (canMove == true)
+                                                    {
+                                                        tempPosition = input.EatMovement;
+                                                        newPosition = tempPosition;
+                                                        continue;
+                                                    }
+                                                }
                                             }
                                         }
-                                     
+
+                                        foreach(Player p2Piece in playerOne)
+                                        {
+                                            tempPosition = input.GetPosition(p2Piece.Position, playerName);
+                                            
+
+                                            gameover = input.QuitInput;
+                                            changePiece = input.ChangePieceInput;
+
+                                            if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
+                                            {
+                                                print.RenderMessage("InvalidMove");
+                                                break;
+                                            }
+                                            // Checks if position isn't occupied
+                                            if (!(BoardOccupied(tempPosition)))
+                                            {
+                                                // Check if it's possible to move 1 cell
+                                                if (input.Movement(currentPosition, 
+                                                    Board[tempPosition.Row,tempPosition.
+                                                    Column].Position, Board))
+                                                {
+                                                    newPosition = tempPosition;
+                                                    canMove = true;
+                                                    continue;
+                                                }
+                                                // If the movement is greater than 1
+                                                // Check if it's possible to eat a piece
+                                                if (input.Eat(currentPosition, 
+                                                    Board[tempPosition.Row,tempPosition.
+                                                    Column].Position, Board))
+                                                {
+                                                    
+                                                    // Kills enemy piece
+                                                    PlayerKill(playerName, tempPosition,
+                                                            input);
+                                                    // Gives player new pos
+                                                    if (canMove == true)
+                                                    {
+                                                        tempPosition = input.EatMovement;
+                                                        newPosition = tempPosition;
+                                                        continue;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
+                                    
                                     // If a move or a eat isn't possible
                                     // the move is consider as invalid
-                                    else if (!(gameover) && !changePiece)
+                                    if (!(gameover) && !changePiece)
                                     {   
                                         print.RenderMessage("InvalidMove");
                                         if (boardFailInput > 0)
