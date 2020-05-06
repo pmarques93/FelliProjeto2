@@ -11,6 +11,21 @@ namespace Felli
         public bool QuitInput {get; private set; }
         public bool ChangePieceInput {get; private set; }
         public bool ValidMove { get; private set; }
+
+        private Player[] PlayerOne {get; set;}
+        private Player[] PlayerTwo {get; set;}
+        private string PlayerName {get; set;}
+        private Board[,] Board {get; set;}
+
+        public Input (Player[] playerOne, Player[] playerTwo, string playerName, Board[,] board)
+        {
+            PlayerOne = playerOne;
+            PlayerTwo = playerTwo;
+            PlayerName = playerName;
+            Board = board;
+
+        }
+        public Input (){}
         
         public Position GetPosition(Position currentPos)
         {
@@ -105,7 +120,7 @@ namespace Felli
 
         public bool CheckConvert(string inputString)
         {
-            Renderer print = new Renderer();
+            Renderer print = new Renderer(Board, 5);
             bool validInput = false;
             byte aux;
             try 
@@ -116,10 +131,12 @@ namespace Felli
             
             catch (FormatException)
             {
+                print.RenderBoard(PlayerOne, PlayerTwo, PlayerName);
                 print.RenderMessage("MovementString");
             }
             catch (OverflowException)
             {
+                print.RenderBoard(PlayerOne, PlayerTwo, PlayerName);
                 print.RenderMessage("MovementTooBig");
             }
 
@@ -207,7 +224,30 @@ namespace Felli
                                     Board[,] board)
         {
             bool canEat = false;
-
+            Position[] checkPosition = new Position[] {
+                new Position(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)),
+                new Position(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)),
+                new Position(Convert.ToByte(nextPos.Row + 1), nextPos.Column),
+                new Position(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)),
+                new Position(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)),
+                new Position(Convert.ToByte(nextPos.Row - 1), nextPos.Column),
+                new Position(Convert.ToByte(nextPos.Row - 1), nextPos.Column),
+                new Position(nextPos.Row, Convert.ToByte(nextPos.Column - 1)),
+                new Position(nextPos.Row, Convert.ToByte(nextPos.Column + 1))
+                };
+    
+            foreach (Position pos in checkPosition)
+            {
+                try
+                {
+                    if (board[pos.Row, pos.Column].Position.Occupied)
+                    Console.WriteLine("");
+                }
+                catch(IndexOutOfRangeException)
+                {
+                    continue;
+                }
+            }
             // Checks if the player is trying to make a 2 cells move
             if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 &&
                 (Math.Abs(currentPos.Row - nextPos.Row)) <= 2)

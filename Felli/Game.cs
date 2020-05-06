@@ -32,7 +32,7 @@ namespace Felli
         public void Run()
         {
             // Input class
-            Input input = new Input();
+            // Input input = new Input();
             Victory winCondition = new Victory();
             
             byte roundCounter = 0;
@@ -64,7 +64,7 @@ namespace Felli
                 bool changePiece = false;
                 canMove = false;
                 pieceIndex = 0;
-                
+                Input input = new Input(playerOne, playerTwo, playerName, Board);
                 if (roundCounter == 0 && firstToPlay != 1 && firstToPlay != 2)
                 {
                     print.RenderMessage("FirstRound");
@@ -128,8 +128,10 @@ namespace Felli
 
                                     if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
                                     {
+                                        print.RenderBoard(playerOne, playerTwo,
+                                        playerName);
                                         print.RenderMessage("InvalidMove");
-                                        break;
+                                        continue;
                                     }
                                     // Checks if position isn't occupied
                                     if (!(BoardOccupied(tempPosition)))
@@ -166,7 +168,7 @@ namespace Felli
                                     // If a move or a eat isn't possible
                                     // the move is consider as invalid
                                     else if (!(gameover) && !changePiece)
-                                    {   
+                                    {  
                                         print.RenderMessage("InvalidMove");
                                         if (boardFailInput > 0)
                                             print.RenderBoard(playerOne, 

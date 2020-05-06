@@ -1,3 +1,4 @@
+using System;
 namespace Felli
 {
     public class Victory
@@ -61,125 +62,48 @@ namespace Felli
             return gameover;
         }
     
-    private bool CantMove(Position p, Board[,] board)
-    {
-        bool gameOver = false;
-        byte gameOverCount = 0;
+        private bool CantMove(Position p, Board[,] board)
+        {
+            bool gameOver = false;
+            byte gameOverCount = 0;
+            byte necessaryToWin = 8;
+    
+            int [][] checkList = new int [][]
+            {
+                new int[2] {(p.Row + 1), (p.Column + 1)}, 
+                new int[2] {(p.Row + 1), (p.Column - 1)},
+                new int[2] {(p.Row + 1), p.Column},
+                new int[2] {(p.Row - 1), (p.Column + 1)},
+                new int[2] {(p.Row - 1), (p.Column - 1)},
+                new int[2] {(p.Row - 1), p.Column},
+                new int[2] {p.Row, (p.Column - 1)},
+                new int[2] {p.Row, (p.Column + 1)},
+            };
+            
+            foreach (int[] pos in checkList)
+            {
+                try
+                {
+                    if (board[Convert.ToByte(pos[0]), Convert.ToByte(pos[1])].
+                        Position.IsPlayable)
+                        gameOverCount ++;       
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    necessaryToWin --;
+                    continue;
+                }
+                catch (OverflowException)
+                {
+                    necessaryToWin --;
+                    continue;
+                }   
+            }
 
-        // Borders
-        if (p.Row == 0 && p.Column == 0)
-            if ((board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
-                gameOverCount ++;
+            if (gameOverCount == necessaryToWin)
+                gameOver = true;
 
-        if (p.Row == 0 && p.Column == 2)
-            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column].Position.IsPlayable == false))
-                gameOverCount ++;
-        
-        if (p.Row == 0 && p.Column == 4)
-            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column-2].Position.IsPlayable == false))
-                gameOverCount ++;
-        
-        if (p.Row == 4 && p.Column == 0)
-            if ((board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column+2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-        if (p.Row == 4 && p.Column == 2)
-            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column].Position.IsPlayable == false))
-                gameOverCount ++;
-        
-        if (p.Row == 4 && p.Column == 4)
-            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column-2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-
-        // Borders - 1
-        if (p.Row == 1 && p.Column == 1)
-            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+2].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-        if (p.Row == 1 && p.Column == 3)
-            if ((board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-2].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column-2].Position.IsPlayable == false))
-                gameOverCount ++;
-        
-        if (p.Row == 3 && p.Column == 3)
-            if ((board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-2].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column-2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-        if (p.Row == 3 && p.Column == 1)
-            if ((board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+2].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column+2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-        if (p.Row == 1 && p.Column == 2)
-            if ((board[p.Row-1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column].Position.IsPlayable == false))
-                gameOverCount ++;
-
-        if (p.Row == 3 && p.Column == 2)
-            if ((board[p.Row+1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column].Position.IsPlayable == false))
-                gameOverCount ++;
-        
-        // Middle
-        if (p.Row == 2 && p.Column == 2)
-            if ((board[p.Row-1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column-2].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row-1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row-2,p.Column+2].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column-1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column-2].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column].Position.IsPlayable == false) &&
-                (board[p.Row+1,p.Column+1].Position.IsPlayable == false) &&
-                (board[p.Row+2,p.Column+2].Position.IsPlayable == false))
-                gameOverCount ++;
-
-
-        if (gameOverCount > 0)
-            gameOver = true;
-
-        return gameOver;
-    }
-
-
-
-
+            return gameOver;
+        }
     }
 }
