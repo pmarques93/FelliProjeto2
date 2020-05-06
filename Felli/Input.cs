@@ -66,15 +66,18 @@ namespace Felli
                     }
                     else
                     {
-                        if (CheckConvert(rowString) && CheckConvert(columnString))
+                        if (CheckConvert(rowString) && 
+                            CheckConvert(columnString))
                         {
                             row = Convert.ToByte(rowString);
                             column = Convert.ToByte(columnString);
                             newPos = new Position(row, column);
                         
                             
-                            if ((Math.Abs(currentPos.Column - newPos.Column)) <= 2 &&
-                                (Math.Abs(currentPos.Row - newPos.Row)) <= 2)
+                            if ((Math.Abs(
+                                currentPos.Column - newPos.Column)) <= 2 &&
+                                (Math.Abs(
+                                    currentPos.Row - newPos.Row)) <= 2)
                             {
                                 validInput = true;
                                 ValidMove = true;
@@ -224,217 +227,34 @@ namespace Felli
                                     Board[,] board)
         {
             bool canEat = false;
-            Position[] checkPosition = new Position[] {
-                new Position(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column + 1)),
-                new Position(Convert.ToByte(nextPos.Row + 1), Convert.ToByte(nextPos.Column - 1)),
-                new Position(Convert.ToByte(nextPos.Row + 1), nextPos.Column),
-                new Position(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column + 1)),
-                new Position(Convert.ToByte(nextPos.Row - 1), Convert.ToByte(nextPos.Column - 1)),
-                new Position(Convert.ToByte(nextPos.Row - 1), nextPos.Column),
-                new Position(Convert.ToByte(nextPos.Row - 1), nextPos.Column),
-                new Position(nextPos.Row, Convert.ToByte(nextPos.Column - 1)),
-                new Position(nextPos.Row, Convert.ToByte(nextPos.Column + 1))
-                };
-    
-            foreach (Position pos in checkPosition)
+
+            sbyte [][] checkNext = new sbyte [8][]{
+                new sbyte [2]{-2,-2}, new sbyte [2]{-2,2}, new sbyte [2]{2,2},
+                new sbyte [2]{2,-2}, new sbyte [2]{-2,0}, new sbyte [2]{2,0},
+                new sbyte [2]{0,2}, new sbyte [2]{0,-2}
+
+            };
+
+            for (sbyte i = 0; i < 8; i++)
             {
-                try
+                if (nextPos.Row - currentPos.Row == checkNext[i][0] &&
+                    nextPos.Column - currentPos.Column == checkNext[i][1])
                 {
-                    if (board[pos.Row, pos.Column].Position.Occupied)
-                    Console.WriteLine("");
-                }
-                catch(IndexOutOfRangeException)
-                {
-                    continue;
-                }
-            }
-            // Checks if the player is trying to make a 2 cells move
-            if ((Math.Abs(currentPos.Column - nextPos.Column)) <= 2 &&
-                (Math.Abs(currentPos.Row - nextPos.Row)) <= 2)
-            {
-                if (nextPos.Row == 0)
-                {
-                    if (nextPos.Column == 0)
+                    if (!(board[nextPos.Row,nextPos.Column].Position.Occupied)&&
+                        board[
+                            Convert.ToByte(
+                                nextPos.Row + ((checkNext[i][0]/2)*(-1))), 
+                            Convert.ToByte(
+                                nextPos.Column + ((checkNext[i][1]/2)*(-1)))].
+                                Position.Occupied)
                     {
-                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.
-                            ToByte(nextPos.Column + 1)].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
-                                            Convert.ToByte(nextPos.Column + 1));
-                            
-                        }
-                    }
-                    else if (nextPos.Column == 4)
-                    {
-                        if (board[Convert.ToByte(nextPos.Row + 1), Convert.
-                            ToByte(nextPos.Column - 1)].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
-                                            Convert.ToByte(nextPos.Column - 1));
-                        }
-                    }
-                    else
-                    {
-                        if (board[Convert.ToByte(nextPos.Row + 1), nextPos.
-                            Column].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row + 1),
-                                            nextPos.Column);
-                        }
-                    }
-                }
-
-                else if (nextPos.Row == 4)
-                {
-                    if (nextPos.Column == 0)
-                    {
-                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.
-                            ToByte(nextPos.Column + 1)].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1),
-                                            Convert.ToByte(nextPos.Column + 1));
-                        }
-                    }
-
-                    else if (nextPos.Column == 4)
-                    {
-                        if (board[Convert.ToByte(nextPos.Row - 1), Convert.
-                            ToByte(nextPos.Column - 1)].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1),
-                                            Convert.ToByte(nextPos.Column - 1));
-                        }
-                    }
-                    else
-                    {
-                        if (board[Convert.ToByte(nextPos.Row - 1), nextPos.
-                        Column].Position.Occupied)
-                        {
-                            canEat = true;
-                            SetEatMovement(nextPos.Row, nextPos.Column);
-                            SetKilledPiecePos(Convert.ToByte(nextPos.Row - 1), 
-                                            nextPos.Column);
-                        }
-                    }
-                     
-                }
-                else
-                {
-                    if (nextPos.Row > currentPos.Row)
-                    {
-                        if (nextPos.Column > currentPos.Column)
-                        {
-                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.
-                                ToByte(nextPos.Column - 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
-                                            Convert.ToByte(nextPos.Column - 1));
-                            }
-                        }
-
-                        else if (nextPos.Column < currentPos.Column)
-                        {
-                            if (board[Convert.ToByte(nextPos.Row - 1), Convert.
-                                ToByte(nextPos.Column + 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
-                                            Convert.ToByte(nextPos.Column + 1));
-                            }
-                        }
-
-                        else
-                        {
-                            if (board[Convert.ToByte(nextPos.Row - 1), nextPos.
-                                Column].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row-1),
-                                                nextPos.Column);
-                            }
-                        }
-                    }
-
-
-                    // 
-                    else if (nextPos.Row < currentPos.Row)
-                    {
-                        if (nextPos.Column > currentPos.Column)
-                        {
-                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.
-                                ToByte(nextPos.Column - 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
-                                            Convert.ToByte(nextPos.Column - 1));
-                            }
-                        }
-
-                        else if (nextPos.Column < currentPos.Column)
-                        {
-                            if (board[Convert.ToByte(nextPos.Row + 1), Convert.
-                                ToByte(nextPos.Column + 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
-                                            Convert.ToByte(nextPos.Column + 1));
-                            }
-                        }
-
-                        else
-                        {
-                            if (board[Convert.ToByte(nextPos.Row + 1), nextPos.
-                                Column].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(Convert.ToByte(nextPos.Row+1),
-                                                nextPos.Column);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        
-                        if (nextPos.Column > currentPos.Column)
-                        {
-                            
-                            if (board[nextPos.Row, Convert.ToByte(nextPos.
-                                Column - 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(nextPos.Row, Convert.
-                                                ToByte(nextPos.Column - 1));
-                            }
-                        }
-                        else
-                        {
-                            if (board[nextPos.Row, Convert.ToByte(nextPos.
-                                Column + 1)].Position.Occupied)
-                            {
-                                canEat = true;
-                                SetEatMovement(nextPos.Row, nextPos.Column);
-                                SetKilledPiecePos(nextPos.Row, Convert.
-                                                ToByte(nextPos.Column + 1));
-                            }
-                        }
+                        canEat = true;
+                        SetEatMovement(nextPos.Row, nextPos.Column);
+                        SetKilledPiecePos(
+                            Convert.ToByte(
+                                nextPos.Row + ((checkNext[i][0]/2)*(-1))), 
+                            Convert.ToByte(
+                            nextPos.Column + ((checkNext[i][1]/2)*(-1))));
                     }
                 }
             }
