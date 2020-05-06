@@ -17,6 +17,15 @@ namespace Felli
         private string PlayerName {get; set;}
         private Board[,] Board {get; set;}
 
+        /// <summary>
+        /// Constructor for the Input Class
+        /// </summary>
+        /// <param name="playerOne">Variable from the Player class that 
+        /// represents player One</param>
+        /// <param name="playerTwo">Variable from the Player class that 
+        /// represents player Two</param>
+        /// <param name="playerName">Name of each player's pieces.</param>
+        /// <param name="board"></param>
         public Input (Player[] playerOne, Player[] playerTwo, string playerName, Board[,] board)
         {
             PlayerOne = playerOne;
@@ -25,8 +34,17 @@ namespace Felli
             Board = board;
 
         }
+        /// <summary>
+        /// Empty Constructor used to create instaces of the class
+        /// </summary>
         public Input (){}
         
+        /// <summary>
+        /// Method that saves the current position of the selected piece
+        /// </summary>
+        /// <param name="currentPos">Instace of the class position that holds
+        /// all the parameters of the selected piece</param>
+        /// <returns>Returns an instace of the selected piece</returns>
         public Position GetPosition(Position currentPos)
         {
             Renderer print = new Renderer();
@@ -102,6 +120,10 @@ namespace Felli
             return newPos;
         }
 
+        /// <summary>
+        /// Method that asks for Input to select a piece
+        /// </summary>
+        /// <returns>Returns the name of the chosen piece</returns>
         public string GetPiece()
         {
             string pieceChoice;
@@ -120,7 +142,14 @@ namespace Felli
 
             return pieceChoice;
         }
-
+        
+        /// <summary>
+        /// Method responsible for testing the input of the player for invalid
+        /// inputs
+        /// </summary>
+        /// <param name="inputString">Variable that saves the player's input</param>
+        /// <returns>Returns TRUE if the input is valid or FALSE
+        /// if it isnt.</returns>
         public bool CheckConvert(string inputString)
         {
             Renderer print = new Renderer(Board, 5);
@@ -146,6 +175,13 @@ namespace Felli
             return validInput;
         }
         
+
+        /// <summary>
+        /// Method responsible for checking if the movement is within the 
+        /// board's boundaries
+        /// </summary>
+        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <returns>Returns TRUE if the input is valid or FALSE if not</returns>
         public bool GameBoundaries(Position nextPos)
         {
             bool result = false;
@@ -162,6 +198,16 @@ namespace Felli
             return result;
         }
 
+        /// <summary>
+        /// Method that checks if the movement is possible
+        /// </summary>
+        /// <param name="currentPos">Variable that holds the current position of
+        /// the selected piece</param>
+        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="board">Instance of the Board Class that holds all the 
+        /// parameters of the current game</param>
+        /// <returns>Returns TRUE if removing the piece is possible or
+        /// FALSE if not</returns>
         public bool Movement(Position currentPos, Position nextPos, 
                         Board[,] board)
         {
@@ -181,6 +227,17 @@ namespace Felli
             return canMove;
         }
 
+
+        /// <summary>
+        /// Method that checks if its possible to remove an opponents piece
+        /// with the movement input
+        /// </summary>
+        /// <param name="currentPos">Variable that holds the current position of
+        /// the selected piece</param>
+        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="board">Instance of the Board Class that holds all the 
+        /// parameters of the current game</param>
+        /// <returns></returns>
         public bool Eat(Position currentPos, Position nextPos, Board[,] board)
         {
             bool canMove = false;
@@ -196,6 +253,14 @@ namespace Felli
             return canMove;
         }
 
+        /// <summary>
+        /// Method that checks if the input is whitin one house of distance from
+        /// the current position
+        /// </summary>
+        /// <param name="currentPos">Variable that holds the current position of
+        /// the selected piece</param>
+        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <returns>Returns TRUE if the input is valid or FALSE if not</returns>
         public bool OneSquareMovement(Position currentPos, Position nextPos)
         {
             bool canMove = false;
@@ -223,6 +288,17 @@ namespace Felli
             return canMove;
         }
 
+
+        /// <summary>
+        /// Method that checks if the input to remove a piece is valid or possible
+        /// </summary>
+        /// <param name="currentPos">Variable that holds the current position of
+        /// the selected piece</param>
+        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <returns>Returns TRUE if the input is valid or FALSE if not</param>
+        /// <param name="board">Instance of the Board Class that holds all the 
+        /// parameters of the current game</param>
+        /// <returns></returns>
         private bool CheckPossibleEat(Position currentPos, Position nextPos, 
                                     Board[,] board)
         {
@@ -261,11 +337,23 @@ namespace Felli
             return canEat;
         }
 
+        /// <summary>
+        /// Method that sets the piece's movement to the one inputed
+        /// </summary>
+        /// <param name="row"> Variable that holds the row value
+        ///  of the piece </param>
+        /// <param name="column">Variable that holds the column value
+        ///  of the piece</param>
         private void SetEatMovement(byte row, byte column)
         {
             EatMovement = new Position (row, column);
         }
 
+        /// <summary>
+        /// Method that sets the piece's position has the removed piece
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>//
         private void SetKilledPiecePos(byte row, byte column)
         {
             KilledPiecePos = new Position (row, column);

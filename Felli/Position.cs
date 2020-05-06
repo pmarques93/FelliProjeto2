@@ -12,26 +12,46 @@ namespace Felli
         public bool IsPlayable { get; set; }
 
         public bool Occupied { get; private set; }
-        
+        /// <summary>
+        /// Constructor used when using the Class Position with the Class
+        /// Board
+        /// </summary>
+        /// <param name="row">Variable that holds the row value
+        ///  of the board </param>
+        /// <param name="column">Variable that holds the column value
+        ///  of the board</param>
+        /// <param name="isPlayable">Variable that sets the position has playble
+        ///(True) or unplayble (False)</param>
         public Position(byte row, byte column, bool isPlayable)
         {
             Row = row;
             Column = column;
             IsPlayable = isPlayable;
         }        
-
+        /// <summary>
+        /// Constructor used when using the Class Position with the Class
+        /// Player
+        /// </summary>
+        /// <param name="row">Variable that holds the row value
+        ///  of the player </param>
+        /// <param name="column">Variable that holds the column value
+        ///  of the player</param>
         public Position(byte row, byte column)
         {
             Row = row;
             Column = column;
         }
-
+        /// <summary>
+        /// Method used to change a position from free to occupied
+        /// </summary>  
         public void OccupySpace()
         {
             IsPlayable = false;
             Occupied = true;
         }
-
+        /// <summary>
+        /// Method used to change a position from occupied to free
+        /// </summary>
         public void FreeSpace()
         {
             IsPlayable = true;
