@@ -14,6 +14,14 @@ namespace Felli
 
         public byte Index { get; private set;}
 
+        /// <summary>
+        /// Constructor for the Player Class
+        /// </summary>
+        /// <param name="name">Variable that holds the player's name</param>
+        /// <param name="position">Variable from the class Position
+        /// that holds each player's piece position</param>
+        /// <param name="isAlive">Variable that checks if each player's piece
+        /// is still in game or dead. </param>
         public Player(string name, Position position, bool isAlive)
         {
             Name = name;
@@ -22,22 +30,34 @@ namespace Felli
             Index = GetIndex();
         }
 
+        /// <summary>
+        /// Method used to check which player is currently playing
+        /// </summary>
         public void SelectPlayer()
         {
             Selected = true;
         }
 
+        /// <summary>
+        /// Method used to change the playing player.
+        /// </summary>
         public void DeselectPlayer()
         {
             Selected = false;
         }
 
-        // Stops playing from being printed and chooseable
+        ///<summary>
+        /// Removes a piece from the Player's Total
+        ///<summary>          
         public void Die()
         {
             IsAlive = false;
         }
 
+        /// <summary>
+        /// Method that calls the chosen piece to be played
+        /// </summary>
+        /// <returns>Returns the index of the chosen piece </returns>
         private byte GetIndex()
         {
 

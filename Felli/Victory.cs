@@ -61,7 +61,15 @@ namespace Felli
 
             return gameover;
         }
-    
+        
+        /// <summary>
+        /// Method that checks if the player's pieces are all blocked
+        /// </summary>
+        /// <param name="p">Variable that holds the position of each player's
+        /// piece</param>
+        /// <param name="board">Instance of the Board Class that holds all the 
+        /// parameters of the current game</param>
+        /// <returns></returns>
         private bool CantMove(Position p, Board[,] board)
         {
             bool gameOver = false;
