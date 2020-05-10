@@ -26,7 +26,8 @@ namespace Felli
         /// represents player Two</param>
         /// <param name="playerName">Name of each player's pieces.</param>
         /// <param name="board"></param>
-        public Input (Player[] playerOne, Player[] playerTwo, string playerName, Board[,] board)
+        public Input (Player[] playerOne, Player[] playerTwo, 
+                string playerName, Board[,] board)
         {
             PlayerOne = playerOne;
             PlayerTwo = playerTwo;
@@ -55,6 +56,7 @@ namespace Felli
             Position newPos;
             while (!(validInput))
             {
+                //Asks input to the player
                 print.RenderMessage("InsertRow");
                 rowString = Console.ReadLine();
                 if (rowString.ToLower() == "exit")
@@ -84,6 +86,7 @@ namespace Felli
                     }
                     else
                     {
+                        //Checks if Input is Valid
                         if (CheckConvert(rowString) && 
                             CheckConvert(columnString))
                         {
@@ -147,7 +150,8 @@ namespace Felli
         /// Method responsible for testing the input of the player for invalid
         /// inputs
         /// </summary>
-        /// <param name="inputString">Variable that saves the player's input</param>
+        /// <param name="inputString">Variable that saves the 
+        /// player's input</param>
         /// <returns>Returns TRUE if the input is valid or FALSE
         /// if it isnt.</returns>
         public bool CheckConvert(string inputString)
@@ -160,6 +164,7 @@ namespace Felli
                 aux = Convert.ToByte(inputString);
                 validInput = true;
             }
+            
             
             catch (FormatException)
             {
@@ -180,7 +185,8 @@ namespace Felli
         /// Method responsible for checking if the movement is within the 
         /// board's boundaries
         /// </summary>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input for 
+        /// the movement</param>
         /// <returns>Returns TRUE if the input is valid or FALSE if not</returns>
         public bool GameBoundaries(Position nextPos)
         {
@@ -203,7 +209,8 @@ namespace Felli
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input for the 
+        /// movement</param>
         /// <param name="board">Instance of the Board Class that holds all the 
         /// parameters of the current game</param>
         /// <returns>Returns TRUE if removing the piece is possible or
@@ -234,10 +241,12 @@ namespace Felli
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input for the 
+        /// movement</param>
         /// <param name="board">Instance of the Board Class that holds all the 
         /// parameters of the current game</param>
-        /// <returns></returns>
+        /// <returns>Returns TRUE if conditions are met or FALSE
+        /// otherwise</returns>
         public bool Eat(Position currentPos, Position nextPos, Board[,] board)
         {
             bool canMove = false;
@@ -259,7 +268,8 @@ namespace Felli
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input for 
+        /// the movement</param>
         /// <returns>Returns TRUE if the input is valid or FALSE if not</returns>
         public bool OneSquareMovement(Position currentPos, Position nextPos)
         {
@@ -294,7 +304,8 @@ namespace Felli
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input 
+        /// for the movement</param>
         /// <returns>Returns TRUE if the input is valid or FALSE if not</param>
         /// <param name="board">Instance of the Board Class that holds all the 
         /// parameters of the current game</param>

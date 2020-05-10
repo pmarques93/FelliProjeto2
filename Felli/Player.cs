@@ -60,11 +60,12 @@ namespace Felli
         /// <returns>Returns the index of the chosen piece </returns>
         private byte GetIndex()
         {
-
+            //Creation of arrays with each players pieces
             string [] name1 = new string [6]{"W0", "W1","W2", "W3", "W4" ,"W5"};
             string [] name2 = new string [6]{"B0", "B1","B2", "B3", "B4" ,"B5"};
             byte index = 0;
 
+            
             for (byte i = 0; i < 6; i++)
             {
                 if (Name == name1[i] || Name == name2[i])

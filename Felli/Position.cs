@@ -20,8 +20,8 @@ namespace Felli
         ///  of the board </param>
         /// <param name="column">Variable that holds the column value
         ///  of the board</param>
-        /// <param name="isPlayable">Variable that sets the position has playble
-        ///(True) or unplayble (False)</param>
+        /// <param name="isPlayable">Variable that sets the position has playable
+        ///(True) or unplayable (False)</param>
         public Position(byte row, byte column, bool isPlayable)
         {
             Row = row;

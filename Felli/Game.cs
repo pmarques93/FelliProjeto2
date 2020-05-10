@@ -64,9 +64,11 @@ namespace Felli
                 bool changePiece = false;
                 canMove = false;
                 pieceIndex = 0;
-                Input input = new Input(playerOne, playerTwo, playerName, Board);
+                Input input = new Input(playerOne, playerTwo, 
+                                    playerName, Board);
                 if (roundCounter == 0 && firstToPlay != 1 && firstToPlay != 2)
                 {
+                    //Asks the player to choose who plays first
                     print.RenderMessage("FirstRound");
                     string auxInput = Console.ReadLine();
                     if (auxInput.ToLower() == "exit")
@@ -126,7 +128,8 @@ namespace Felli
                                     gameover = input.QuitInput;
                                     changePiece = input.ChangePieceInput;
 
-                                    if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
+                                    if (!(input.GameBoundaries(tempPosition)) ||
+                                    !(input.ValidMove))
                                     {
                                         print.RenderBoard(playerOne, playerTwo,
                                         playerName);
