@@ -76,24 +76,24 @@ namespace Felli
             byte gameOverCount = 0;
             byte necessaryToWin = 8;
     
-            int [][] checkList = new int [][]
+            sbyte [][] checkList = new sbyte [][]
             {
-                new int[2] {(p.Row + 1), (p.Column + 1)}, 
-                new int[2] {(p.Row + 1), (p.Column - 1)},
-                new int[2] {(p.Row + 1), p.Column},
-                new int[2] {(p.Row - 1), (p.Column + 1)},
-                new int[2] {(p.Row - 1), (p.Column - 1)},
-                new int[2] {(p.Row - 1), p.Column},
-                new int[2] {p.Row, (p.Column - 1)},
-                new int[2] {p.Row, (p.Column + 1)},
+                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)(p.Column + 1)}, 
+                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)(p.Column - 1)},
+                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)p.Column},
+                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)(p.Column + 1)},
+                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)(p.Column - 1)},
+                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)p.Column},
+                new sbyte[2] {(sbyte)p.Row, (sbyte)(p.Column - 1)},
+                new sbyte[2] {(sbyte)p.Row, (sbyte)(p.Column + 1)}
             };
             
-            foreach (int[] pos in checkList)
+            foreach (sbyte[] pos in checkList)
             {
                 try
                 {
-                    if (board[Convert.ToByte(pos[0]), Convert.ToByte(pos[1])].
-                        Position.IsPlayable)
+                    if (!(board[Convert.ToByte(pos[0]), Convert.ToByte(pos[1])].
+                        Position.IsPlayable))
                         gameOverCount ++;       
                 }
                 catch (IndexOutOfRangeException)
