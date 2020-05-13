@@ -38,6 +38,9 @@ namespace Felli
             Console.Write(" |                    |              ");
             PossiblePick(playerOne, playerTwo, playerName);
             Console.WriteLine("");
+            
+            //Prints the board with all pieces, and playable houses
+            //according to the boardSize value
             for (byte i = 0; i < boardSize; i++)
             {
                 Console.Write($" {i}   ");
@@ -70,6 +73,7 @@ namespace Felli
                         Console.Write($".. ");  
                 }
                 Console.Write($"  {i}");
+                
                 // Prints playable numbers on middle row
                 if (i == 2)
                     PossiblePlays();
@@ -197,9 +201,11 @@ namespace Felli
         {
             if (x == 1)
             {
+                //Checks all pieces in the playerOne array 
                 Console.Write($"    Eaten Player One Pieces: ");
                 foreach (Player player in playerOne)
                 {
+                    //If the piece is eliminated prints it on the board
                     if (!(player.IsAlive))
                     {
                         Console.Write($"{player.Name} ");
@@ -208,9 +214,11 @@ namespace Felli
             }
             else
             {
+                //Checks all pieces in the playerTwo array 
                 Console.Write($"    Eaten Player Two Pieces: ");
                 foreach (Player player in playerTwo)
                 {
+                    //If the piece is eliminated prints it on the board
                     if (!(player.IsAlive))
                     {
                         Console.Write($"{player.Name} ");
@@ -248,7 +256,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method that prints current playbale pieces for the active player in 
+        /// Method that prints current playable pieces for the active player in 
         /// the current turn
         /// </summary>
         /// <param name="playerOne">Variable from the Player class that 
@@ -259,10 +267,13 @@ namespace Felli
         private void PossiblePick(Player[] playerOne, Player[] playerTwo, 
                                 string playerName)
         {
+            
             if (playerName == "p1")
-            {
+            {   
+                //Checks all pieces in the playerOne array 
                 foreach (Player player in playerOne)
                 {
+                    //If the piece is in-game prints it on the board
                     if (player.IsAlive)
                     {
                         Console.Write($"{player.Name}|");
@@ -271,8 +282,10 @@ namespace Felli
             }
             else
             {
+                //Checks all pieces in the playerTwo array 
                 foreach (Player player in playerTwo)
                 {
+                    //If the piece is in-game prints it on the board
                     if (player.IsAlive)
                     {
                         Console.Write($"{player.Name}|");
