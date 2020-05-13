@@ -31,8 +31,6 @@ namespace Felli
         /// </summary>
         public void Run()
         {
-            // Input class
-            // Input input = new Input();
             Victory winCondition = new Victory();
             
             byte roundCounter = 0;
@@ -64,7 +62,7 @@ namespace Felli
                 bool changePiece = false;
                 canMove = false;
                 pieceIndex = 0;
-                Input input = new Input(playerOne, playerTwo, playerName, Board);
+                Input input = new Input(playerOne,playerTwo, playerName, Board);
                 if (roundCounter == 0 && firstToPlay != 1 && firstToPlay != 2)
                 {
                     print.RenderMessage("FirstRound");
@@ -122,11 +120,13 @@ namespace Felli
                                                        playerName);
 
 
-                                    tempPosition = input.GetPosition(currentPosition);
+                                    tempPosition = input.
+                                    GetPosition(currentPosition);
                                     gameover = input.QuitInput;
                                     changePiece = input.ChangePieceInput;
 
-                                    if (!(input.GameBoundaries(tempPosition)) || !(input.ValidMove))
+                                    if (!(input.GameBoundaries(tempPosition)) ||
+                                        !(input.ValidMove))
                                     {
                                         print.RenderBoard(playerOne, playerTwo,
                                         playerName);
@@ -158,7 +158,8 @@ namespace Felli
                                             // Gives player new pos
                                             if (canMove == true)
                                             {
-                                                tempPosition = input.EatMovement;
+                                                tempPosition = input.
+                                                EatMovement;
                                                 newPosition = tempPosition;
                                                 continue;
                                             }

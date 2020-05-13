@@ -259,8 +259,10 @@ namespace Felli
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
-        /// <returns>Returns TRUE if the input is valid or FALSE if not</returns>
+        /// <param name="nextPos">Variable that holds the input for the 
+        /// movement</param>
+        /// <returns>Returns TRUE if the input is valid or FALSE if 
+        /// not</returns>
         public bool OneSquareMovement(Position currentPos, Position nextPos)
         {
             bool canMove = false;
@@ -290,11 +292,13 @@ namespace Felli
 
 
         /// <summary>
-        /// Method that checks if the input to remove a piece is valid or possible
+        /// Method that checks if the input to remove a piece is valid or 
+        /// possible
         /// </summary>
         /// <param name="currentPos">Variable that holds the current position of
         /// the selected piece</param>
-        /// <param name="nextPos">Variable that holds the input for the movement</param>
+        /// <param name="nextPos">Variable that holds the input for the 
+        /// movement</param>
         /// <returns>Returns TRUE if the input is valid or FALSE if not</param>
         /// <param name="board">Instance of the Board Class that holds all the 
         /// parameters of the current game</param>

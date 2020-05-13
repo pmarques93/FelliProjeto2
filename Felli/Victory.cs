@@ -74,7 +74,7 @@ namespace Felli
         {
             bool gameOver = false;
             byte gameOverCount = 0;
-            byte necessaryToWin = 8;
+            byte necessaryToWin = 8;    
     
             sbyte [][] checkList = new sbyte [][]
             {
