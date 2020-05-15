@@ -240,21 +240,22 @@ namespace Felli
             "---");
             Console.WriteLine(" ----------------------- Rules -------------"+
             "-----");
-            Console.WriteLine(" - 6 White pieces are positioned on the" + 
+            Console.WriteLine(" - 6 White pieces are positioned at the" + 
             " bottom.");
-            Console.WriteLine(" - 6 Black pieces are positioned on the top.");
+            Console.WriteLine(" - 6 Black pieces are positioned at the top.");
             Console.WriteLine(" - Each player gets a turn.");
             Console.WriteLine(" - On each player's turn, only one piece" +
-            " must be moved at a time.");
+            " must be moved at a time, by \n   inserting its name and then" +
+            " the desired row and column.");
             Console.WriteLine(" - Pieces may be moved in every direction if " +  
-            "theres an empty/playable\n   space next to it.");
-            Console.WriteLine(" - Pieces can also eat and eliminate enemy " +
-            " pieces, jumping over them\n   and landing on" +  
-            " the house on the back of that same piece.");
+            "there's an empty/playable\n   space next to it.");
+            Console.WriteLine(@" - Pieces can also 'eat' other enemy pieces, " +
+            " and, therefore, eliminate\n   them, jumping over them and " +
+            "landing on the house on the back of that\n   same piece.");
             Console.WriteLine(" - Only a single piece may be eliminated " +
             "each turn.");
             Console.WriteLine(" - The game ends when a player eliminates" + 
-            " all the opponent pieces,\n   or if the opponent has no possible" + 
+            " all the opponent pieces, or\n   the opponent has no possible" + 
             " plays.");
         }   
 
