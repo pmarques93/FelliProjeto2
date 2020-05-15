@@ -21,6 +21,7 @@
 |Add - Introduction|Add - Select Pieces Input|Add - Movement Limitation|
 |Add - Victory|Fix - Eating Movement/ Movement Limitation|Add - Eating Movement|
 ||Fix - General Inputs/Error Messages/Add - Try-Catch Movement|Fix - Victory|
+|XML Documentation|UML Diagram|README.md|
 
 ## Repositório git
 
@@ -29,9 +30,9 @@
 ## Breve descrição da solução
 
 Para resolução do problema criámos várias classes com diferentes
-responsabilidades. Criámos classes relativas ao jogo, classes com o propósito
-de receber o _input_ do jogador e também classes cuja única função é imprimir
-o tabuleiro na consola.
+responsabilidades. Criámos classes relativas ao jogo, uma classe com o propósito
+de receber o _input_ do jogador e também uma classe cuja única função é imprimir
+o tabuleiro/_inputs_* na consola.
 
 ### Resumo de lógica implementada (algoritmos não triviais)
 
@@ -49,11 +50,12 @@ _FreeSpace()_ e o _OccupySpace()_. Esta solução foi implementada de modo a
 _libertarmos_ e _ocuparmos_ espaços no tabuleiro sempre que necessitássemos,
 para controlar as peças dos jogadores.
 
-Para a condição de vitória, no método _cantMove()_, utilizámos _loops_ que vão
+Para a condição de vitória, no método _Gameover()_, utilizámos _loops_ que vão
 confirmar quantas/quais peças do jogador ainda estão vivas, seguindo-se do
-método _GameOver()_ que vai confirmar quais das peças analisadas não têm
-movimentos possíveis. Caso o número de confirmações seja o mesmo para ambos
-os casos, quer dizer que não existem jogadas possíveis e o jogo acaba.
+método _CantMove_()_ que vai confirmar quais das peças analisadas não têm
+movimentos possíveis, quer de uma casa ou duas casas. Caso o número de
+confirmações seja o mesmo para ambos os casos, quer dizer que não existem
+jogadas possíveis e o jogo acaba.
 
 ### Diagrama UML
 
