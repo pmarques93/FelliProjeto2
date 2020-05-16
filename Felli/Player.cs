@@ -1,27 +1,41 @@
 namespace Felli
 {
     /// <summary>
-    /// Class for player character
+    /// Class for player character.
     /// </summary>
     public class Player
     {
+        /// <summary>
+        /// Gets the name of the player.
+        /// </summary>
         public string Name { get; }
+        /// <summary>
+        /// Gets and sets a Position value.
+        /// </summary>
         public Position Position { get; set; }
 
+        /// <summary>
+        /// Gets and sets a value indicating if the player is selected.
+        /// </summary>
         public bool Selected { get; set; }
-        
+
+        /// <summary>
+        /// Gets and sets a value indicating if the player's piece is alive.
+        /// </summary>        
         public bool IsAlive { get; private set; }
 
+        /// <summary>
+        /// Gets and sets selected piece's index.
+        /// </summary>
         public byte Index { get; private set;}
 
         /// <summary>
         /// Constructor for the Player Class
         /// </summary>
-        /// <param name="name">Variable that holds the player's name</param>
-        /// <param name="position">Variable from the class Position
-        /// that holds each player's piece position</param>
-        /// <param name="isAlive">Variable that checks if each player's piece
-        /// is still in game or dead. </param>
+        /// <param name="name">Player's name</param>
+        /// <param name="position">Player's piece position</param>
+        /// <param name="isAlive">Specifies whether the piece is still alive
+        /// or dead. </param>
         public Player(string name, Position position, bool isAlive)
         {
             Name = name;
@@ -31,7 +45,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method used to check which player is currently playing
+        /// Checks which player is currently playing.
         /// </summary>
         public void SelectPlayer()
         {
@@ -39,7 +53,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method used to change the playing player.
+        /// Changes the player.
         /// </summary>
         public void DeselectPlayer()
         {
@@ -55,7 +69,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method that calls the chosen piece to be played
+        /// Calls the chosen piece to be played.
         /// </summary>
         /// <returns>Returns the index of the chosen piece </returns>
         private byte GetIndex()

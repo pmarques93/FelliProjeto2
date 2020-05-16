@@ -4,15 +4,12 @@ namespace Felli
     public class Victory
     {
         /// <summary>
-        /// Defines victory condition
+        /// Defines victory condition.
         /// </summary>
-        /// <param name="playerOne"> Parameter with playerOne array</param>
-        /// <param name="playerTwo"> Parameter with playerTwo array</param>
-        /// <param name="Board"> Parameter with board array</param>
-        /// <returns> Returns victory condition if one of the players
-        /// runs out of pieces;
-        /// Returns victory condition if one of the players runs out 
-        /// of possible plays;</returns>
+        /// <param name="playerOne"> PlayerOne array.</param>
+        /// <param name="playerTwo"> PlayerTwo array.</param>
+        /// <param name="Board"> Array with all board positions.</param>
+        /// <returns> Returns TRUE if a player won, otherwise FALSE.</returns>
         public bool Gameover(Player[] playerOne, Player[] playerTwo,
                             Board[,] board)
         {
@@ -63,13 +60,12 @@ namespace Felli
         }
         
         /// <summary>
-        /// Method that checks if the player's pieces are all blocked
+        /// Checks if the player's pieces are all blocked.
         /// </summary>
-        /// <param name="p">Variable that holds the position of each player's
-        /// piece</param>
-        /// <param name="board">Instance of the Board Class that holds all the 
-        /// parameters of the current game</param>
-        /// <returns></returns>
+        /// <param name="p">Position of each player's piece.</param>
+        /// <param name="board">Array with all  board positions.</param>
+        /// <returns>Returns TRUE if the piece cant move, otherwise FALSE.
+        /// </returns>
         private bool CantMove(Position p, Board[,] board)
         {
             Input input = new Input();

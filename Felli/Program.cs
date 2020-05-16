@@ -10,7 +10,7 @@ namespace Felli
         /// <summary>
         /// Main method
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Number of arguments the program takes</param>
         static void Main(string[] args)
         {
             Game gameplay = new Game();

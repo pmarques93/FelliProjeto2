@@ -20,8 +20,8 @@
 ||Add - Input class|Add - Input class|
 |Add - Introduction|Add - Select Pieces Input|Add - Movement Limitation|
 |Add - Victory|Fix - Eating Movement/ Movement Limitation|Add - Eating Movement|
-||Fix - General Inputs/Error Messages/Add - Try-Catch Movement|Fix - Victory|
-|XML Documentation|UML Diagram|README|
+|XML Documentation|Fix - General Inputs/Error Messages/Add - Try-Catch Movement|Fix - Victory|
+|HTML Documentation|UML Diagram|README|
 
 ## Repositório git
 
