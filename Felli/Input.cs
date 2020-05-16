@@ -312,8 +312,13 @@ namespace Felli
                     if (nextPos.Column == currentPos.Column + 2 ||
                         nextPos.Column == currentPos.Column - 2)
                         {
-                            canMove = true;
+                            if (nextPos.Row == currentPos.Row)
+                            {
+                                Console.WriteLine("\nentou\n");
+                                canMove = true;
+                            }
                         }
+
                 }
                 else if (nextPos.Column == currentPos.Column + 1 ||
                     nextPos.Column == currentPos.Column - 1)
