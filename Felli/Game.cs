@@ -163,8 +163,8 @@ namespace Felli
                                     {
                                         if (!(input.ChangePieceInput))
                                         {
-                                            print.RenderBoard(playerOne, playerTwo,
-                                        playerName);
+                                            print.RenderBoard(playerOne, 
+                                                        playerTwo, playerName);
                                             print.RenderMessage("InvalidMove");
                                         }
                                         continue;
