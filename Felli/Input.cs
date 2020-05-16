@@ -302,8 +302,10 @@ namespace Felli
                 if ((nextPos.Row == 1 && nextPos.Column == 1) || (nextPos.
                     Row == 1 && nextPos.Column == 3))
                     canMove = false; 
-                else if (nextPos.Row == currentPos.Row + 1 && nextPos.
-                    Column == currentPos.Column)
+                else if ((nextPos.Row == currentPos.Row + 1 && nextPos.
+                    Column == currentPos.Column) ||( nextPos.Row == 0 
+                    && nextPos.Column == 4) ||
+                    ( nextPos.Row == 0 && nextPos.Column == 0))
                     canMove = true;
             }
 
@@ -312,8 +314,10 @@ namespace Felli
                 if ((nextPos.Row ==  3 && nextPos.Column == 1) || (nextPos.
                     Row == 3 && nextPos.Column == 3))
                     canMove = false; 
-                else if (nextPos.Row == currentPos.Row - 1 && nextPos.
-                        Column == currentPos.Column)
+                else if ((nextPos.Row == currentPos.Row - 1 && nextPos.
+                    Column == currentPos.Column) ||( nextPos.Row == 4 
+                    && nextPos.Column == 4) ||
+                    ( nextPos.Row == 4 && nextPos.Column == 0))
                     canMove = true;
             }
 
