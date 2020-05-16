@@ -130,9 +130,9 @@ namespace Felli
                         
                             
                             if ((Math.Abs(
-                                currentPos.Column - newPos.Column)) <= 2 &&
+                                currentPos.Column - newPos.Column)) <= 4 &&
                                 (Math.Abs(
-                                    currentPos.Row - newPos.Row)) <= 2)
+                                    currentPos.Row - newPos.Row)) <= 4)
                             {
                                 validInput = true;
                                 ValidMove = true;
@@ -350,6 +350,40 @@ namespace Felli
 
             for (sbyte i = 0; i < 8; i++)
             {
+                if (currentPos.Row == 0 || currentPos.Row == 4)
+                {
+
+                    
+                    if (nextPos.Column - currentPos.Column == -4)
+                    {
+                        // Console.WriteLine($"enemy piece pos:    {nextPos.Row}, {nextPos.Column + 2}\n");
+
+                        
+                        if(board[nextPos.Row, (byte)(nextPos.Column + 2)].
+                        Position.Occupied)
+                        {
+                            if(!(board[nextPos.Row, nextPos.Column].
+                                Position.Occupied))
+                            {
+                                canEat = true;
+                                SetEatMovement(nextPos.Row, nextPos.Column);
+                                SetKilledPiecePos(nextPos.Row, 
+                                                    (byte)(nextPos.Column + 2));
+                            }
+                        }
+                    }
+                    else if (nextPos.Column - currentPos.Column == 4 &&
+                        board[nextPos.Row, (byte)(nextPos.Column - 2)].
+                        Position.Occupied &&
+                        !(board[nextPos.Row, nextPos.Column].
+                        Position.Occupied))
+                    {
+                        canEat = true;
+                        SetEatMovement(nextPos.Row, nextPos.Column);
+                        SetKilledPiecePos(nextPos.Row, 
+                        (byte)(nextPos.Column - 2));
+                    }
+                }
                 if (nextPos.Row - currentPos.Row == checkNext[i][0] &&
                     nextPos.Column - currentPos.Column == checkNext[i][1])
                 {

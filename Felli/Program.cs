@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Felli
+﻿namespace Felli
 {
     /// <summary>
     /// Class for main Program

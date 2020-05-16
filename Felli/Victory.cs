@@ -1,4 +1,3 @@
-using System;
 namespace Felli
 {
     public class Victory

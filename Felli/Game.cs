@@ -186,8 +186,7 @@ namespace Felli
                                         if (input.Eat(currentPosition, 
                                             Board[tempPosition.Row,tempPosition.
                                             Column].Position, Board))
-                                        {
-                                            
+                                        {    
                                             // Kills enemy piece
                                             PlayerKill(playerName, tempPosition,
                                                     input);
