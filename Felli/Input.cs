@@ -314,7 +314,6 @@ namespace Felli
                         {
                             if (nextPos.Row == currentPos.Row)
                             {
-                                Console.WriteLine("\nentou\n");
                                 canMove = true;
                             }
                         }
