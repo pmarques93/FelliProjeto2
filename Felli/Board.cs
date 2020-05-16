@@ -6,7 +6,7 @@ namespace Felli
     public class Board
     {
     
-        /// <summary>Gets and sets aPosition value.</summary>
+        /// <summary>Gets and sets a Position value.</summary>
         public Position Position { get; private set; }
         
         /// <summary>

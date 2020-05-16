@@ -12,36 +12,38 @@ namespace Felli
         public Board[,] Board { get; private set; }
 
         /// <summary>
-        ///Sets the boardsize value.
+        /// Sets the boardsize value.
         /// </summary>
         private const byte boardSize = 5;
 
-        ///<summary>
-        ///Sets a value indicating whether game is over.
-        ///</summary>
+        /// <summary>
+        /// Sets a value indicating whether game is over.
+        /// </summary>
         private bool gameover = false;
 
-        ///<summary>
-        ///Sets two Player values.
-        ///</summary>
+        /// <summary>
+        /// Sets two Player values.
+        /// </summary>
         private Player[] playerOne, playerTwo;
-        ///<summary>
-        ///Sets a value indicating whether a piece can move.
-        ///</summary>
+        
+        /// <summary>
+        /// Sets a value indicating whether a piece can move.
+        /// </summary>
         private bool canMove;
 
-        ///<summary>
-        ///Sets a Player value.
-        ///</summary>
+        /// <summary>
+        /// Sets a Player value.
+        /// </summary>
         private Player[] selectedPlayer;
 
-        ///<summary>
-        ///Sets a Renderer value.
-        ///</summary>
+        /// <summary>
+        /// Sets a Renderer value.
+        /// </summary>
         private Renderer print;
-        ///<summary>
-        ///Sets the player's name.
-        ///</summary>
+
+        /// <summary>
+        /// Sets the player's name.
+        /// </summary>
         private string playerName;
 
         /// <summary>
@@ -309,8 +311,8 @@ namespace Felli
         /// <summary>
         /// Checks if a position is occupied.
         /// </summary>
-        /// <param name="tempPosition"> Position to be checked.</param>
-        /// <returns> True if position is occupied.</returns>//
+        /// <param name=>Position to be checked.</param>
+        /// <returns> True if position is occupied, otherwise false.</returns>//
         private bool BoardOccupied(Position tempPosition)
         {
             bool occupied = false;
@@ -390,7 +392,7 @@ namespace Felli
         /// <summary>
         /// Creates players.
         /// </summary>
-        /// <param name="x">Defines the number of the creating player.</param>
+        /// <param name="x">Player's number.</param>
         private void CreatePlayer(byte x)
         {   
             byte temp = 0;

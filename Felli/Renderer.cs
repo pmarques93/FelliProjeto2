@@ -100,8 +100,8 @@ namespace Felli
         }
 
         /// <summary>
-        /// Prints all information related to the game to the players. 
-        /// /// </summary>
+        /// Prints all information related to the game to the players.
+        /// </summary>
         /// <param name="message">Player's Input.</param>
         public void RenderMessage(string message)
         {

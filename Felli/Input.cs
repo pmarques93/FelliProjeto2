@@ -59,7 +59,7 @@ namespace Felli
         /// <param name="playerOne">Input for Player 1.</param>
         /// <param name="playerTwo">Input for Player 2.</param>
         /// <param name="playerName">Name of each player's pieces.</param>
-        /// <param name="board"></param>
+        /// <param name="board">Array with all board positions.</param>
 
         public Input (Player[] playerOne, Player[] playerTwo, 
                 string playerName, Board[,] board)
@@ -373,10 +373,10 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method that sets the piece's position has the removed piece
+        /// Sets the piece's position to the removed piece's position.
         /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>//
+        /// <param name="row"> Row value of the piece. </param>
+        /// <param name="column">Column value of the piece.</param>
         private void SetKilledPiecePos(byte row, byte column)
         {
             KilledPiecePos = new Position (row, column);

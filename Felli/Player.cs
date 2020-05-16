@@ -9,6 +9,7 @@ namespace Felli
         /// Gets the name of the player.
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Gets and sets a Position value.
         /// </summary>
@@ -60,9 +61,9 @@ namespace Felli
             Selected = false;
         }
 
-        ///<summary>
+        /// <summary>
         /// Removes a piece from the Player's Total
-        ///<summary>          
+        /// <summary>          
         public void Die()
         {
             IsAlive = false;
