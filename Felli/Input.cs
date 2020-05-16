@@ -2,7 +2,7 @@ using System;
 namespace Felli
 {
     /// <summary>
-    /// Class for user input
+    /// Class for user input.
     /// </summary>
     public class Input
     {
@@ -18,11 +18,11 @@ namespace Felli
         private Board[,] Board {get; set;}
 
         /// <summary>
-        /// Constructor for the Input Class
+        /// Constructor for the Input Class.
         /// </summary>
-        /// <param name="playerOne">Variable from the Player class that 
+        /// <param name="playerOne">Variable from the Player class that.
         /// represents player One</param>
-        /// <param name="playerTwo">Variable from the Player class that 
+        /// <param name="playerTwo">Variable from the Player class that.
         /// represents player Two</param>
         /// <param name="playerName">Name of each player's pieces.</param>
         /// <param name="board"></param>
@@ -36,15 +36,14 @@ namespace Felli
 
         }
         /// <summary>
-        /// Empty Constructor used to create instaces of the class
+        /// Empty Constructor used to create instaces of the class.
         /// </summary>
         public Input (){}
         
         /// <summary>
-        /// Method that saves the current position of the selected piece
+        /// Asks the player for an intended movement coordinates.
         /// </summary>
-        /// <param name="currentPos">Instace of the class position that holds
-        /// all the parameters of the selected piece</param>
+        /// <param name="currentPos">Current Player position.</param>
         /// <returns>Returns an instace of the selected piece</returns>
         public Position GetPosition(Position currentPos)
         {
@@ -102,23 +101,17 @@ namespace Felli
                             {
                                 validInput = true;
                                 ValidMove = true;
-                            }
-                                                            
+                            }      
                             else
                             {
                                 validInput = true;
                                 ValidMove = false;
-
                             }
-                        }
-                            
-                            
+                        } 
                         QuitInput = false;
                     }
                 }
-
             }
-
             newPos = new Position(row, column);
             return newPos;
         }
@@ -218,7 +211,7 @@ namespace Felli
         public bool Movement(Position currentPos, Position nextPos, 
                         Board[,] board)
         {
-            bool canMove = false;   
+            bool canMove = false;  
             
             if (GameBoundaries(nextPos))
             {

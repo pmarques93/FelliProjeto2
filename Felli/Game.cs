@@ -130,9 +130,12 @@ namespace Felli
                                     if (!(input.GameBoundaries(tempPosition)) ||
                                     !(input.ValidMove))
                                     {
-                                        print.RenderBoard(playerOne, playerTwo,
+                                        if (!(input.ChangePieceInput))
+                                        {
+                                            print.RenderBoard(playerOne, playerTwo,
                                         playerName);
-                                        print.RenderMessage("InvalidMove");
+                                            print.RenderMessage("InvalidMove");
+                                        }
                                         continue;
                                     }
                                     // Checks if position isn't occupied
@@ -170,7 +173,8 @@ namespace Felli
                                     }
                                     // If a move or a eat isn't possible
                                     // the move is consider as invalid
-                                    else if (!(gameover) && !changePiece)
+                                    else if (!(gameover) && 
+                                    !(input.ChangePieceInput))
                                     {  
                                         print.RenderMessage("InvalidMove");
                                         if (boardFailInput > 0)

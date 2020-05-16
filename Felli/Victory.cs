@@ -23,7 +23,7 @@ namespace Felli
             byte piecesLeftP2 = 0;
             byte gameOverCountP1 = 0;
             byte gameOverCountP2 = 0;
-
+            
             // Checks if there are plays left for each player
             foreach (Player p1 in playerOne)
             {
@@ -48,7 +48,7 @@ namespace Felli
                 {
                     piecesLeftP2++;
                     if (CantMove(p2.Position, board))
-                    {
+                    { 
                         gameOverCountP2++;
                     }
                 }
@@ -72,40 +72,60 @@ namespace Felli
         /// <returns></returns>
         private bool CantMove(Position p, Board[,] board)
         {
+            Input input = new Input();
             bool gameOver = false;
             byte gameOverCount = 0;
-            byte necessaryToWin = 8;    
-    
+            byte necessaryToWin = 8;
+
             sbyte [][] checkList = new sbyte [][]
             {
-                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)(p.Column + 1)}, 
-                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)(p.Column - 1)},
-                new sbyte[2] {(sbyte)(p.Row + 1), (sbyte)p.Column},
-                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)(p.Column + 1)},
-                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)(p.Column - 1)},
-                new sbyte[2] {(sbyte)(p.Row - 1), (sbyte)p.Column},
-                new sbyte[2] {(sbyte)p.Row, (sbyte)(p.Column - 1)},
-                new sbyte[2] {(sbyte)p.Row, (sbyte)(p.Column + 1)}
+                new sbyte[2] {1, 1},
+                new sbyte[2] {1, -1},
+                new sbyte[2] {1, 0},
+                new sbyte[2] {-1, 1},
+                new sbyte[2] {-1, -1},
+                new sbyte[2] {-1, 0},
+                new sbyte[2] {0, -1},
+                new sbyte[2] {0, 1}
             };
             
             foreach (sbyte[] pos in checkList)
             {
                 try
                 {
-                    if (!(board[Convert.ToByte(pos[0]), Convert.ToByte(pos[1])].
-                        Position.IsPlayable))
-                        gameOverCount ++;       
+                    if (!(board[Convert.ToByte(p.Row + pos[0]), 
+                    Convert.ToByte(p.Column + pos[1])].Position.IsPlayable))
+                    {
+                        gameOverCount++;    
+                    }
                 }
                 catch (IndexOutOfRangeException)
                 {
                     necessaryToWin --;
-                    continue;
                 }
                 catch (OverflowException)
                 {
                     necessaryToWin --;
-                    continue;
                 }   
+
+                try
+                {
+                    if (input.Eat(p, board[Convert.ToByte(pos[0]*2), 
+                    Convert.ToByte(pos[1]*2)].Position, board))
+                    {
+                        gameOver = false;
+                        gameOverCount = 0;
+                        break;
+                    } 
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    continue;
+                }
+                catch (OverflowException)
+                {
+                    continue;
+                }
             }
 
             if (gameOverCount == necessaryToWin)
