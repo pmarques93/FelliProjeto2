@@ -33,9 +33,9 @@ namespace Felli
         public void RenderBoard(Player[] playerOne, Player[] playerTwo,
                             string playerName)
         {
-            Console.Write("\n .----0  1  2  3  4---.");
-            Console.Write($"                  Selectable Pieces\n");
-            Console.Write(" |                    |                 ");
+            Console.Write("\n   _ 0_ 1_ 2_ 3_ 4_ _  ");
+            Console.Write($"                   Selectable Pieces\n");
+            Console.Write(" |                    |                  ");
             PossiblePick(playerOne, playerTwo, playerName);
             Console.WriteLine("");
             
@@ -70,24 +70,38 @@ namespace Felli
                         }
                     } 
                     else
-                        Console.Write($".. ");  
+                    {
+                        Console.Write($"   ");
+                    }
                 }
                 Console.Write($"  {i}");
+                if(i == 0)
+                    Console.Write("\n"+@" |     \   |    /     |");
+                else if (i == 1)
+                {
+                    PossiblePlays();
+                    Console.Write("\n"+@" |       \ |  /       |");
+                }
+                else if (i == 2)
+                {
+                    EatenPieces(playerOne, playerTwo, 2);
+                    Console.Write("\n"+@" |       / |  \       |");
+                }
+                else if (i == 3)
+                    Console.Write("\n"+@" |     /   |    \     |");
                 
                 // Prints playable numbers on middle row
+                // if (i == 0)
+                //     PossiblePlays();
                 if (i == 1)
-                    PossiblePlays();
-                if (i == 2)
-                    EatenPieces(playerOne, playerTwo, 1);
-                if (i == 3)
-                    EatenPieces(playerOne, playerTwo, 2);
+                    EatenPieces(playerOne, playerTwo, 1);                    
 
                 Console.WriteLine("");
             }
-            Console.Write(" |                    |");
-            Console.Write("    'back' to select another piece");
-            Console.Write("\n '----0  1  2  3  4---'");
-            Console.Write("          'exit' to leave the game\n");
+            Console.Write(" | _  _  _  _  _  _ _ |");
+            Console.WriteLine("     'back' to select another piece");
+            Console.Write("     0  1  2  3  4     ");
+            Console.WriteLine("           'exit' to leave the game");
         }
 
         /// <summary>
@@ -125,13 +139,13 @@ namespace Felli
                     Console.WriteLine("\n -----------------------------" +
                     "----------------------------");
                     Console.Write("                            "
-                        +"                ** PLAYER 1 **");
+                        +"                 ** PLAYER 1 **\n");
                     break;
                 case "Player2Round":
                     Console.WriteLine("\n --------------------------------" +
                     "-------------------------");
                     Console.Write("                            "
-                        +"                ** PLAYER 2 **");
+                        +"                 ** PLAYER 2 **\n");
                     break;
                 case "InvalidPiece":
                     Console.WriteLine("\n -------------------- INVALID PIECE" +
@@ -181,7 +195,7 @@ namespace Felli
         /// </summary>
         private void PossiblePlays()
         {
-            Console.Write($"              Playable Numbers: ");
+            Console.Write($"                   Playable Numbers: ");
             foreach (Board position in board)
             {
                 if (position.Position.IsPlayable)
@@ -206,7 +220,7 @@ namespace Felli
             if (x == 1)
             {
                 //Checks all pieces in the playerOne array 
-                Console.Write($"       Eaten Player One Pieces: ");
+                Console.Write($"            Eaten Player One Pieces: ");
                 foreach (Player player in playerOne)
                 {
                     //If the piece is eliminated prints it on the board
@@ -219,11 +233,11 @@ namespace Felli
             else
             {
                 //Checks all pieces in the playerTwo array 
-                Console.Write($"       Eaten Player Two Pieces: ");
+                Console.Write($"            Eaten Player Two Pieces: ");
                 foreach (Player player in playerTwo)
                 {
                     //If the piece is eliminated prints it on the board
-                    if (!(player.IsAlive))
+                    if (!(player.IsAlive))  
                     {
                         Console.Write($"{player.Name} ");
                     }

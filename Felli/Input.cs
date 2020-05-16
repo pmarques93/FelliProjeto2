@@ -41,7 +41,7 @@ namespace Felli
         public Input (){}
         
         /// <summary>
-        /// Asks the player for an intended movement coordinates.
+        /// Gets player's intended move coordinates.
         /// </summary>
         /// <param name="currentPos">Current Player position.</param>
         /// <returns>Returns an instace of the selected piece</returns>
@@ -285,7 +285,15 @@ namespace Felli
             }
             else
             {
-                if (nextPos.Column == currentPos.Column + 1 ||
+                if(currentPos.Row == 0 || currentPos.Row == 4)
+                {
+                    if (nextPos.Column == currentPos.Column + 2 ||
+                        nextPos.Column == currentPos.Column - 2)
+                        {
+                            canMove = true;
+                        }
+                }
+                else if (nextPos.Column == currentPos.Column + 1 ||
                     nextPos.Column == currentPos.Column - 1)
                     canMove = true;
             }
