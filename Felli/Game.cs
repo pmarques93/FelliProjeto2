@@ -2,21 +2,52 @@ using System;
 namespace Felli
 {
     /// <summary>
-    /// Class responsible for running the game
+    /// Class responsible for running the game.
     /// </summary>
     public class Game
     {
+        /// <summary>
+        /// Gets or sets a Board value.
+        /// </summary>
         public Board[,] Board { get; private set; }
+
+        /// <summary>
+        /// Sets the boardsize value.
+        /// </summary>
         private const byte boardSize = 5;
+
+        /// <summary>
+        /// Sets a value indicating whether game is over.
+        /// </summary>
         private bool gameover = false;
+
+        /// <summary>
+        /// Sets two Player values.
+        /// </summary>
         private Player[] playerOne, playerTwo;
+        
+        /// <summary>
+        /// Sets a value indicating whether a piece can move.
+        /// </summary>
         private bool canMove;
+
+        /// <summary>
+        /// Sets a Player value.
+        /// </summary>
         private Player[] selectedPlayer;
+
+        /// <summary>
+        /// Sets a Renderer value.
+        /// </summary>
         private Renderer print;
+
+        /// <summary>
+        /// Sets the player's name.
+        /// </summary>
         private string playerName;
 
         /// <summary>
-        /// Game class constructor
+        /// Game class constructor.
         /// </summary>
         public Game()
         {
@@ -27,7 +58,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Used to run the game, contains the main gameloop
+        /// Used to run the game, contains the main gameloop.
         /// </summary>
         public void Run()
         {
@@ -237,10 +268,10 @@ namespace Felli
         }
 
         /// <summary>
-        /// Defines player's turn
+        /// Defines player's turn.
         /// </summary>
-        /// <param name="firstToPlay"> Defines first player to play</param>
-        /// <param name="roundCounter"> Parameter with round number</param>
+        /// <param name="firstToPlay"> Defines first player to play.</param>
+        /// <param name="roundCounter"> Parameter with round number.</param>
         private void PlayerTurn(byte firstToPlay, byte roundCounter)
         {
             if (firstToPlay == 1)
@@ -278,10 +309,10 @@ namespace Felli
         }
 
         /// <summary>
-        /// Checks if a position is occupied
+        /// Checks if a position is occupied.
         /// </summary>
-        /// <param name="tempPosition"> Position to be checked</param>
-        /// <returns> True if position is occupied</returns>//
+        /// <param name=>Position to be checked.</param>
+        /// <returns> True if position is occupied, otherwise false.</returns>//
         private bool BoardOccupied(Position tempPosition)
         {
             bool occupied = false;
@@ -293,10 +324,10 @@ namespace Felli
         }
 
         /// <summary>
-        /// Kills enemy piece
+        /// Kills enemy piece.
         /// </summary>
-        /// <param name="pName">Chosen player</param>
-        /// <param name="tempPosition">Temporary position input</param>
+        /// <param name="pName">Chosen player.</param>
+        /// <param name="tempPosition">Temporary position input.</param>
         private void PlayerKill(string pName, Position tempPosition,Input input)
         {
             byte killedPieceRow = input.KilledPiecePos.Row;
@@ -335,7 +366,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Creates game board
+        /// Creates game board.
         /// </summary>
         private void CreateGameBoard()
         {
@@ -359,9 +390,9 @@ namespace Felli
         }
 
         /// <summary>
-        /// Creates players
+        /// Creates players.
         /// </summary>
-        /// <param name="x">Defines the number of the creating player</param>
+        /// <param name="x">Player's number.</param>
         private void CreatePlayer(byte x)
         {   
             byte temp = 0;
@@ -403,7 +434,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Quits the gameloop
+        /// Ends the gameloop.
         /// </summary>
         private void Quit()
         {

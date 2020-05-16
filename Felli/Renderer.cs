@@ -2,14 +2,25 @@ using System;
 namespace Felli
 {
     /// <summary>
-    /// Class responsible for all renders in the console
+    /// Class responsible for all renders in the console.
     /// </summary>
     public class Renderer
     {
+        /// <summary>
+        /// Gets or sets a Board value.
+        /// </summary>
         private Board[,] board;
 
+        /// <summary>
+        ///Sets the boardsize value.
+        /// </summary>
         private byte boardSize;
         
+        /// <summary>
+        /// Constructor for the Renderer class.
+        /// </summary>
+        /// <param name="board">Array with all board positions.</param>
+        /// <param name="boardSize">Size of the board.</param>
         public Renderer(Board[,] board, byte boardSize)
         {
             this.board = board;
@@ -17,18 +28,16 @@ namespace Felli
         }
 
         /// <summary>
-        /// Empty Constructor used to create instaces of the class
+        /// Empty Constructor used to create instaces of the class.
         /// </summary>
         public Renderer(){}
 
 
         /// <summary>
-        /// Method that prints the board with all pieces, rows and columns
+        /// Prints the board with all pieces, rows and columns.
         /// </summary>
-        /// <param name="playerOne">Variable from the Player class that 
-        /// represents player One</param>
-        /// <param name="playerTwo">Variable from the Player class that 
-        /// represents player Two</param>
+        /// <param name="playerOne">Player one piece's position and name.</param>
+        /// <param name="playerTwo">Player two piece's position and name.</param>
         /// <param name="playerName">Name of each player's pieces.</param>
         public void RenderBoard(Player[] playerOne, Player[] playerTwo,
                             string playerName)
@@ -105,10 +114,9 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method responsible for printing all information related to the game 
-        /// to the players 
-        /// /// </summary>
-        /// <param name="message"></param>
+        /// Prints all information related to the game to the players.
+        /// </summary>
+        /// <param name="message">Player's Input.</param>
         public void RenderMessage(string message)
         {
             
@@ -181,17 +189,16 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method responsible for printing the name of the selected player
+        /// Prints the name of the selected player.
         /// </summary>
-        /// <param name="playerName">Name of each player's pieces</param>
+        /// <param name="playerName">Name of selected player.</param>
         public void RenderPlayer(string playerName)
         {
             Console.WriteLine($" {playerName} selected.\n");
         }
 
         /// <summary>
-        /// Method responsible for printing the possible plays in the current
-        /// turn to the active player
+        /// Prints the possible plays in the current turn to the active player.
         /// </summary>
         private void PossiblePlays()
         {
@@ -207,14 +214,11 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method responsible for printing the removed pieces for each player
+        /// Prints the removed pieces for each player.
         /// </summary>
-        /// <param name="playerOne">Variable from the Player class that 
-        /// represents player One</param>
-        /// <param name="playerTwo">Variable from the Player class that 
-        /// represents player Two</param>
-        /// <param name="x">Variable that holds the number of either player One
-        /// or player Two</param>
+        /// <param name="playerOne">Player one piece's position and name.</param>
+        /// <param name="playerTwo">Player two piece's position and name.</param>
+        /// <param name="x">Player's number.</param>
         private void EatenPieces(Player[] playerOne, Player[] playerTwo, byte x)
         {
             if (x == 1)
@@ -246,7 +250,7 @@ namespace Felli
         }
 
         /// <summary>
-        /// Method that prints the rules
+        /// Method that prints the rules.
         /// </summary>
         public void PrintRules()
         {
@@ -274,14 +278,11 @@ namespace Felli
         }   
 
         /// <summary>
-        /// Method that prints current playable pieces for the active player in 
-        /// the current turn
-        /// </summary>
-        /// <param name="playerOne">Variable from the Player class that 
-        /// represents player One</param>
-        /// <param name="playerTwo">Variable from the Player class that 
-        /// represents player Two</param>
-        /// <param name="playerName">Name of each player's pieces.</param>
+        /// Prints current playable pieces for the active player in the current 
+        /// turn.</summary>
+        /// <param name="playerOne">Player one piece's position and name.</param>
+        /// <param name="playerTwo">Player two piece's position and name.</param>
+        /// <param name="playerName">Player's name.</param>
         private void PossiblePick(Player[] playerOne, Player[] playerTwo, 
                                 string playerName)
         {
@@ -314,11 +315,12 @@ namespace Felli
 
 
         /// <summary>
-        /// 
+        /// Compares a board position with a player's piece position.
         /// </summary>
-        /// <param name="board"></param>
-        /// <param name="player"></param>
-        /// <returns></returns>
+        /// <param name="board">One single board position.</param>
+        /// <param name="player">Selected player's piece's position.</param>
+        /// <returns>returns true if the positions are equal, otherwise
+        /// false.</returns>
         private bool ComparePosition(Board board, Player player) 
         {
             bool x = false;
