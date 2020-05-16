@@ -20,8 +20,8 @@
 ||Add - Input class|Add - Input class|
 |Add - Introduction|Add - Select Pieces Input|Add - Movement Limitation|
 |Add - Victory|Fix - Eating Movement/ Movement Limitation|Add - Eating Movement|
-|XML Documentation|Fix - General Inputs/Error Messages/Add - Try-Catch Movement|Fix - Victory|
-|HTML Documentation|UML Diagram|README|
+||Fix - General Inputs/Error Messages/Add - Try-Catch Movement|Fix - Victory|
+|XML / HTML Documentation|UML Diagram|README|
 
 ## Repositório git
 
@@ -40,7 +40,7 @@ Durante o ```Run()```, após o _input_ do utilizador, é chamado o método
 ```BoardOccupied()``` para sabermos se a posição desejada está livre ou ocupada.
 Caso a posição esteja livre, na possibilidade de existir a movimentação,
 através do método ```Movement()```, a peça movimenta-se. Caso a posição esteja
-ocupada, utilizamos o método ```Eat```(), que vai chamar vários métodos da mesma
+ocupada, utilizamos o método ```Eat()```, que vai chamar vários métodos da mesma
 classe, que,por sua vez, vão confirmar se existe a possibilidade de movimentar
 a peça duas posições, sendo que, se movimentar a peça vai eliminar a peça
 adversária que estava no caminho.

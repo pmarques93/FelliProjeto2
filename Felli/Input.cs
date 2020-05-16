@@ -178,7 +178,8 @@ namespace Felli
         /// Tests the input of the player for invalid
         /// </summary>
         /// <param name="inputString">Player's input</param>
-        /// <returns>Returns TRUE if the input is valid, otherwise FALSE.</returns>
+        /// <returns>Returns TRUE if the input is valid, 
+        /// otherwise FALSE.</returns>
         public bool CheckConvert(string inputString)
         {
             Renderer print = new Renderer(Board, 5);
@@ -210,7 +211,8 @@ namespace Felli
         /// Checks if the movement is within the board's boundaries.
         /// </summary>
         /// <param name="nextPos">Input for desired movement</param>
-        /// <returns>Returns TRUE if the input is valid, otherwise FALSE.</returns>
+        /// <returns>Returns TRUE if the input is valid, 
+        /// otherwise FALSE.</returns>
         public bool GameBoundaries(Position nextPos)
         {
             bool result = false;
@@ -258,7 +260,8 @@ namespace Felli
         /// <summary>
         /// Checks if its possible to remove an opponents piece.
         /// </summary>
-        /// <param name="currentPos">Current position of the selected piece.</param>
+        /// <param name="currentPos">Current position of the selected 
+        /// piece.</param>
         /// <param name="nextPos">Input for the movement.</param>
         /// <param name="board">Array with all board Positions.</param>
         /// <returns>Returns TRUE if its possible to remove the other player's
@@ -294,7 +297,68 @@ namespace Felli
                                 nextPos.Column == currentPos.Column - 1 ||
                                 nextPos.Column == currentPos.Column);
 
-            if (nextPos.Row == currentPos.Row + 1)
+            if (currentPos.Row == 0 && currentPos.Column == 2)
+            {
+                if ((nextPos.Row == 1 && nextPos.Column == 1) || (nextPos.
+                    Row == 1 && nextPos.Column == 3))
+                    canMove = false; 
+                else if (nextPos.Row == currentPos.Row + 1 && nextPos.
+                    Column == currentPos.Column)
+                    canMove = true;
+            }
+
+            else if (currentPos.Row == 4 && currentPos.Column == 2)
+            {
+                if ((nextPos.Row ==  3 && nextPos.Column == 1) || (nextPos.
+                    Row == 3 && nextPos.Column == 3))
+                    canMove = false; 
+                else if (nextPos.Row == currentPos.Row - 1 && nextPos.
+                        Column == currentPos.Column)
+                    canMove = true;
+            }
+
+            else if (currentPos.Row == 1 && currentPos.Column == 1)
+            {
+                if (nextPos.Row == 0 && nextPos.Column == 2)
+                    canMove = false;
+                else if ((nextPos.Row == 0 && nextPos.Column == 0) || (nextPos.
+                            Row == 1 && nextPos.Column == 2) || (nextPos.
+                            Row == 2 && nextPos.Column == 2))
+                    canMove = true;
+                        
+            }
+
+            else if (currentPos.Row == 1 && currentPos.Column == 3)
+            {
+                if (nextPos.Row == 0 && nextPos.Column == 2)
+                    canMove = false;
+                else if ((nextPos.Row == 0 && nextPos.Column == 4) || (nextPos.
+                        Row == 1 && nextPos.Column == 2) || (nextPos.
+                        Row == 2 && nextPos.Column == 2))
+                    canMove = true;
+            }
+
+            else if (currentPos.Row == 3 && currentPos.Column == 3)
+            {
+                if (nextPos.Row == 4 && nextPos.Column == 2)
+                    canMove = false;
+                else if ((nextPos.Row == 4 && nextPos.Column == 4) || (nextPos.
+                        Row == 3 && nextPos.Column == 2) || (nextPos.
+                        Row == 2 && nextPos.Column == 2))
+                    canMove = true;
+            }
+
+            else if (currentPos.Row == 3 && currentPos.Column == 1)
+            {
+                if (nextPos.Row == 4 && nextPos.Column == 2)
+                    canMove = false;
+                else if ((nextPos.Row == 4 && nextPos.Column == 0) || (nextPos.
+                        Row == 3 && nextPos.Column == 2) || (nextPos.
+                        Row == 2 && nextPos.Column == 2))
+                    canMove = true;
+            }
+
+            else if (nextPos.Row == currentPos.Row + 1)
             {
                 if (checkColumn)
                     canMove = true; 
@@ -305,6 +369,8 @@ namespace Felli
                 if (checkColumn)
                     canMove = true;
             }
+
+
             else
             {
                 if(currentPos.Row == 0 || currentPos.Row == 4)

@@ -36,8 +36,10 @@ namespace Felli
         /// <summary>
         /// Prints the board with all pieces, rows and columns.
         /// </summary>
-        /// <param name="playerOne">Player one piece's position and name.</param>
-        /// <param name="playerTwo">Player two piece's position and name.</param>
+        /// <param name="playerOne">Player one piece's position and 
+        /// name.</param>
+        /// <param name="playerTwo">Player two piece's position and 
+        /// name.</param>
         /// <param name="playerName">Name of each player's pieces.</param>
         public void RenderBoard(Player[] playerOne, Player[] playerTwo,
                             string playerName)
@@ -216,8 +218,10 @@ namespace Felli
         /// <summary>
         /// Prints the removed pieces for each player.
         /// </summary>
-        /// <param name="playerOne">Player one piece's position and name.</param>
-        /// <param name="playerTwo">Player two piece's position and name.</param>
+        /// <param name="playerOne">Player one piece's position and 
+        /// name.</param>
+        /// <param name="playerTwo">Player two piece's position and 
+        /// name.</param>
         /// <param name="x">Player's number.</param>
         private void EatenPieces(Player[] playerOne, Player[] playerTwo, byte x)
         {
@@ -280,8 +284,10 @@ namespace Felli
         /// <summary>
         /// Prints current playable pieces for the active player in the current 
         /// turn.</summary>
-        /// <param name="playerOne">Player one piece's position and name.</param>
-        /// <param name="playerTwo">Player two piece's position and name.</param>
+        /// <param name="playerOne">Player one piece's position and 
+        /// name.</param>
+        /// <param name="playerTwo">Player two piece's position and 
+        /// name.</param>
         /// <param name="playerName">Player's name.</param>
         private void PossiblePick(Player[] playerOne, Player[] playerTwo, 
                                 string playerName)
